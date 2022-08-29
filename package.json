@@ -153,8 +153,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "Theatre Ticket Manager",
+    "appId": "org.erb.TheatreTicketManager",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
