@@ -1,17 +1,15 @@
 import '../css/Login.css'
 import {Card, CardContent, Grid} from "@mui/material";
 import {useState} from "react";
-import {createClient} from '@supabase/supabase-js';
-
-const supabase = createClient(
-  'https://szqedkllaitqpzsbbmcs.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN6cWVka2xsYWl0cXB6c2JibWNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjE1NDUwODYsImV4cCI6MTk3NzEyMTA4Nn0.1M2TsD1QrqN4Dnk5JauSkrpO408JcrU1dDJcniaIcPA'
-)
+import supabase from '../../Supabase.js';
 
 // print data from Venues table to console
 async function getVenue() {
   let{data, error} = await supabase.from('Venues').select('*');
-  console.log(data);
+  console.log('Venues:');
+  data.forEach(function (item, index){
+    console.log('Venue ID:  ' + item.venueID + '    Venue Name:  ' + item.venueName + '    Venue Capacity:  ' + item.venueCapacity);
+  });
 }
 getVenue();
 
