@@ -1,21 +1,29 @@
 import '../css/Login.css'
 import {Card, CardContent, Grid} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import supabase from '../../Supabase.js';
 
-// print data from Venues table to console
-async function getVenue() {
-  let{data, error} = await supabase.from('Venues').select('*');
-  console.log('Venues:');
-  data.forEach(function (item, index){
-    console.log('Venue ID:  ' + item.venueID + '    Venue Name:  ' + item.venueName + '    Venue Capacity:  ' + item.venueCapacity);
-  });
-}
-getVenue();
+
 
 const Login = ({}) => {
 
-  
+  const [words, setWords] = useState('')
+
+  useEffect(() => {
+    // print data from Venues table to console
+    async function getVenue() {
+      let{data, error} = await supabase.from('Venues').select('*');
+      console.log('Venues:');
+      let text = '';
+      data.forEach(function (item, index){
+        text += 'Venue ID:  ' + item.venueID + '    Venue Name:  ' + item.venueName + '    Venue Capacity:  ' + item.venueCapacity
+      });
+
+      setWords(text)
+    }
+    getVenue();
+  }, [])
+
 
   const [toggle, setToggle] = useState(false)
 
@@ -29,7 +37,7 @@ const Login = ({}) => {
             <CardContent onClick={() => {
               setToggle(!toggle)
             }}>
-              Text
+              {words}
             </CardContent>
           </Card>
         </Grid>
