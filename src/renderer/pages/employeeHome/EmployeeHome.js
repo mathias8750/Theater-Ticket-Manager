@@ -9,19 +9,19 @@ const EmployeeHome = ({}) => {
       <Typography>This is the Employee Home Page</Typography>
 
       <NavLink to={""}>
-        <Button>
+        <Button variant="contained">
           Events
         </Button>
       </NavLink>
 
       <NavLink to={""}>
-        <Button>
+        <Button variant="contained">
           Seasons
         </Button>
       </NavLink>
 
       <NavLink to={""}>
-        <Button>
+        <Button variant="contained">
           Organizations
         </Button>
       </NavLink>
