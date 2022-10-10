@@ -6,23 +6,25 @@ const EmployeeHome = ({}) => {
   return (
     <>
 
-      <Typography>This is the Employee Home Page</Typography>
+      <Typography variant="h1" >
+          Employee Home Page
+      </Typography>
 
-      <NavLink to={""}>
+      <NavLink to={"/employee/home/events"}>
         <Button variant="contained">
-          Events
+          Create/Manage Events
         </Button>
       </NavLink>
 
-      <NavLink to={""}>
+      <NavLink to={"/employee/home/seasons"}>
         <Button variant="contained">
-          Seasons
+          Create/Manage Seasons
         </Button>
       </NavLink>
 
-      <NavLink to={""}>
+      <NavLink to={"/employee/home/organizations"}>
         <Button variant="contained">
-          Organizations
+          Create/Manage Organizations
         </Button>
       </NavLink>
     </>

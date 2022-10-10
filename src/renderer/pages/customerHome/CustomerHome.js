@@ -6,7 +6,7 @@ const CustomerHome = ({}) => {
 
   return (
     <>
-      <Typography varient="h1" >Customer Home Page</Typography>
+      <Typography variant="h1" >Customer Home Page</Typography>
 
       <NavLink to={"/customer/events"}>
         <Button>
