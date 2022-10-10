@@ -8,14 +8,15 @@ import CustomerHome from "./pages/customerHome/CustomerHome";
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<CustomerHome/>} />
-        <Route path={"/customer/events"} element={<CustomerEvents/>} />
-        <Route path={"/employee/login"} element={<EmployeeLogin/>} />
-        <Route path={"/employee/login/select"} element={<OrganizationSelect/>}/>
-        <Route path={"/employee/home"} element={<EmployeeHome/>}/>
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<CustomerHome/>} />
+          <Route path={"/customer/events"} element={<CustomerEvents/>} />
+          <Route path={"/employee/login"} element={<EmployeeLogin/>} />
+          <Route path={"/employee/login/select"} element={<OrganizationSelect/>}/>
+          <Route path={"/employee/home"} element={<EmployeeHome/>}/>
+        </Routes>
+      </Router>
+
   );
 }

@@ -1,5 +1,5 @@
-import {Typography} from "@mui/material";
-
+import {Typography, Button} from "@mui/material";
+import {Link as NavLink} from 'react-router-dom';
 
 const EmployeeHome = ({}) => {
 
@@ -8,6 +8,23 @@ const EmployeeHome = ({}) => {
 
       <Typography>This is the Employee Home Page</Typography>
 
+      <NavLink to={""}>
+        <Button>
+          Events
+        </Button>
+      </NavLink>
+
+      <NavLink to={""}>
+        <Button>
+          Seasons
+        </Button>
+      </NavLink>
+
+      <NavLink to={""}>
+        <Button>
+          Organizations
+        </Button>
+      </NavLink>
     </>
   )
 }
