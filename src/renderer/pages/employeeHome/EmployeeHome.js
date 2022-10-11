@@ -1,32 +1,36 @@
 import {Typography, Button} from "@mui/material";
-import {Link as NavLink} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const EmployeeHome = ({}) => {
+
+
+  let navigate = useNavigate();
 
   return (
     <>
 
-      <Typography variant="h3" >
+      <Typography variant="h3" color="primary">
           Employee Home
       </Typography>
 
-      <NavLink to={"/employee/home/events"}>
-        <Button variant="text">
-          Create/Manage Events
-        </Button>
-      </NavLink>
+      
+      <Button variant="text" onClick={() => navigate("/employee/home/events")}>
+         Create/Manage Events
+      </Button>
+      
 
-      <NavLink to={"/employee/home/seasons"}>
-        <Button variant="text">
-          Create/Manage Seasons
-        </Button>
-      </NavLink>
+      <Button variant="text" onClick={() => navigate("/employee/home/seasons")}>
+         Create/Manage Seasons
+      </Button>
+    
 
-      <NavLink to={"/employee/home/organizations"}>
-        <Button variant="text">
-          Create/Manage Organizations
-        </Button>
-      </NavLink>
+      <Button variant="text" onClick={() => navigate("/employee/home/organizations")}>
+         Create/Manage Organizations
+      </Button>
+
+      <Button>
+        Help
+      </Button>
     </>
   )
 }
