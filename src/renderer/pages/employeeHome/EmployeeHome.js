@@ -23,14 +23,14 @@ const EmployeeHome = ({}) => {
 
       <Button variant="text" 
               onClick={() => navigate("/employee/home/seasons")}
-              style={{fontSize: 20, marginLeft: -205, marginRight: 0, marginTop: 200}}>
+              style={{fontSize: 20, marginLeft: -285, marginRight: 0, marginTop: 200}}>
          Create/Manage Seasons
       </Button>
     
 
       <Button variant="text" 
               onClick={() => navigate("/employee/home/organizations")}
-              style={{fontSize: 20, marginLeft: -216, marginRight: 0, marginTop: 400}}>
+              style={{fontSize: 20, marginLeft: -303, marginRight: 0, marginTop: 400}}>
          Create/Manage Organizations
       </Button>
 
