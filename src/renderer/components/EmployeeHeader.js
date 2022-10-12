@@ -3,22 +3,23 @@ import SidebarEventItem from "./SidebarEventItem";
 import {useNavigate} from "react-router-dom";
 
 
-const CustomerHeader = ({}) => {
+const EmployeeHeader = ({}) => {
 
-  let navigate = useNavigate();
+    let navigate = useNavigate();
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
           <Toolbar>
             <Button 
-                color="inherit"
-                onClick={() => navigate("/")}>
-                    Home
+                color="inherit" 
+                onClick={() => navigate("/employee/home")}>
+                    Employee Home
             </Button>
             <Button 
                 color="inherit" 
-                style={{marginLeft:600}}>
+                style={{marginLeft: 500}}>
                     Help
             </Button>
           </Toolbar>
@@ -28,4 +29,4 @@ const CustomerHeader = ({}) => {
   )
 }
 
-export default CustomerHeader;
+export default EmployeeHeader;
