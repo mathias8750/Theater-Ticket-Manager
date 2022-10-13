@@ -10,14 +10,17 @@ const EmployeeHome = ({}) => {
   return (
     <>
       <EmployeeHeader/>
-      <Typography variant="h3" color="primary">
+      <Typography 
+          variant="h3" 
+          color="primary"
+          style={{marginTop: -625}}>
           Employee Home
       </Typography>
 
       
       <Button variant="text" 
               onClick={() => navigate("/employee/home/events")} 
-              style={{fontSize: 20, marginLeft: 0, marginRight: 0, marginTop: -100}}>
+              style={{fontSize: 20, marginLeft: 0, marginRight: 0, marginTop: -40}}>
          Create/Manage Events
       </Button>
       
@@ -31,7 +34,7 @@ const EmployeeHome = ({}) => {
 
       <Button variant="text" 
               onClick={() => navigate("/employee/home/organizations")}
-              style={{fontSize: 20, marginLeft: -303, marginRight: 0, marginTop: 300}}>
+              style={{fontSize: 20, marginLeft: -303, marginRight: 0, marginTop: 240}}>
          Create/Manage Organizations
       </Button>
     </>
