@@ -1,11 +1,12 @@
 import {Button, Typography} from "@mui/material";
 import {Link as NavLink} from 'react-router-dom';
+import CustomerHeader from "../../components/CustomerHeader";
 
 
 const CustomerHome = ({}) => {
 
   return (
-    <>
+    <CustomerHeader>
       <Typography varient="h1" >Customer Home Page</Typography>
 
       <NavLink to={"/customer/events"}>
@@ -18,7 +19,7 @@ const CustomerHome = ({}) => {
           Employee Login
         </Button>
       </NavLink>
-    </>
+    </CustomerHeader>
   )
 }
 

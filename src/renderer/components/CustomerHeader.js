@@ -1,5 +1,6 @@
 import {AppBar, Box, Button, Grid, TextField, Toolbar} from "@mui/material";
 import SidebarEventItem from "./SidebarEventItem";
+import {Link as NavLink} from "react-router-dom";
 
 
 const CustomerHeader = (props) => {
@@ -9,7 +10,16 @@ const CustomerHeader = (props) => {
       <Box sx={{ flexGrow: 1}}>
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
           <Toolbar style={{ height: '10%'}}>
-            <Button color="inherit">Home</Button>
+            <NavLink to={"/"}>
+              <Button color={'inherit'}>
+                Home
+              </Button>
+            </NavLink>
+            <NavLink to={"/customer/events"}>
+              <Button color={'inherit'}>
+                Events
+              </Button>
+            </NavLink>
           </Toolbar>
         </AppBar>
       </Box>
@@ -17,7 +27,6 @@ const CustomerHeader = (props) => {
         {props.children}
       </div>
     </>
-
   )
 }
 
