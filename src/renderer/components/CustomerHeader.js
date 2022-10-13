@@ -3,14 +3,15 @@ import SidebarEventItem from "./SidebarEventItem";
 import {useNavigate} from "react-router-dom";
 
 
-const CustomerHeader = ({}) => {
+const CustomerHeader = (props) => {
 
   let navigate = useNavigate();
+  
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1}}>
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
-          <Toolbar>
+          <Toolbar style={{ height: '10%'}}>
             <Button 
                 color="inherit"
                 onClick={() => navigate("/")}>
@@ -24,7 +25,11 @@ const CustomerHeader = ({}) => {
           </Toolbar>
         </AppBar>
       </Box>
+      <div style={{ height: '90%'}}>
+        {props.children}
+      </div>
     </>
+
   )
 }
 
