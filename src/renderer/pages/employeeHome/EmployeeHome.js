@@ -1,6 +1,9 @@
 import {Typography, Button} from "@mui/material";
 import {useNavigate} from 'react-router-dom';
+<<<<<<< HEAD
 import EmployeeHeader from "../../components/EmployeeHeader"; 
+=======
+>>>>>>> dev
 
 const EmployeeHome = ({}) => {
 
@@ -17,22 +20,29 @@ const EmployeeHome = ({}) => {
           Employee Home
       </Typography>
 
+<<<<<<< HEAD
       
       <Button variant="text" 
               onClick={() => navigate("/employee/home/events")} 
               style={{fontSize: 20, marginLeft: 0, marginRight: 0, marginTop: -40}}>
+=======
+
+      <Button variant="text"
+              onClick={() => navigate("/employee/home/events")}
+              style={{marginLeft: 50, marginRight: 50, marginTop: 20}}>
+>>>>>>> dev
          Create/Manage Events
       </Button>
-      
 
-      <Button variant="text" 
+
+      <Button variant="text"
               onClick={() => navigate("/employee/home/seasons")}
               style={{fontSize: 20, marginLeft: -285, marginRight: 0, marginTop: 100}}>
          Create/Manage Seasons
       </Button>
-    
 
-      <Button variant="text" 
+
+      <Button variant="text"
               onClick={() => navigate("/employee/home/organizations")}
               style={{fontSize: 20, marginLeft: -303, marginRight: 0, marginTop: 240}}>
          Create/Manage Organizations

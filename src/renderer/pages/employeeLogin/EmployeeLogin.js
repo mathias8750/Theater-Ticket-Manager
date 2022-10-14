@@ -1,7 +1,7 @@
 import {Button, Typography, TextField} from "@mui/material";
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import React, {useRef, Component} from "react";
-import supabase from '../../components/Supabase.js';
+import supabase from '../../utils/Supabase.js';
 
 
 const EmployeeLogin = ({}) => {
@@ -19,11 +19,11 @@ const EmployeeLogin = ({}) => {
       .select('*')
       .eq('username', usernameRef.current.value);
 
-    // If the array is empty, no user with the specified username was found  
+    // If the array is empty, no user with the specified username was found
     if(Users.length == 0){
       console.log('Username not recognized');
-    }  
-    
+    }
+
     // Otherwise the username is in the database and the code below will execute
     Users.forEach(function (item, index){
 
@@ -49,7 +49,7 @@ const EmployeeLogin = ({}) => {
       label='Username'
       inputRef={usernameRef}
       />
-      
+
       <TextField
       id='passwordTextField'
       label='Password'
