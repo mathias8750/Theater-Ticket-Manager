@@ -5,9 +5,14 @@ import OrganizationSelect from "./pages/organizationSelect/OrganizationSelect";
 import EmployeeLogin from "./pages/employeeLogin/EmployeeLogin";
 import CustomerEvents from "./pages/customerEvents/CustomerEvents";
 import CustomerHome from "./pages/customerHome/CustomerHome";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+
+
+const queryClient = new QueryClient()
 
 export default function App() {
   return (
+    <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
           <Route path="/" element={<CustomerHome/>} />
@@ -17,6 +22,8 @@ export default function App() {
           <Route path={"/employee/home"} element={<EmployeeHome/>}/>
         </Routes>
       </Router>
+    </QueryClientProvider>
+
 
   );
 }
