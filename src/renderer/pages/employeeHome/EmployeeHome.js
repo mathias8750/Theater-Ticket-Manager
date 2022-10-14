@@ -13,22 +13,22 @@ const EmployeeHome = ({}) => {
           Employee Home
       </Typography>
 
-      
-      <Button variant="text" 
-              onClick={() => navigate("/employee/home/events")} 
+
+      <Button variant="text"
+              onClick={() => navigate("/employee/home/events")}
               style={{marginLeft: 50, marginRight: 50, marginTop: 20}}>
          Create/Manage Events
       </Button>
-      
 
-      <Button variant="text" 
+
+      <Button variant="text"
               onClick={() => navigate("/employee/home/seasons")}
               style={{marginLeft: 50, marginRight: 50, marginTop: 50}}>
          Create/Manage Seasons
       </Button>
-    
 
-      <Button variant="text" 
+
+      <Button variant="text"
               onClick={() => navigate("/employee/home/organizations")}
               style={{marginLeft: 50, marginRight: 50, marginTop: 80}}>
          Create/Manage Organizations
