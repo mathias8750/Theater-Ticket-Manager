@@ -29,9 +29,6 @@ const CustomerHome = ({}) => {
           type="search"
           variant="standard"
         />
-
-      
-
       <NavLink to={"/customer/events"}>
         <Button>
           See All Events

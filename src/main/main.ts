@@ -69,6 +69,7 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
+
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
@@ -80,6 +81,7 @@ const createWindow = async () => {
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
+    autoHideMenuBar: true,
   });
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
