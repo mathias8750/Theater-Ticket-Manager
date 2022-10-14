@@ -1,31 +1,42 @@
-import {Button, Typography} from "@mui/material";
-import {NavLink} from "react-router-dom";
-
+import {Typography, Button} from "@mui/material";
+import {useNavigate} from 'react-router-dom';
 
 const EmployeeHome = ({}) => {
+
+
+  let navigate = useNavigate();
 
   return (
     <>
 
-      <Typography>This is the Employee Home Page</Typography>
+      <Typography variant="h3" color="primary">
+          Employee Home
+      </Typography>
 
-      <NavLink to={""}>
-        <Button>
-          Events
-        </Button>
-      </NavLink>
 
-      <NavLink to={""}>
-        <Button>
-          Seasons
-        </Button>
-      </NavLink>
+      <Button variant="text"
+              onClick={() => navigate("/employee/home/events")}
+              style={{marginLeft: 50, marginRight: 50, marginTop: 20}}>
+         Create/Manage Events
+      </Button>
 
-      <NavLink to={""}>
-        <Button>
-          Organizations
-        </Button>
-      </NavLink>
+
+      <Button variant="text"
+              onClick={() => navigate("/employee/home/seasons")}
+              style={{marginLeft: 50, marginRight: 50, marginTop: 50}}>
+         Create/Manage Seasons
+      </Button>
+
+
+      <Button variant="text"
+              onClick={() => navigate("/employee/home/organizations")}
+              style={{marginLeft: 50, marginRight: 50, marginTop: 80}}>
+         Create/Manage Organizations
+      </Button>
+
+      <Button style={{marginLeft: 350, marginRight: 50, marginTop: 120}}>
+        Help
+      </Button>
     </>
   )
 }
