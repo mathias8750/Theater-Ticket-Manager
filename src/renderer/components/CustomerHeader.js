@@ -1,33 +1,15 @@
 import {AppBar, Box, Button, Grid, TextField, Toolbar} from "@mui/material";
 import SidebarEventItem from "./SidebarEventItem";
-<<<<<<< HEAD
-import {useNavigate} from "react-router-dom";
-=======
 import {Link as NavLink} from "react-router-dom";
->>>>>>> dev
-
+import {Link as NavLink} from "react-router-dom";
 
 const CustomerHeader = (props) => {
 
-  let navigate = useNavigate();
-  
   return (
     <>
       <Box sx={{ flexGrow: 1}}>
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
           <Toolbar style={{ height: '10%'}}>
-<<<<<<< HEAD
-            <Button 
-                color="inherit"
-                onClick={() => navigate("/")}>
-                    Home
-            </Button>
-            <Button 
-                color="inherit" 
-                style={{marginLeft:600}}>
-                    Help
-            </Button>
-=======
             <NavLink to={"/"}>
               <Button color={'inherit'}>
                 Home
@@ -38,7 +20,6 @@ const CustomerHeader = (props) => {
                 Events
               </Button>
             </NavLink>
->>>>>>> dev
           </Toolbar>
         </AppBar>
       </Box>

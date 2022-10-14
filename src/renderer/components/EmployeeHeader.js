@@ -12,18 +12,21 @@ const EmployeeHeader = (props) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
           <Toolbar style={{ height: '10%'}}>
-            <Button 
-                color="inherit" 
+            <Button
+                color="inherit"
                 onClick={() => navigate("/employee/home")}>
                     Employee Home
             </Button>
-            <Button 
-                color="inherit" 
-                style={{marginLeft: 500}}>
+            <div style={{ flexGrow: 1}}/>
+
+            <Button
+                color="inherit"
+                style={{alignItems: 'right'}}
+            >
                     Help
             </Button>
-            <Button 
-                color="inherit" 
+            <Button
+                color="inherit"
                 onClick={() => navigate("/")}>
                     Logout
             </Button>

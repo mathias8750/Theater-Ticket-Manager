@@ -9,6 +9,10 @@ import EmployeeEvents from "./pages/employeeEvents/EmployeeEvents";
 import EmployeeSeasons from "./pages/employeeSeasons/EmployeeSeasons";
 import EmployeeOrganizations from "./pages/employeeOrganizations/EmployeeOrganizations";
 
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+
+
+const queryClient = new QueryClient()
 
 export default function App() {
   return (

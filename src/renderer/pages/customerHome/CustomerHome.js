@@ -11,7 +11,6 @@ import "./style.css";
 const CustomerHome = ({}) => {
 
   return (
-<<<<<<< HEAD
     <>
       <AppBar className="topbar"  >
         <Toolbar>
@@ -24,32 +23,16 @@ const CustomerHome = ({}) => {
           </NavLink>
         </Toolbar>
       </AppBar>
-      
-      <TextField
-          id="standard-search"
-          label="Search field"
-          type="search"
-          variant="standard"
-        />
-=======
     <CustomerHeader>
       <Typography varient="h1" >Customer Home Page</Typography>
->>>>>>> dev
-
       <NavLink to={"/customer/events"}>
         <Button>
-          Customer Events
+          See All Events
         </Button>
       </NavLink>
-      <TextField
-        id="standard-search"
-        label="Search field"
-        type="search"
-        variant="standard"
-      />
       <NavLink to={"/employee/login"}>
-        <Button>
-          See All Events
+        <Button className="button">
+          Employee Login
         </Button>
       </NavLink>
     </CustomerHeader>
