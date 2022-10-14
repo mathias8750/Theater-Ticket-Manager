@@ -41,6 +41,7 @@ const CustomerEvents = ({}) => {
             <ScrollableSidebar events={data} onEventClick={onEventClick}/>
           </Grid>
 
+
           <Grid item md={8} style={{paddingRight: '10px', height: '100%'}}>
             {selectedEvent !== null ? (
               <CustomerEvent event={selectedEvent}/>
