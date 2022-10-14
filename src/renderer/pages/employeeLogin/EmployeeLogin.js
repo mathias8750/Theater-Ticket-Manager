@@ -1,7 +1,7 @@
 import {Button, Typography, TextField} from "@mui/material";
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import React, {useRef, Component} from "react";
-import supabase from '../../Supabase.js';
+import supabase from '../../components/Supabase.js';
 
 
 const EmployeeLogin = ({}) => {
