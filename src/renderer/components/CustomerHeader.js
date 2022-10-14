@@ -9,12 +9,12 @@ const CustomerHeader = (props) => {
       <Box sx={{ flexGrow: 1}}>
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
           <Toolbar style={{ height: '10%'}}>
-            <NavLink to={"/"}>
+            <NavLink to={"/"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button color={'inherit'}>
                 Home
               </Button>
             </NavLink>
-            <NavLink to={"/customer/events"}>
+            <NavLink to={"/customer/events"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button color={'inherit'}>
                 Events
               </Button>
