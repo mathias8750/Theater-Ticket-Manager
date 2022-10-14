@@ -5,6 +5,10 @@ import OrganizationSelect from "./pages/organizationSelect/OrganizationSelect";
 import EmployeeLogin from "./pages/employeeLogin/EmployeeLogin";
 import CustomerEvents from "./pages/customerEvents/CustomerEvents";
 import CustomerHome from "./pages/customerHome/CustomerHome";
+import EmployeeEvents from "./pages/employeeEvents/EmployeeEvents";
+import EmployeeSeasons from "./pages/employeeSeasons/EmployeeSeasons";
+import EmployeeOrganizations from "./pages/employeeOrganizations/EmployeeOrganizations";
+
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 
@@ -20,6 +24,9 @@ export default function App() {
           <Route path={"/employee/login"} element={<EmployeeLogin/>} />
           <Route path={"/employee/login/select"} element={<OrganizationSelect/>}/>
           <Route path={"/employee/home"} element={<EmployeeHome/>}/>
+          <Route path={"/employee/home/events"} element={<EmployeeEvents/>}/>
+          <Route path={"/employee/home/seasons"} element={<EmployeeSeasons/>}/>
+          <Route path={"/employee/home/organizations"} element={<EmployeeOrganizations/>}/>
         </Routes>
       </Router>
     </QueryClientProvider>

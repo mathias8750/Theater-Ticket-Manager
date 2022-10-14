@@ -14,20 +14,20 @@ const CustomerHome = ({}) => {
     <CustomerHeader>
       <Typography varient="h1" >Customer Home Page</Typography>
 
+      <TextField
+          id="standard-search"
+          label="Search field"
+          type="search"
+          variant="standard"
+        />
       <NavLink to={"/customer/events"}>
         <Button>
-          Customer Events
+          See All Events
         </Button>
       </NavLink>
-      <TextField
-        id="standard-search"
-        label="Search field"
-        type="search"
-        variant="standard"
-      />
       <NavLink to={"/employee/login"}>
-        <Button>
-          See All Events
+        <Button className="button">
+          Employee Login
         </Button>
       </NavLink>
     </CustomerHeader>
