@@ -1,5 +1,6 @@
 import {Typography, Button} from "@mui/material";
 import {useNavigate} from 'react-router-dom';
+import EmployeeHeader from "../../components/EmployeeHeader";
 
 const EmployeeHome = ({}) => {
 
@@ -8,34 +9,33 @@ const EmployeeHome = ({}) => {
 
   return (
     <>
-
-      <Typography variant="h3" color="primary">
+      <EmployeeHeader/>
+      <Typography
+          variant="h3"
+          color="primary"
+          style={{marginTop: -625}}>
           Employee Home
       </Typography>
 
-      
-      <Button variant="text" 
-              onClick={() => navigate("/employee/home/events")} 
-              style={{marginLeft: 50, marginRight: 50, marginTop: 20}}>
+
+      <Button variant="text"
+              onClick={() => navigate("/employee/home/events")}
+              style={{fontSize: 20, marginLeft: 0, marginRight: 0, marginTop: -40}}>
          Create/Manage Events
       </Button>
-      
 
-      <Button variant="text" 
+
+      <Button variant="text"
               onClick={() => navigate("/employee/home/seasons")}
-              style={{marginLeft: 50, marginRight: 50, marginTop: 50}}>
+              style={{fontSize: 20, marginLeft: -285, marginRight: 0, marginTop: 100}}>
          Create/Manage Seasons
       </Button>
-    
 
-      <Button variant="text" 
+
+      <Button variant="text"
               onClick={() => navigate("/employee/home/organizations")}
-              style={{marginLeft: 50, marginRight: 50, marginTop: 80}}>
+              style={{fontSize: 20, marginLeft: -303, marginRight: 0, marginTop: 240}}>
          Create/Manage Organizations
-      </Button>
-
-      <Button style={{marginLeft: 350, marginRight: 50, marginTop: 120}}>
-        Help
       </Button>
     </>
   )

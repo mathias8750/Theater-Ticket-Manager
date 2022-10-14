@@ -2,71 +2,8 @@ import {Grid, TextField} from "@mui/material";
 import SidebarEventItem from "./SidebarEventItem";
 
 
-const ScrollableSidebar = ({}) => {
+const ScrollableSidebar = ({ events, onEventClick }) => {
 
-  let temp = [
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-    {
-      name: 'event',
-      date: 'today',
-    },
-
-  ]
 
 
   return (
@@ -82,9 +19,9 @@ const ScrollableSidebar = ({}) => {
         }}>
           <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
             <div style={{ height: '100%', overflow: 'auto'}}>
-              {temp.map((event) => {
+              {events.map((event) => {
                 return (
-                  <SidebarEventItem event={event}/>
+                  <SidebarEventItem event={event} onEventClick={onEventClick}/>
                 )
               })}
             </div>
