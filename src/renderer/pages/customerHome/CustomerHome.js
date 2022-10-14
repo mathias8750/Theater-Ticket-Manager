@@ -11,20 +11,15 @@ import "./style.css";
 const CustomerHome = ({}) => {
 
   return (
-    <>
-      <AppBar className="topbar"  >
-        <Toolbar>
-          <Typography variant="h6" className="title"  >Theater Ticket Manager</Typography>
-          <Typography variant="subtitle1" className="title" >Home</Typography>
-          <NavLink to={"/employee/login"}>
-            <Button className="button">
-              Employee Login
-            </Button>
-          </NavLink>
-        </Toolbar>
-      </AppBar>
     <CustomerHeader>
       <Typography varient="h1" >Customer Home Page</Typography>
+
+      <TextField
+          id="standard-search"
+          label="Search field"
+          type="search"
+          variant="standard"
+        />
       <NavLink to={"/customer/events"}>
         <Button>
           See All Events
