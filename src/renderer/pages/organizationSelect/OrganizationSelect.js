@@ -9,7 +9,7 @@ const OrganizationSelect = ({}) => {
   return (
     <>
 
-      <Typography>This is the Organization Select Page</Typography>
+      <Typography>Organization Select Page</Typography>
 
       
       <OrganizationList/>

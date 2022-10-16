@@ -1,7 +1,7 @@
 import {FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 import React, {Component} from "react";
-import supabase from "./Supabase.js"
 import organizationContext from "../context/organizationContext.js";
+import supabase from "../utils/Supabase";
 
 class OrganizationList extends React.Component {
     constructor(props) {
