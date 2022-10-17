@@ -1,14 +1,19 @@
-import {Button, Typography, TextField} from "@mui/material";
+import {Button, Typography, TextField, AlertTitle, Dialog, Alert} from "@mui/material";
 import {Link as NavLink, useNavigate} from "react-router-dom";
-import React, {useRef, Component} from "react";
+import React, {useRef, useState, Component} from "react";
 import supabase from '../../utils/Supabase.js';
 
 
 const EmployeeLogin = ({}) => {
 
+  const [open, setOpen] = useState(false);
   const usernameRef = useRef('');
   const passwordRef = useRef('');
   let navigate = useNavigate();
+
+  const toggleAlert = () => {
+    setOpen(!open);
+  }
 
   // Function to login as employee and access the org select screen
   async function login() {
@@ -21,7 +26,7 @@ const EmployeeLogin = ({}) => {
 
     // If the array is empty, no user with the specified username was found
     if(Users.length == 0){
-      console.log('Username not recognized');
+      setOpen(!open);
     }
 
     // Otherwise the username is in the database and the code below will execute
@@ -33,7 +38,7 @@ const EmployeeLogin = ({}) => {
         console.log('Logged in successfully');
         navigate("/employee/login/select");
       } else {
-        console.log('Incorrect password');
+        setOpen(!open);
       }
     });
 
@@ -66,6 +71,14 @@ const EmployeeLogin = ({}) => {
         Login
       </Button>
 
+      <Dialog open={open} onClose={toggleAlert}>
+        <Alert
+        severity="error"
+        >
+          <AlertTitle>Error</AlertTitle>
+          Invalid Username/Password
+        </Alert>
+      </Dialog>
     </>
   )
 }
