@@ -13,6 +13,7 @@ const OrganizationList = ({}) => {
     // Get organizations from the supabase
     const getOrganizations = async () => {
         const {data: organizations} = await supabase.from("Organizations").select("*");
+        update({selectedOrg: {organizationID: 0, organizationName: "defaultname", organizationEmail: "defaultemail"}});
         return organizations;
     };
     const {status, data, error} = useQuery(['orgs'], getOrganizations);
@@ -48,7 +49,8 @@ const OrganizationList = ({}) => {
                     return (<MenuItem key={index} value={org}>{org?.organizationName}</MenuItem>)
                 })}
                 </Select>
-            </FormControl>
+        </FormControl>
+        
     )
 }
 

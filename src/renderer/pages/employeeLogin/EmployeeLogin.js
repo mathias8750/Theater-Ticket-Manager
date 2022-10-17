@@ -24,9 +24,10 @@ const EmployeeLogin = ({}) => {
       .select('*')
       .eq('username', usernameRef.current.value);
 
-    // If the array is empty, no user with the specified username was found
+    // If the array is empty no user with the specified username was found
+    // Alert the user due to invalid username
     if(Users.length == 0){
-      setOpen(!open);
+      toggleAlert();
     }
 
     // Otherwise the username is in the database and the code below will execute
@@ -38,7 +39,8 @@ const EmployeeLogin = ({}) => {
         console.log('Logged in successfully');
         navigate("/employee/login/select");
       } else {
-        setOpen(!open);
+        // Invalid password, alert the user
+        toggleAlert();
       }
     });
 
