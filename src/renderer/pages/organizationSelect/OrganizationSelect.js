@@ -1,5 +1,5 @@
 import {Button, Typography, TextField, FormControl, InputLabel, Select, MenuItem, Alert, AlertTitle, Dialog} from "@mui/material";
-import {Link as NavLink, useNavigate, useLocation} from "react-router-dom";
+import {Link as NavLink, useNavigate} from "react-router-dom";
 import OrganizationList from "../../components/OrganizationList";
 import { OrganizationContext } from "renderer/context/OrganizationContext";
 import React, {useRef, useState, useContext} from "react";
@@ -14,11 +14,11 @@ const OrganizationSelect = ({}) => {
   const [orgErrOpen, setOpen] = useState(false);
   const [newOrgErrOpen, setNewOpen] = useState(false);
   const [orgAddedOpen, setAddedOpen] = useState(false);
+  const [orgs, setOrgs] = useState([]);
   const newOrgNameRef = useRef('');
   const newOrgEmailRef = useRef('');
-  let orgName = "";
+  const newOrgObjectRef = useRef('');
   const navigate = useNavigate();
-  const location = useLocation();
 
   // If org isn't selected alert the user, if it is navigate to employee home page
   const onSelectButton = () => {
@@ -34,38 +34,37 @@ const OrganizationSelect = ({}) => {
     
     if((newOrgNameRef != '') && (newOrgEmailRef != '')){
 
+      // Get the current array of orgs from the db, before adding the new org
       const { data: orgs_compare} = await supabase
         .from('Organizations')
         .select('*')
 
+      // Add the new org to the db, supabase will handle uniqueness constraints
       const {data: orgs, error} = await supabase
         .from('Organizations')
         .insert([{organizationName: newOrgNameRef.current.value, organizationEmail: newOrgEmailRef.current.value}]);
-
-
+      
+      // Check if the org name or email is already in use; if it is display alert
       let orgSelectAlertStatus = false;
       for(let i = 0; i < orgs_compare.length; i++){
-        console.log(' Org name ' + orgs_compare[i].organizationName + ' Org email ' + orgs_compare[i].organizationEmail);
-        console.log(' New Org name ' + newOrgNameRef.current.value + ' New Org email ' + newOrgEmailRef.current.value);
-
-
         if((orgs_compare[i].organizationName == newOrgNameRef.current.value) || (orgs_compare[i].organizationEmail == newOrgEmailRef.current.value)){
           orgSelectAlertStatus = true;
         }
       }
-
       if(orgSelectAlertStatus == true){
         toggleNewOrgAlert();
       } else {
         toggleOrgAddedAlert();
-        navigate(location.pathname);
+
+        // Org added; pass new org to org list to update the list
+        setOrgs({...orgs});
       }
     }
-    orgName = newOrgNameRef.current.value;
+
+    // Clear the new org name and new org email text fields
     newOrgNameRef.current.value = "";
     newOrgEmailRef.current.value = "";
   }
-
 
   // Function to toggle the org select alert message
   const toggleOrgSelectAlert = () => {
@@ -87,7 +86,7 @@ const OrganizationSelect = ({}) => {
 
       <Typography>Organization Select Page</Typography>
 
-      <OrganizationList/>
+      <OrganizationList newOrgs={orgs}/>
 
       <TextField
       id='newOrgNameTextField'
