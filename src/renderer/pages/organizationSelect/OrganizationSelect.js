@@ -42,12 +42,12 @@ const OrganizationSelect = ({}) => {
       // Add the new org to the db, supabase will handle uniqueness constraints
       const {data: orgs, error} = await supabase
         .from('Organizations')
-        .insert([{organizationName: newOrgNameRef.current.value, organizationEmail: newOrgEmailRef.current.value}]);
+        .insert([{organizationName: newOrgNameRef.current.value.trim(), organizationEmail: newOrgEmailRef.current.value.trim().toLowerCase()}]);
       
       // Check if the org name or email is already in use; if it is display alert
       let orgSelectAlertStatus = false;
       for(let i = 0; i < orgs_compare.length; i++){
-        if((orgs_compare[i].organizationName == newOrgNameRef.current.value) || (orgs_compare[i].organizationEmail == newOrgEmailRef.current.value)){
+        if((orgs_compare[i].organizationName == newOrgNameRef.current.value.trim()) || (orgs_compare[i].organizationEmail.toLowerCase() == newOrgEmailRef.current.value.trim().toLowerCase())){
           orgSelectAlertStatus = true;
         }
       }
