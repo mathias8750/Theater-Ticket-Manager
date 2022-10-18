@@ -1,5 +1,6 @@
-import {FormControl, InputLabel, Select, MenuItem} from "@mui/material";
+import {FormControl, InputLabel, Select, MenuItem, Button} from "@mui/material";
 import React, {Component, useContext, useState} from "react";
+import {createHistory} from 'react-router'
 import {OrganizationContext} from "../context/OrganizationContext.js";
 import supabase from "../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
@@ -9,6 +10,7 @@ const OrganizationList = ({}) => {
     // Use react context to keep track of selected org throughout the program
     const {state, update} = useContext(OrganizationContext);
     const [selectedOrg, setSelectedOrg] = useState(null)
+    const [counter, setCounter] = useState(0);
 
     // Get organizations from the supabase
     const getOrganizations = async () => {
@@ -34,6 +36,12 @@ const OrganizationList = ({}) => {
         update({selectedOrg: e.target.value});
     }
 
+    const refreshList = () => {
+        setCounter(counter + 1);
+    }
+
+
+
     return (
         <FormControl fullWidth>
                 <InputLabel id="organization-select-label">Organization</InputLabel>
@@ -49,7 +57,17 @@ const OrganizationList = ({}) => {
                     return (<MenuItem key={index} value={org}>{org?.organizationName}</MenuItem>)
                 })}
                 </Select>
+                    <Button
+                    variant='contained'
+                    type='submit'
+                    color='primary'
+                    size='small'
+                    onClick={refreshList}
+                    >
+                     Refresh List
+                    </Button>
         </FormControl>
+        
         
     )
 }
