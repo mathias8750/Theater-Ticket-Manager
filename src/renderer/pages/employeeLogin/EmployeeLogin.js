@@ -2,6 +2,7 @@ import {Button, Typography, TextField, AlertTitle, Dialog, Alert} from "@mui/mat
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import React, {useRef, useState, Component} from "react";
 import supabase from '../../utils/Supabase.js';
+import LoginHeader from "renderer/components/LoginHeader.js";
 
 
 const EmployeeLogin = ({}) => {
@@ -48,8 +49,8 @@ const EmployeeLogin = ({}) => {
 
 
   return (
-    <>
-      <Typography>This is the Employee Login Page</Typography>
+    <LoginHeader>
+      <Typography>Employee Login</Typography>
 
       <TextField
       id='usernameTextField'
@@ -81,7 +82,7 @@ const EmployeeLogin = ({}) => {
           Invalid Username/Password
         </Alert>
       </Dialog>
-    </>
+    </LoginHeader>
   )
 }
 
