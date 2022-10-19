@@ -1,4 +1,4 @@
-import {Button, Typography, TextField, FormControl, InputLabel, Select, MenuItem, Alert, AlertTitle, Dialog} from "@mui/material";
+import {Button,Box, Grid, Typography, TextField, FormControl, InputLabel, Select, MenuItem, Alert, AlertTitle, Dialog} from "@mui/material";
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import OrganizationList from "../../components/OrganizationList";
 import { OrganizationContext } from "renderer/context/OrganizationContext";
@@ -6,7 +6,6 @@ import React, {useRef, useState, useContext} from "react";
 import React from "react";
 import supabase from "renderer/utils/Supabase";
 import { fontFamily } from "@mui/system";
-
 
 const OrganizationSelect = ({}) => {
 
@@ -32,7 +31,7 @@ const OrganizationSelect = ({}) => {
   // Function to control adding organization
   const onAddButton = async () => {
     
-    if((newOrgNameRef != '') && (newOrgEmailRef != '')){
+    if((newOrgNameRef.current.value.trim() != '') && (newOrgEmailRef.current.value.trim() != '')){
 
       // Get the current array of orgs from the db, before adding the new org
       const { data: orgs_compare} = await supabase
@@ -83,42 +82,67 @@ const OrganizationSelect = ({}) => {
 
   return (
     <>
+      {/*
+      <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        height: '0%',
+        margin: '5%',
+      }}>
+    
+      </div>
+      */}
+        <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '0%',
+          margin: '10%',
+        }}
+        >
+          <Button
+          variant='contained'
+          type='submit'
+          color='primary'
+          size='small'
+          onClick={onSelectButton}
+          >
+          Select Organization
+          </Button>
+          <OrganizationList newOrgs={orgs}/>
+        </div>
+      
+        <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        height: '0%',
+        margin: '10%',
+      }}>  
 
-      <Typography>Organization Select Page</Typography>
+          <Button
+          variant='contained'
+          type='submit'
+          color='primary'
+          size='small'
+          onClick={onAddButton}
+          >
+            Add Organization
+          </Button>
+        <TextField
+          id='newOrgNameTextField'
+          label='Organization Name'
+          inputRef={newOrgNameRef}
+          />
 
-      <OrganizationList newOrgs={orgs}/>
+          <TextField
+          id='newOrgEmailTextField'
+          label='Organization Email'
+          inputRef={newOrgEmailRef}
+          />
 
-      <TextField
-      id='newOrgNameTextField'
-      label='Organization Name'
-      inputRef={newOrgNameRef}
-      />
-
-      <TextField
-      id='newOrgEmailTextField'
-      label='Organization Email'
-      inputRef={newOrgEmailRef}
-      />
-
-      <Button
-      variant='contained'
-      type='submit'
-      color='primary'
-      size='small'
-      onClick={onSelectButton}
-      >
-        Select Organization
-      </Button>
-
-      <Button
-      variant='contained'
-      type='submit'
-      color='primary'
-      size='small'
-      onClick={onAddButton}
-      >
-        Add Organization
-      </Button>
+          
+        </div>
 
       <Dialog open={orgErrOpen} onClose={toggleOrgSelectAlert}>
         <Alert
@@ -146,6 +170,7 @@ const OrganizationSelect = ({}) => {
           Successfully Added New Organization
         </Alert>
       </Dialog>
+      
     </>
   )
 }

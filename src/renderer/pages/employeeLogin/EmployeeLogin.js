@@ -49,7 +49,7 @@ const EmployeeLogin = ({}) => {
 
   return (
     <>
-      <Typography>This is the Employee Login Page</Typography>
+      <Typography>Employee Login</Typography>
 
       <TextField
       id='usernameTextField'
