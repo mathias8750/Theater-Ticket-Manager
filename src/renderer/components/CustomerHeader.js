@@ -1,5 +1,5 @@
+import SidebarEventItem from "./SidebarEventItem";
 import {AppBar, Box, Typography, Button, Grid, TextField, Toolbar} from "@mui/material";
-
 import {Link as NavLink} from "react-router-dom";
 
 const CustomerHeader = (props) => {
@@ -10,12 +10,12 @@ const CustomerHeader = (props) => {
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
           <Toolbar style={{ height: '10%'}}>
           <Typography varient="h1" >Theater Ticket Manager</Typography>
-            <NavLink to={"/"}>
+            <NavLink to={"/"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button color={'inherit'}>
                 Home
               </Button>
             </NavLink>
-            <NavLink to={"/customer/events"}>
+            <NavLink to={"/customer/events"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button color={'inherit'}>
                 Events
               </Button>
