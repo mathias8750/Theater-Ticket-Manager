@@ -1,6 +1,6 @@
 import {FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 import React, {Component, useContext, useState, useEffect} from "react";
-import {OrganizationContext} from "../context/OrganizationContext.js";
+import {OrganizationContext} from "../context/Context.js";
 import supabase from "../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 
