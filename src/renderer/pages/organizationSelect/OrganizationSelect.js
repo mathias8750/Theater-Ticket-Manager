@@ -1,6 +1,7 @@
 import {Button,Box, Grid, Typography, TextField, FormControl, InputLabel, Select, MenuItem, Alert, AlertTitle, Dialog} from "@mui/material";
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import OrganizationList from "../../components/OrganizationList";
+import LoginHeader from "renderer/components/LoginHeader";
 import { OrganizationContext } from "renderer/context/OrganizationContext";
 import React, {useRef, useState, useContext} from "react";
 import React from "react";
@@ -81,18 +82,8 @@ const OrganizationSelect = ({}) => {
   }
 
   return (
-    <>
-      {/*
-      <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        height: '0%',
-        margin: '5%',
-      }}>
-    
-      </div>
-      */}
+      
+      <LoginHeader>
         <div
         style={{
           display: 'flex',
@@ -170,8 +161,7 @@ const OrganizationSelect = ({}) => {
           Successfully Added New Organization
         </Alert>
       </Dialog>
-      
-    </>
+    </LoginHeader>
   )
 }
 
