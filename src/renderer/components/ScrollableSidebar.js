@@ -10,7 +10,12 @@ const ScrollableSidebar = ({ events, onEventClick }) => {
     <>
       <Grid container direction={'column'} style={{height: '100%'}}>
         <Grid item style={{height: '10%'}}>
-          <TextField fullWidth={true}/>
+          <TextField
+            id="standard-search"
+            label="Search field"
+            type="search"
+            variant="standard"
+          />
         </Grid>
 
         <Grid item style={{

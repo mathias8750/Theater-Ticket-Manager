@@ -42,27 +42,11 @@ const CustomerHome = ({}) => {
 
   return (
     <CustomerHeader>
-      <Typography varient="h1" >Customer Home Page</Typography>
-
-      <TextField
-          id="standard-search"
-          label="Search field"
-          type="search"
-          variant="standard"
-        />
+      <Typography varient="h1" >Customer Home</Typography>
         
-      <NavLink to={"/customer/events"}>
-        <Button>
-          See All Events
-        </Button>
-      </NavLink>
-      <NavLink to={"/employee/login"}>
-        <Button className="button">
-          Employee Login
-        </Button>
-      </NavLink>
 
-      <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
+
+      <Box style={{ flexGrow: 1, background: 'white', height: '90%'}}>
         <Grid container style={{padding: '10px', height: '100%'}}>
           <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
             <ScrollableSidebar events={data} onEventClick={onEventClick}/>
@@ -78,6 +62,14 @@ const CustomerHome = ({}) => {
           </Grid>
         </Grid>
       </Box>
+      <NavLink to={"/customer/events"}>
+        <Button>
+          See All Events
+        </Button>
+      </NavLink>
+      <Button className="button">
+          Employee Login
+        </Button>
     </CustomerHeader>
   )
 }
