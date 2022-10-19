@@ -1,14 +1,16 @@
 import {FormControl, InputLabel, Select, MenuItem} from "@mui/material";
-import React, {Component, useContext, useState} from "react";
+import React, {Component, useContext, useState, useEffect} from "react";
 import {OrganizationContext} from "../context/OrganizationContext.js";
 import supabase from "../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 
-const OrganizationList = ({}) => {
+const OrganizationList = ({newOrgs}) => {
 
     // Use react context to keep track of selected org throughout the program
     const {state, update} = useContext(OrganizationContext);
-    const [selectedOrg, setSelectedOrg] = useState(null)
+    const [selectedOrg, setSelectedOrg] = useState(null);
+    const [orgs, setOrgs] = useState([]);
+    const [counter, setCounter] = useState(0);
 
     // Get organizations from the supabase
     const getOrganizations = async () => {
@@ -16,8 +18,15 @@ const OrganizationList = ({}) => {
         update({selectedOrg: {organizationID: 0, organizationName: "defaultname", organizationEmail: "defaultemail"}});
         return organizations;
     };
-    const {status, data, error} = useQuery(['orgs'], getOrganizations);
+    let {status, data, error} = useQuery(['orgs'], getOrganizations);
 
+    // When a new org is added, add it to the dropdown list
+    useEffect(() => {
+       if(newOrgs.length != 0){
+        data.push(newOrgs[0]);
+       }
+    }, [newOrgs]);
+    
     // Display loading screen while loading data from supabase
     if (status === 'loading') {
         return <span>Loading...</span>
@@ -50,7 +59,6 @@ const OrganizationList = ({}) => {
                 })}
                 </Select>
         </FormControl>
-        
     )
 }
 
