@@ -1,10 +1,11 @@
 import {AppBar, Box, Button, Grid, TextField, Toolbar} from "@mui/material";
-import {useNavigate} from "react-router-dom";
-
-import {Link as NavLink} from "react-router-dom";
+import {Link as NavLink, useNavigate} from "react-router-dom";
+import React, {useState} from 'react';
+import HelpBackdrop from "./HelpBackdrop";
 
 const LoginHeader = (props) => {
 
+  const [open, setOpen] = useState(false);  
   const navigate = useNavigate();  
 
   return (
@@ -14,6 +15,7 @@ const LoginHeader = (props) => {
           <Toolbar style={{ height: '10%'}}>
             <Button
                 color="inherit"
+                style={{alignItems: 'left'}}
                 onClick={() => navigate("/")}>
                     Customer Home
             </Button>
@@ -21,10 +23,14 @@ const LoginHeader = (props) => {
             <Button
                 color={"inherit"}
                 style={{alignItems: 'right'}}
+                onClick={() => {
+                    setOpen(!open);
+                }}
             >
                     Help
             </Button>
-          </Toolbar>
+            <HelpBackdrop open={open} setOpen={setOpen}/>
+            </Toolbar>
         </AppBar>
       </Box>
       <div style={{ height: '90%'}}>
