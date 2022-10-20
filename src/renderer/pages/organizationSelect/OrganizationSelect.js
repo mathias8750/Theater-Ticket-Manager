@@ -83,10 +83,16 @@ const OrganizationSelect = ({}) => {
   }
 
   return (
+      
       <LoginHeader>
-
-        <div style={{height: '20%', padding: '15%'}}>
-          
+        <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '0%',
+          margin: '10%',
+        }}
+        >
           <Button
           variant='contained'
           type='submit'
@@ -97,7 +103,15 @@ const OrganizationSelect = ({}) => {
           Select Organization
           </Button>
           <OrganizationList newOrgs={orgs}/>
-    
+        </div>
+      
+        <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        height: '0%',
+        margin: '10%',
+      }}>  
+
           <Button
           variant='contained'
           type='submit'
@@ -121,6 +135,7 @@ const OrganizationSelect = ({}) => {
 
           
         </div>
+
       <Dialog open={orgErrOpen} onClose={toggleOrgSelectAlert}>
         <Alert
         severity="info"
