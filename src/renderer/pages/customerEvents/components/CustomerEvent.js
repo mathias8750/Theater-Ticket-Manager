@@ -19,7 +19,7 @@ const CustomerEvent = ({event}) => {
         />
       </Card>
         <Box style={{display: 'flex'}}>
-          <div style={{paddingTop: '57%', paddingBottom: '10%', paddingLeft: '45%'}}>
+          <div style={{paddingTop: '50%', paddingBottom: '10%', paddingLeft: '45%'}}>
             <Button
               variant='contained'
               type='submit'
