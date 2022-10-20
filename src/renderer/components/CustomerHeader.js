@@ -1,4 +1,4 @@
-import {AppBar, Box, Button, Grid, TextField, Toolbar} from "@mui/material";
+import {AppBar, Box, Button, Grid, TextField, Toolbar, Typography} from "@mui/material";
 import SidebarEventItem from "./SidebarEventItem";
 import {Link as NavLink} from "react-router-dom";
 
