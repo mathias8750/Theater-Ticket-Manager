@@ -1,11 +1,9 @@
 import {Typography, Button} from "@mui/material";
-import {useNavigate} from 'react-router-dom';
-import EmployeeHeader from "../../components/EmployeeHeader";
+import {Link as NavLink} from "react-router-dom";
+import EmployeeHeader from "../../components/EmployeeHeader"; 
+
 
 const EmployeeHome = ({}) => {
-
-
-  let navigate = useNavigate();
 
   return (
     <>
@@ -16,27 +14,26 @@ const EmployeeHome = ({}) => {
           style={{marginTop: -625}}>
           Employee Home
       </Typography>
-
-
-      <Button variant="text"
-              onClick={() => navigate("/employee/home/events")}
+      <NavLink to={"/employee/home/events"} style={{textDecoration : 'none'}}>
+        <Button variant="text"
               style={{fontSize: 20, marginLeft: 0, marginRight: 0, marginTop: -40}}>
-         Create/Manage Events
-      </Button>
+           Create/Manage Events
+        </Button>
+      </NavLink>
 
-
-      <Button variant="text"
-              onClick={() => navigate("/employee/home/seasons")}
+      <NavLink to={"/employee/home/seasons"} style={{textDecoration : 'none'}}>
+        <Button variant="text"
               style={{fontSize: 20, marginLeft: -285, marginRight: 0, marginTop: 100}}>
-         Create/Manage Seasons
-      </Button>
+           Create/Manage Seasons
+        </Button>
+      </NavLink>
 
-
-      <Button variant="text"
-              onClick={() => navigate("/employee/home/organizations")}
+      <NavLink to={"/employee/home/organizations"} style={{textDecoration : 'none'}}>
+        <Button variant="text"
               style={{fontSize: 20, marginLeft: -303, marginRight: 0, marginTop: 240}}>
-         Create/Manage Organizations
-      </Button>
+           Create/Manage Organizations
+        </Button>
+      </NavLink>
     </>
   )
 }

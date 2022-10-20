@@ -1,5 +1,5 @@
 import {AppBar, Box, Button, Grid, TextField, Toolbar} from "@mui/material";
-
+import SidebarEventItem from "./SidebarEventItem";
 import {Link as NavLink} from "react-router-dom";
 
 const CustomerHeader = (props) => {
