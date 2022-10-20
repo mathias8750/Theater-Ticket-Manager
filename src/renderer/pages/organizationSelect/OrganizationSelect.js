@@ -1,8 +1,8 @@
-import {Button,Box, Grid, Typography, TextField, FormControl, InputLabel, Select, MenuItem, Alert, AlertTitle, Dialog} from "@mui/material";
+import {Button, Box, Grid, Typography, TextField, FormControl, InputLabel, Select, MenuItem, Alert, AlertTitle, Dialog} from "@mui/material";
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import OrganizationList from "../../components/OrganizationList";
 import LoginHeader from "renderer/components/LoginHeader";
-import { OrganizationContext } from "renderer/context/OrganizationContext";
+import { OrganizationContext } from "renderer/context/Context";
 import React, {useRef, useState, useContext} from "react";
 import React from "react";
 import supabase from "renderer/utils/Supabase";
@@ -19,6 +19,7 @@ const OrganizationSelect = ({}) => {
   const newOrgEmailRef = useRef('');
   const newOrgObjectRef = useRef('');
   const navigate = useNavigate();
+
 
   // If org isn't selected alert the user, if it is navigate to employee home page
   const onSelectButton = () => {
@@ -162,6 +163,7 @@ const OrganizationSelect = ({}) => {
         </Alert>
       </Dialog>
     </LoginHeader>
+
   )
 }
 

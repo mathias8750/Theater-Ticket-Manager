@@ -1,6 +1,6 @@
-import {Button, Typography, TextField, AlertTitle, Dialog, Alert} from "@mui/material";
+import {Button, Typography, TextField, AlertTitle, Dialog, Alert, Box} from "@mui/material";
 import {Link as NavLink, useNavigate} from "react-router-dom";
-import React, {useRef, useState, Component} from "react";
+import React, {useRef, useState, Component, useContext, useEffect} from "react";
 import supabase from '../../utils/Supabase.js';
 import LoginHeader from "renderer/components/LoginHeader.js";
 
@@ -19,36 +19,26 @@ const EmployeeLogin = ({}) => {
   // Function to login as employee and access the org select screen
   async function login() {
 
-    // Find user record with matching username to the user input
+    // Find user record with matching username and password to the user input
     let {data: Users, error} = await supabase
       .from('Users')
       .select('*')
-      .eq('username', usernameRef.current.value);
-
-    // If the array is empty no user with the specified username was found
-    // Alert the user due to invalid username
-    if(Users.length == 0){
+      .eq('username', usernameRef.current.value)
+      .eq('password', passwordRef.current.value);
+      
+    // If the username and password are valid, navigate to the employee login screen
+    if(Users.length > 0){
+      console.log('Logged in successfully');
+      navigate("/employee/login/select");
+    } else {
+      // Invalid login info, alert the user
       toggleAlert();
     }
-
-    // Otherwise the username is in the database and the code below will execute
-    Users.forEach(function (item, index){
-
-      // If the user input password matches the password from the user record
-      // found in the db, navigate to the org select screen
-      if(item.password == passwordRef.current.value){
-        console.log('Logged in successfully');
-        navigate("/employee/login/select");
-      } else {
-        // Invalid password, alert the user
-        toggleAlert();
-      }
-    });
-
   }
 
 
   return (
+    
     <LoginHeader>
       <Typography>Employee Login</Typography>
 

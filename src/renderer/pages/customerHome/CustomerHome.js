@@ -21,7 +21,7 @@ const CustomerHome = ({}) => {
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('*')
+      .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
 
     return events;
   }
@@ -43,8 +43,6 @@ const CustomerHome = ({}) => {
   return (
     <CustomerHeader>
       <Typography varient="h1" >Customer Home</Typography>
-        
-
 
       <Box style={{ flexGrow: 1, background: 'white', height: '90%'}}>
         <Grid container style={{padding: '10px', height: '100%'}}>
@@ -63,13 +61,15 @@ const CustomerHome = ({}) => {
         </Grid>
       </Box>
       <NavLink to={"/customer/events"}>
-        <Button>
+        <Button className="button">
           See All Events
         </Button>
       </NavLink>
-      <Button className="button">
+      <NavLink to={"/employee/login"}>
+        <Button className="button">
           Employee Login
         </Button>
+      </NavLink>
     </CustomerHeader>
   )
 }
