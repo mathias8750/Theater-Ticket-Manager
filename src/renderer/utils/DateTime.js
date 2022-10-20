@@ -8,6 +8,7 @@
 
 import React from 'react';
 
+// Takes a date and returns a string with the time in AM/PM form
 export const formatAMPM = (date) => {
     let hours = date.getHours();
     let minutes = date.getMinutes();    
@@ -21,3 +22,8 @@ export const formatAMPM = (date) => {
   
     return strTime;
 };
+
+// Returns the event date/time/organization info to be printed as a card subheader
+export const eventDateTimeSubheader = (date, event) => {
+    return (event.Organizations.organizationName + " - " + (date.getMonth()+1).toString() + "/" + date.getDate() + "/" + date.getFullYear() + "  " + formatAMPM(date));
+}

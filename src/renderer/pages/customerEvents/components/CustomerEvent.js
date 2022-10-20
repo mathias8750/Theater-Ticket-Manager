@@ -1,6 +1,6 @@
 import {Typography, Card, CardHeader, Button, Box} from "@mui/material";
 import React, {useState} from 'react';
-import { formatAMPM } from "renderer/utils/DateTime";
+import { eventDateTimeSubheader } from "renderer/utils/DateTime";
 
 const CustomerEvent = ({event}) => {
 
@@ -15,7 +15,7 @@ const CustomerEvent = ({event}) => {
       <Card>
         <CardHeader
           title={event.eventName}
-          subheader={event.Organizations.organizationName + " - " + (date.getMonth()+1).toString() + "/" + date.getDate() + "/" + date.getFullYear() + "  " + formatAMPM(date)}
+          subheader={eventDateTimeSubheader(date, event)}
         />
       </Card>
         <Box style={{display: 'flex'}}>
