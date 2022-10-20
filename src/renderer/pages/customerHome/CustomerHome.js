@@ -61,13 +61,15 @@ const CustomerHome = ({}) => {
         </Grid>
       </Box>
       <NavLink to={"/customer/events"}>
-        <Button>
+        <Button className="button">
           See All Events
         </Button>
       </NavLink>
-      <Button className="button">
+      <NavLink to={"/employee/login"}>
+        <Button className="button">
           Employee Login
         </Button>
+      </NavLink>
     </CustomerHeader>
   )
 }
