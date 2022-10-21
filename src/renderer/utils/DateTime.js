@@ -21,7 +21,7 @@ export const formatAMPM = (date) => {
     const strTime = `${hours}:${minutes} ${ampm}`;
   
     return strTime;
-};
+}
 
 // Returns the event date/time/organization info to be printed as a card subheader
 export const eventDateTimeSubheader = (date, event) => {

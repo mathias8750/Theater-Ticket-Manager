@@ -23,16 +23,19 @@ const EmployeeLogin = ({}) => {
     let {data: Users, error} = await supabase
       .from('Users')
       .select('*')
-      .eq('username', usernameRef.current.value)
-      .eq('password', passwordRef.current.value);
+      .eq('username', usernameRef.current.value.trim())
+      .eq('password', passwordRef.current.value.trim());
       
     // If the username and password are valid, navigate to the employee login screen
-    if(Users.length > 0){
-      console.log('Logged in successfully');
-      navigate("/employee/login/select");
-    } else {
+    if(Users.length == 0) {
       // Invalid login info, alert the user
       toggleAlert();
+    } else {
+      if (usernameRef.current.value.trim() == 'admin') {
+        navigate('/employee/login/admin');
+      } else {
+        navigate('/employee/login/select');
+      }
     }
   }
 
