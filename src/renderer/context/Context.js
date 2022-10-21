@@ -10,7 +10,7 @@
 
     NOTE: must use following imports:
 
-    import {OrganizationContext} from "renderer/context/OrganizationContext";
+    import {OrganizationContext} from "renderer/context/Context";
     import {useContext} from "react";
 */
 

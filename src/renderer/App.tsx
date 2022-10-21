@@ -10,7 +10,7 @@ import EmployeeSeasons from "./pages/employeeSeasons/EmployeeSeasons";
 import EmployeeOrganizations from "./pages/employeeOrganizations/EmployeeOrganizations";
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import { OrganizationProvider } from './context/OrganizationContext';
+import { OrganizationProvider } from './context/Context';
 
 const queryClient = new QueryClient()
 
