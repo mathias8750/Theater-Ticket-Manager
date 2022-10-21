@@ -33,7 +33,7 @@ const CustomerHeader = (props) => {
             }}>
               Help
             </Button>
-            <HelpBackdrop currentScreen={location.pathname} open={open} setOpen={setOpen}/>
+            <HelpBackdrop open={open} setOpen={setOpen}/>
           </Toolbar>
         </AppBar>
       </Box>

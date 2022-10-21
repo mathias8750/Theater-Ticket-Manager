@@ -31,14 +31,13 @@ const EmployeeHeader = (props) => {
                 }}>
                     Help
               </Button>
-              <HelpBackdrop currentScreen={location.pathname} open={open} setOpen={setOpen}/>
-      
             <NavLink to={"/"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button
                 color="inherit">
                     Logout
               </Button>
             </NavLink>
+            <HelpBackdrop open={open} setOpen={setOpen}/>
           </Toolbar>
         </AppBar>
       </Box>
