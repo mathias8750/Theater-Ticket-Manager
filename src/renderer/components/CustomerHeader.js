@@ -1,8 +1,13 @@
 import SidebarEventItem from "./SidebarEventItem";
 import {AppBar, Box, Typography, Button, Grid, TextField, Toolbar} from "@mui/material";
-import {Link as NavLink} from "react-router-dom";
+import {Link as NavLink, useLocation} from "react-router-dom";
+import { useState, } from "react";
+import HelpBackdrop from "./HelpBackdrop";
 
 const CustomerHeader = (props) => {
+
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <>
@@ -20,6 +25,15 @@ const CustomerHeader = (props) => {
                 Events
               </Button>
             </NavLink>
+            <div style={{ flexGrow: 1}}/>
+            <Button color={'inherit'}
+            style={{alignItems: 'right'}}
+            onClick={() => {
+              setOpen(!open);
+            }}>
+              Help
+            </Button>
+            <HelpBackdrop currentScreen={location.pathname} open={open} setOpen={setOpen}/>
           </Toolbar>
         </AppBar>
       </Box>
