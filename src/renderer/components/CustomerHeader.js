@@ -14,7 +14,7 @@ const CustomerHeader = (props) => {
       <Box sx={{ flexGrow: 1}}>
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
           <Toolbar style={{ height: '10%'}}>
-          <Typography varient="h1" >Theater Ticket Manager</Typography>
+          <Typography variant="h5" >Theater Ticket Manager</Typography>
             <NavLink to={"/"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button color={'inherit'}>
                 Home
@@ -25,6 +25,7 @@ const CustomerHeader = (props) => {
                 Events
               </Button>
             </NavLink>
+<<<<<<< HEAD
             <div style={{ flexGrow: 1}}/>
             <Button color={'inherit'}
             style={{alignItems: 'right'}}
@@ -34,6 +35,11 @@ const CustomerHeader = (props) => {
               Help
             </Button>
             <HelpBackdrop open={open} setOpen={setOpen}/>
+=======
+              <Button className="button">
+                Employee Login
+              </Button>
+>>>>>>> andrew-dev
           </Toolbar>
         </AppBar>
       </Box>
