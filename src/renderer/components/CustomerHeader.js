@@ -26,7 +26,7 @@ const CustomerHeader = (props) => {
               </Button>
             </NavLink>
             <NavLink to={"/employee/login"} style={{ color: 'inherit', textDecoration: 'none' }}>
-              <Button color="inherit">
+              <Button className="button">
                 Employee Login
               </Button>
             </NavLink>

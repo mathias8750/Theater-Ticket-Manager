@@ -17,36 +17,19 @@
 import React, {createContext, useReducer} from 'react';
 
 export const OrganizationContext = createContext({});
-const orgReducer = (orgtSate, orgPair) => ({...orgState, ...orgPair});
 
-const orgInitialState = {
+const reducer = (state, pair) => ({...state, ...pair});
+
+const initialState = {
     selectedOrg: {organizationID: 0, organizationName: "defaultname", organizationEmail: "defaultemail"}
 }
 
-export function OrganizationProvider(props) {
-    const [state, update] = useReducer(orgReducer, orgInitialState)
+export function OrganizationProvider(props){
+    const [state, update] = useReducer(reducer, initialState)
 
     return (
         <OrganizationContext.Provider value={{state, update}}>
             {props.children}
         </OrganizationContext.Provider>
-    )
-}
-
-export const EventContext = createContext({});
-const reducer = (state, pair) => ({...state, ...pair});
-
-const eventInitialState = {
-    selectedEvent: {eventID: 0, organizationID: 0, venueID: 0, seasonID: 0, eventDateTime: 'NULL', eventName: 'NULL'},
-    numTickets: 2
-}
-
-export function EventProvider(props) {
-    const [state, update] = useReducer(reducer, eventInitialState)
-
-    return (
-        <EventContext.Provider value={{state, update}}>
-            {props.children}
-        </EventContext.Provider>
     )
 }
