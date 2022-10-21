@@ -25,21 +25,9 @@ const CustomerHeader = (props) => {
                 Events
               </Button>
             </NavLink>
-<<<<<<< HEAD
-            <div style={{ flexGrow: 1}}/>
-            <Button color={'inherit'}
-            style={{alignItems: 'right'}}
-            onClick={() => {
-              setOpen(!open);
-            }}>
-              Help
-            </Button>
-            <HelpBackdrop open={open} setOpen={setOpen}/>
-=======
               <Button className="button">
                 Employee Login
               </Button>
->>>>>>> andrew-dev
           </Toolbar>
         </AppBar>
       </Box>
