@@ -1,9 +1,14 @@
 import {AppBar, Box, Button, Grid, TextField, Toolbar} from "@mui/material";
 import SidebarEventItem from "./SidebarEventItem";
-import {Link as NavLink} from "react-router-dom";
+import {Link as NavLink, useLocation} from "react-router-dom";
+import { useState, } from "react";
+import HelpBackdrop from "./HelpBackdrop";
 
 
 const EmployeeHeader = (props) => {
+
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <>
@@ -20,16 +25,19 @@ const EmployeeHeader = (props) => {
     
               <Button
                 color="inherit"
-                style={{alignItems: 'right'}}>
+                style={{alignItems: 'right'}}
+                onClick={() => {
+                    setOpen(!open);
+                }}>
                     Help
               </Button>
-      
             <NavLink to={"/"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button
                 color="inherit">
                     Logout
               </Button>
             </NavLink>
+            <HelpBackdrop open={open} setOpen={setOpen}/>
           </Toolbar>
         </AppBar>
       </Box>

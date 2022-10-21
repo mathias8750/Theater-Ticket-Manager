@@ -1,15 +1,20 @@
 import SidebarEventItem from "./SidebarEventItem";
 import {AppBar, Box, Typography, Button, Grid, TextField, Toolbar} from "@mui/material";
-import {Link as NavLink} from "react-router-dom";
+import {Link as NavLink, useLocation} from "react-router-dom";
+import { useState, } from "react";
+import HelpBackdrop from "./HelpBackdrop";
 
 const CustomerHeader = (props) => {
+
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <>
       <Box sx={{ flexGrow: 1}}>
         <AppBar position="static" style={{ background: 'gray', borderShadow: 'none'}}>
           <Toolbar style={{ height: '10%'}}>
-          <Typography varient="h1" >Theater Ticket Manager</Typography>
+          <Typography variant="h5" >Theater Ticket Manager</Typography>
             <NavLink to={"/"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button color={'inherit'}>
                 Home
@@ -18,6 +23,11 @@ const CustomerHeader = (props) => {
             <NavLink to={"/customer/events"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button color={'inherit'}>
                 Events
+              </Button>
+            </NavLink>
+            <NavLink to={"/employee/login"} style={{ color: 'inherit', textDecoration: 'none' }}>
+              <Button className="button">
+                Employee Login
               </Button>
             </NavLink>
           </Toolbar>
