@@ -25,9 +25,11 @@ const CustomerHeader = (props) => {
                 Events
               </Button>
             </NavLink>
+            <NavLink to={"/employee/login"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button className="button">
                 Employee Login
               </Button>
+            </NavLink>
           </Toolbar>
         </AppBar>
       </Box>
