@@ -22,7 +22,8 @@ const CustomerHome = ({}) => {
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
+      .select('eventName, eventDateTime, eventID, Organizations(organizationName)')
+      .range(0, 3)
 
     return events;
   }
@@ -43,10 +44,9 @@ const CustomerHome = ({}) => {
 
   return (
     <CustomerHeader>
-      <Typography variant="h6" >Customer Home</Typography>
-
+      <Typography variant="h6" align="center" style={{padding: '10px'}}>Upcoming Events</Typography>
       <Box style={{ flexGrow: 1, background: 'white', height: '90%'}}>
-        <Grid  style={{padding: '10px', height: '100%', margin: 'auto', width: '80%'}}>
+        <Grid  style={{padding: '10px', margin: 'auto', width: '80%'}}>
           <Grid item md={4} style={{paddingRight: '0px', height: '100%'}}>
             <ScrollableSidebar events={data} onEventClick={onEventClick}/>
           </Grid>
