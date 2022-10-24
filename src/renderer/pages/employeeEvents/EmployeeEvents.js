@@ -6,6 +6,7 @@ import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import {useState} from "react";
 
+
 const EmployeeEvents = ({event}) => {
 
 
@@ -21,9 +22,22 @@ const EmployeeEvents = ({event}) => {
 
   const {status, data, error} = useQuery(['events'], fetchEvents);
   
-    return (
-        <>
-          <EmployeeHeader/>
+  if (status === 'loading') {
+    return <span>Loading...</span>
+  }
+
+  if (status === 'error') {
+    return <span>Error: {error.message}</span>
+  }
+
+  const onEventClick = (event) => {
+    setSelectedEvent(event)
+  }
+
+
+  return (
+   <>
+     <EmployeeHeader/>
           
           
         </>
