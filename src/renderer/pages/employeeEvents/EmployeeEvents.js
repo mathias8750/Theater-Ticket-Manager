@@ -8,6 +8,19 @@ import {useState} from "react";
 
 const EmployeeEvents = ({event}) => {
 
+
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const fetchEvents = async () => {
+    const { data: events } = await supabase
+      .from('Events')
+      .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
+
+    return events;
+  }
+
+  const {status, data, error} = useQuery(['events'], fetchEvents);
+  
     return (
         <>
           <EmployeeHeader/>
