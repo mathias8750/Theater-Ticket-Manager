@@ -1,16 +1,13 @@
 import {Typography, Card, CardHeader, Button, Box} from "@mui/material";
 import React, {useState} from 'react';
 import { eventDateTimeSubheader } from "renderer/utils/DateTime";
-import {useNavigate} from "react-router-dom";
 
 const CustomerEvent = ({event}) => {
 
   const date = new Date(event.eventDateTime);
 
-  let navigate = useNavigate()
-
   const onTicketSelectButton = () => {
-    navigate("/customer/events/seat-viewer")
+
   }
 
   return (

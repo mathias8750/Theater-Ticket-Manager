@@ -5,7 +5,6 @@ import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import {useState} from "react";
 import CustomerEvent from "./components/CustomerEvent";
-import Playhouse from "../seatViewer/components/Playhouse";
 
 
 const CustomerEvents = ({}) => {
@@ -41,6 +40,7 @@ const CustomerEvents = ({}) => {
           <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
             <ScrollableSidebar events={data} onEventClick={onEventClick}/>
           </Grid>
+
 
           <Grid item md={8} style={{paddingRight: '10px', height: '100%'}}>
             {selectedEvent !== null ? (
