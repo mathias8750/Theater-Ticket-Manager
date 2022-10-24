@@ -8,10 +8,11 @@ import CustomerHome from "./pages/customerHome/CustomerHome";
 import EmployeeEvents from "./pages/employeeEvents/EmployeeEvents";
 import EmployeeSeasons from "./pages/employeeSeasons/EmployeeSeasons";
 import EmployeeOrganizations from "./pages/employeeOrganizations/EmployeeOrganizations";
-
+import AdminPage from './pages/adminPage/AdminPage';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import { OrganizationProvider } from './context/Context';
 import SeatViewer from "./pages/seatViewer/SeatViewer";
+
 
 const queryClient = new QueryClient()
 
@@ -24,6 +25,7 @@ export default function App() {
               <Route path="/" element={<CustomerHome/>} />
               <Route path={"/customer/events"} element={<CustomerEvents/>} />
               <Route path={"/employee/login"} element={<EmployeeLogin/>} />
+              <Route path={"/employee/login/admin"} element={<AdminPage/>}/>
               <Route path={"/employee/login/select"} element={<OrganizationSelect/>}/>
               <Route path={"/employee/home"} element={<EmployeeHome/>}/>
               <Route path={"/employee/home/events"} element={<EmployeeEvents/>}/>

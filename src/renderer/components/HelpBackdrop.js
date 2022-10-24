@@ -1,7 +1,10 @@
 import { Backdrop } from "@mui/material";
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { useLocation } from "react-router-dom";
 
-const HelpBackdrop = ({currentScreen, open, setOpen}) => {
+const HelpBackdrop = ({open, setOpen}) => {
+
+    const location = useLocation();
 
     return (
         <Backdrop
@@ -9,7 +12,7 @@ const HelpBackdrop = ({currentScreen, open, setOpen}) => {
         open={open}
         onClick={e => {setOpen(!open)}}
         >
-           {currentScreen} Help Overlay
+           {location.pathname} Help Overlay
         </Backdrop>
     );
 }
