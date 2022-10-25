@@ -85,12 +85,11 @@ const OrganizationSelect = ({}) => {
   return (
       
       <LoginHeader>
+        <div style={{height: '100%'}}>
         <div
         style={{
           display: 'flex',
           alignItems: 'center',
-          height: '0%',
-          margin: '10%',
         }}
         >
           <Button
@@ -108,8 +107,7 @@ const OrganizationSelect = ({}) => {
         <div style={{
         display: 'flex',
         alignItems: 'center',
-        height: '0%',
-        margin: '10%',
+       
       }}>  
 
           <Button
@@ -134,6 +132,7 @@ const OrganizationSelect = ({}) => {
           />
 
           
+        </div>
         </div>
 
       <Dialog open={orgErrOpen} onClose={toggleOrgSelectAlert}>
