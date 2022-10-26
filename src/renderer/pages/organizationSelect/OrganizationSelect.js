@@ -4,9 +4,9 @@ import OrganizationList from "../../components/OrganizationList";
 import LoginHeader from "renderer/components/LoginHeader";
 import { OrganizationContext } from "renderer/context/Context";
 import React, {useRef, useState, useContext} from "react";
-import React from "react";
 import supabase from "renderer/utils/Supabase";
 import { fontFamily } from "@mui/system";
+import SnackbarAlert from "renderer/components/SnackbarAlert";
 
 const OrganizationSelect = ({}) => {
 
@@ -135,32 +135,26 @@ const OrganizationSelect = ({}) => {
         </div>
         </div>
 
-      <Dialog open={orgErrOpen} onClose={toggleOrgSelectAlert}>
-        <Alert
-        severity="info"
-        >
-          <AlertTitle>Alert</AlertTitle>
-          Please select an organization
-        </Alert>
-      </Dialog>
+        <SnackbarAlert 
+        alertOpen={orgErrOpen} 
+        toggleAlert={toggleOrgSelectAlert}
+        alertSeverity={'info'}
+        alertText={'Please select an organization'}
+        />
 
-      <Dialog open={newOrgErrOpen} onClose={toggleNewOrgAlert}>
-        <Alert
-        severity="info"
-        >
-          <AlertTitle>Alert</AlertTitle>
-          Oranization Name/Email is already in use
-        </Alert>
-      </Dialog>
+        <SnackbarAlert 
+        alertOpen={newOrgErrOpen} 
+        toggleAlert={toggleNewOrgAlert}
+        alertSeverity={'error'}
+        alertText={'Organization Name/Email already in use'}
+        />
 
-      <Dialog open={orgAddedOpen} onClose={toggleOrgAddedAlert}>
-        <Alert
-        severity="success"
-        >
-          <AlertTitle>Organization Added</AlertTitle>
-          Successfully Added New Organization
-        </Alert>
-      </Dialog>
+        <SnackbarAlert 
+        alertOpen={orgAddedOpen} 
+        toggleAlert={toggleOrgAddedAlert}
+        alertSeverity={'success'}
+        alertText={'Successfully Added New Organization'}
+        />
     </LoginHeader>
 
   )
