@@ -11,6 +11,7 @@ import CustomerEvent from "../customerEvents/components/CustomerEvent";
 
 
 import "./style.css";
+import { autoUpdater } from "electron";
 
 
 
@@ -21,7 +22,7 @@ const CustomerHome = ({}) => {
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
+      .select('*, Organizations(organizationName), Venues(venueName)');
 
     return events;
   }
@@ -42,35 +43,26 @@ const CustomerHome = ({}) => {
 
   return (
     <CustomerHeader>
-      <Typography varient="h1" >Customer Home</Typography>
+      <Typography variant="h6" >Customer Home</Typography>
 
       <Box style={{ flexGrow: 1, background: 'white', height: '90%'}}>
-        <Grid container style={{padding: '10px', height: '100%'}}>
-          <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
+        <Grid  style={{padding: '10px', height: '100%', margin: 'auto', width: '80%'}}>
+          <Grid item md={4} style={{paddingRight: '0px', height: '100%'}}>
             <ScrollableSidebar events={data} onEventClick={onEventClick}/>
-          </Grid>
-
-
-          <Grid item md={8} style={{paddingRight: '10px', height: '100%'}}>
-            {selectedEvent !== null ? (
-              <CustomerEvent event={selectedEvent}/>
-            ) : (
-              <></>
-            )}
           </Grid>
         </Grid>
       </Box>
-      <NavLink to={"/customer/events"}>
-        <Button className="button">
-          See All Events
-        </Button>
-      </NavLink>
-      <NavLink to={"/employee/login"}>
-        <Button className="button">
-          Employee Login
-        </Button>
-      </NavLink>
+
+      <Box style={{margin: 'auto', width: '20%'}}>
+        <NavLink to={"/customer/events"}>
+          <Button>
+            See All Events
+          </Button>
+        </NavLink>
+      </Box>
+      
     </CustomerHeader>
+    
   )
 }
 

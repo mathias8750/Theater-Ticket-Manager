@@ -15,7 +15,7 @@ const CustomerEvent = ({event}) => {
       <Card>
         <CardHeader
           title={event.eventName}
-          subheader={eventDateTimeSubheader(date, event)}
+          subheader={eventDateTimeSubheader(event)}
         />
       </Card>
         <Box style={{display: 'flex'}}>

@@ -32,6 +32,13 @@ const LoginHeader = (props) => {
             >
                     Help
             </Button>
+            <Button
+                color={"inherit"}
+                style={{alignItems: 'right'}}
+                onClick={() => navigate("/employee/login")}
+            >
+                    Logout
+            </Button>
             <HelpBackdrop open={open} setOpen={setOpen}/>
             </Toolbar>
         </AppBar>
