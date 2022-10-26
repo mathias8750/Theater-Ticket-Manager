@@ -8,7 +8,7 @@ const AdminSidebar = ({ users, onUserClick }) => {
 
   return (
     <>
-      <div style={{height: '85%'}}>
+      <div style={{height: '80%'}}>
         <div style={{height: '5%', paddingLeft: '5px'}}>
           <Typography>Users:</Typography>
         </div>
