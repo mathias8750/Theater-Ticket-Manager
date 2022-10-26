@@ -1,15 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import LoginHeader from 'renderer/components/LoginHeader';
 import { useNavigate } from "react-router-dom";
-import { Typography, TextField, Button,  Dialog, Alert, AlertTitle } from '@mui/material';
+import { Typography, TextField, Button,  Dialog, Alert, AlertTitle, Snackbar } from '@mui/material';
 import supabase from 'renderer/utils/Supabase';
 import { useQuery } from "@tanstack/react-query";
 import AdminSidebar from 'renderer/components/AdminSidebar';
+import SnackbarAlert from 'renderer/components/SnackbarAlert';
 
 const AdminPage = ({}) => {
 
-    const [deleteAlert, setDeleteAlert] = useState(false);
     const [userList, setUserList] = useState([]);
+    const [deleteAlertOpen, setDeleteAlert] = useState(false);
     const [successAlertOpen, setSuccessAlert] = useState(false);
     const [failureAlertOpen, setFailureAlert] = useState(false);
     const usernameRef = useRef('');
@@ -23,6 +24,11 @@ const AdminPage = ({}) => {
     // Toggles the failure alert
     const toggleFailureAlert = () => {
         setFailureAlert(!failureAlertOpen);
+    }
+
+    // Toggles the delete alert
+    const toggleDeleteAlert = () => {
+        setDeleteAlert(!deleteAlertOpen);
     }
 
     // Adds a user to the db if the username is not already taken
@@ -127,22 +133,27 @@ const AdminPage = ({}) => {
                 </div>
                 
                 <AdminSidebar users={userList} onUserClick={onUserClick} />
-                <Dialog open={failureAlertOpen} onClose={toggleFailureAlert}>
-                    <Alert
-                        severity="error"
-                    >
-                        <AlertTitle>Alert</AlertTitle>
-                        Username Already in Use
-                    </Alert>
-                </Dialog>
-                <Dialog open={successAlertOpen} onClose={toggleSuccessAlert}>
-                    <Alert
-                        severity="success"
-                    >
-                        <AlertTitle>Success</AlertTitle>
-                        User Added Successfully
-                    </Alert>
-                </Dialog>
+
+                <SnackbarAlert 
+                alertOpen={failureAlertOpen} 
+                toggleAlert={toggleFailureAlert}
+                alertSeverity={'error'}
+                alertText={'Username already in use'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={successAlertOpen} 
+                toggleAlert={toggleSuccessAlert}
+                alertSeverity={'success'}
+                alertText={'User Added Successfully'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={deleteAlertOpen} 
+                toggleAlert={toggleDeleteAlert}
+                alertSeverity={'success'}
+                alertText={'User Deleted Successfully'}
+                />
                 </div>
             </LoginHeader>
         </>
