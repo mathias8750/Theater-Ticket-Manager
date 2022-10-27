@@ -5,9 +5,9 @@ import EmployeeHeader from "../../components/EmployeeHeader";
 const EmployeeSeasons = ({}) => {
 
     return (
-        <>
-          <EmployeeHeader/>
-        </>
+      <EmployeeHeader>
+        <Typography variant="h6" align="center" style={{padding: '10px'}}>Create / Manage Seasons</Typography>
+      </EmployeeHeader>
       )
 }
 
