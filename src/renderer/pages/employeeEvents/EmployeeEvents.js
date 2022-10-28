@@ -11,6 +11,9 @@ const EmployeeEvents = ({event}) => {
 
   const [removedEvent, setremovedEvent] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [deleteAlertOpen, setDeleteAlert] = useState(false);
+  const [successAlertOpen, setSuccessAlert] = useState(false);
+  const [failureAlertOpen, setFailureAlert] = useState(false);
   const organizationidRef = useRef('');
   const eventidRef = useRef('');
   const venueidRef = useRef('');
@@ -22,12 +25,12 @@ const EmployeeEvents = ({event}) => {
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
+      .select('*, Organizations(organizationName), Venues(venueName)');
 
     return events;
   }
 
-  const {status, data, error} = useQuery(['events'], fetchEvents);
+  const {status, data, error} = useQuery(['events'], fetchEvents)
   
   if (status === 'loading') {
     return <span>Loading...</span>
@@ -71,7 +74,26 @@ const EmployeeEvents = ({event}) => {
    <>
      <EmployeeHeader/>
           
-          
+     <SnackbarAlert 
+                alertOpen={failureAlertOpen} 
+                toggleAlert={toggleFailureAlert}
+                alertSeverity={'error'}
+                alertText={'Event Already Exists'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={successAlertOpen} 
+                toggleAlert={toggleSuccessAlert}
+                alertSeverity={'success'}
+                alertText={'New Event Added Successfully'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={deleteAlertOpen} 
+                toggleAlert={toggleDeleteAlert}
+                alertSeverity={'success'}
+                alertText={'Event Deleted Successfully'}
+                />
         </>
       )
   
