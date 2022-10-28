@@ -9,7 +9,7 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const EmployeeEvents = ({event}) => {
 
-
+  const [removedEvent, setremovedEvent] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const organizationidRef = useRef('');
   const eventidRef = useRef('');
@@ -17,6 +17,7 @@ const EmployeeEvents = ({event}) => {
   const seasonidRef = useRef('');
   const eventdatetimeRef = useRef('');
   const eventnameRef = useRef('');
+
 
   const fetchEvents = async () => {
     const { data: events } = await supabase
@@ -64,7 +65,7 @@ const EmployeeEvents = ({event}) => {
         .from("Events")
         .delete()
         .eq('', event.eventID);
-
+  }
 
   return (
    <>
@@ -73,7 +74,7 @@ const EmployeeEvents = ({event}) => {
           
         </>
       )
-  }
+  
 }
 
 export default EmployeeEvents;
