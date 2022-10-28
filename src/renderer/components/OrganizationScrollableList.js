@@ -1,8 +1,8 @@
 import {Grid, TextField, Typography} from "@mui/material";
-import SidebarUserItem from "./SidebarUserItem";
+import OrganizationListItem from "./OrganizationListItem";
 
 
-const AdminSidebar = ({ users, onUserClick }) => {
+const OrganizationScrollableList = ({ orgs, onOrgClick }) => {
 
 
 
@@ -10,7 +10,7 @@ const AdminSidebar = ({ users, onUserClick }) => {
     <>
       <div style={{height: '80%'}}>
         <div style={{height: '5%', paddingLeft: '5px'}}>
-          <Typography>Users:</Typography>
+          <Typography>Select an Organization:</Typography>
         </div>
         <div style={{height: '100%'}}>
         <Grid item style={{
@@ -19,9 +19,9 @@ const AdminSidebar = ({ users, onUserClick }) => {
         }}>
           <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
             <div style={{ height: '100%', overflow: 'auto'}}>
-              {users.map((user) => {
+              {orgs.map((org) => {
                 return (
-                  <SidebarUserItem user={user} onUserClick={onUserClick}/>
+                  <OrganizationListItem org={org} onOrgClick={onOrgClick}/>
                 )
               })}
             </div>
@@ -33,4 +33,4 @@ const AdminSidebar = ({ users, onUserClick }) => {
   )
 }
 
-export default AdminSidebar;
+export default OrganizationScrollableList;

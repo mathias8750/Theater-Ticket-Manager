@@ -1,17 +1,17 @@
-import {Button, Box, Grid, Typography, TextField, FormControl, InputLabel, Select, MenuItem, Alert, AlertTitle, Dialog} from "@mui/material";
+import {Button, Typography, TextField} from "@mui/material";
 import {Link as NavLink, useNavigate} from "react-router-dom";
-import OrganizationList from "../../components/OrganizationList";
-import LoginHeader from "renderer/components/LoginHeader";
-import { OrganizationContext } from "renderer/context/Context";
 import React, {useRef, useState, useContext} from "react";
-import React from "react";
+import { OrganizationContext } from "renderer/context/Context";
+import { useQuery } from "@tanstack/react-query";
+import LoginHeader from "renderer/components/LoginHeader";
+import SnackbarAlert from "renderer/components/SnackbarAlert";
+import OrganizationScrollableList from "renderer/components/OrganizationScrollableList";
 import supabase from "renderer/utils/Supabase";
-import { fontFamily } from "@mui/system";
+
 
 const OrganizationSelect = ({}) => {
 
-  const {state} = useContext(OrganizationContext);
-  const [orgErrOpen, setOpen] = useState(false);
+  const {state, update} = useContext(OrganizationContext);
   const [newOrgErrOpen, setNewOpen] = useState(false);
   const [orgAddedOpen, setAddedOpen] = useState(false);
   const [orgs, setOrgs] = useState([]);
@@ -20,14 +20,30 @@ const OrganizationSelect = ({}) => {
   const newOrgObjectRef = useRef('');
   const navigate = useNavigate();
 
+  // Get organizations from the supabase
+  const getOrganizations = async () => {
+    const {data: organizations} = await supabase.from("Organizations").select("*");
+    update({selectedOrg: {organizationID: 0, organizationName: "defaultname", organizationEmail: "defaultemail"}});
+    setOrgs(organizations);
+    return organizations;
+  };
+  let {status, data, error} = useQuery(['orgs'], getOrganizations);
+
+  // Display loading screen while loading data from supabase
+  if (status === 'loading') {
+    return <span>Loading...</span>
+  }
+
+  // Display error msg in case of query error
+  if (status === 'error') {
+    return <span>Error: {error.message}</span>
+  }
+
 
   // If org isn't selected alert the user, if it is navigate to employee home page
-  const onSelectButton = () => {
-    if(state.selectedOrg.organizationName == "defaultname"){
-        toggleOrgSelectAlert();
-    } else {
-      navigate("/employee/home");
-    }
+  const onSelectButton = (org) => {
+    update({selectedOrg: org});    
+    navigate("/employee/home");
   }
 
   // Function to control adding organization
@@ -58,18 +74,14 @@ const OrganizationSelect = ({}) => {
         toggleOrgAddedAlert();
 
         // Org added; pass new org to org list to update the list
-        setOrgs({...orgs});
+        let newOrgs = orgs_compare.concat(orgs);
+        setOrgs(newOrgs);
       }
     }
 
     // Clear the new org name and new org email text fields
     newOrgNameRef.current.value = "";
     newOrgEmailRef.current.value = "";
-  }
-
-  // Function to toggle the org select alert message
-  const toggleOrgSelectAlert = () => {
-    setOpen(!orgErrOpen);
   }
 
   // Function to toggle the new org alert message
@@ -83,86 +95,62 @@ const OrganizationSelect = ({}) => {
   }
 
   return (
-      
+
       <LoginHeader>
         <div style={{height: '100%'}}>
-        <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
-        >
-          <Button
-          variant='contained'
-          type='submit'
-          color='primary'
-          size='small'
-          onClick={onSelectButton}
-          >
-          Select Organization
-          </Button>
-          <OrganizationList newOrgs={orgs}/>
+            <div
+            style={{
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: '5px',
+            }} >
+            <Typography>Add New Organization</Typography>
+            </div>
+            <div
+            style={{
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: '5px',
+            height: '10%',
+            }} >
+            <TextField
+            id='newOrgNameTextField'
+            label='Organization Name'
+            inputRef={newOrgNameRef}
+            />
+
+            <TextField
+            id='newOrgEmailTextField'
+            label='Organization Email'
+            inputRef={newOrgEmailRef}
+            />
+
+            <Button
+            variant='contained'
+            type='submit'
+            color='primary'
+            size='small'
+            onClick={onAddButton}
+            >
+              Add Organization
+            </Button>
+            </div>
+            <OrganizationScrollableList orgs={orgs} onOrgClick={onSelectButton}/>
         </div>
-      
-        <div style={{
-        display: 'flex',
-        alignItems: 'center',
-       
-      }}>  
+        <SnackbarAlert 
+        alertOpen={newOrgErrOpen} 
+        toggleAlert={toggleNewOrgAlert}
+        alertSeverity={'error'}
+        alertText={'Organization Name/Email already in use'}
+        />
 
-          <Button
-          variant='contained'
-          type='submit'
-          color='primary'
-          size='small'
-          onClick={onAddButton}
-          >
-            Add Organization
-          </Button>
-        <TextField
-          id='newOrgNameTextField'
-          label='Organization Name'
-          inputRef={newOrgNameRef}
-          />
-
-          <TextField
-          id='newOrgEmailTextField'
-          label='Organization Email'
-          inputRef={newOrgEmailRef}
-          />
-
-          
-        </div>
-        </div>
-
-      <Dialog open={orgErrOpen} onClose={toggleOrgSelectAlert}>
-        <Alert
-        severity="info"
-        >
-          <AlertTitle>Alert</AlertTitle>
-          Please select an organization
-        </Alert>
-      </Dialog>
-
-      <Dialog open={newOrgErrOpen} onClose={toggleNewOrgAlert}>
-        <Alert
-        severity="info"
-        >
-          <AlertTitle>Alert</AlertTitle>
-          Oranization Name/Email is already in use
-        </Alert>
-      </Dialog>
-
-      <Dialog open={orgAddedOpen} onClose={toggleOrgAddedAlert}>
-        <Alert
-        severity="success"
-        >
-          <AlertTitle>Organization Added</AlertTitle>
-          Successfully Added New Organization
-        </Alert>
-      </Dialog>
-    </LoginHeader>
-
+        <SnackbarAlert 
+        alertOpen={orgAddedOpen} 
+        toggleAlert={toggleOrgAddedAlert}
+        alertSeverity={'success'}
+        alertText={'Successfully Added New Organization'}
+        />
+      </LoginHeader>
   )
 }
 
