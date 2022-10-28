@@ -31,7 +31,7 @@ const EmployeeHeader = (props) => {
                 }}>
                     Help
               </Button>
-            <NavLink to={"/"} style={{ color: 'inherit', textDecoration: 'none' }}>
+            <NavLink to={"/employee/login"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button
                 color="inherit">
                     Logout
