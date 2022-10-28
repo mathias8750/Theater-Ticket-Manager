@@ -5,6 +5,7 @@ import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import {useState} from "react";
 import CustomerEvent from "./components/CustomerEvent";
+import Playhouse from "../seatViewer/components/Playhouse";
 
 
 const CustomerEvents = ({}) => {
