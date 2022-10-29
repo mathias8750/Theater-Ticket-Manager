@@ -16,14 +16,12 @@
 
 import React, {createContext, useReducer} from 'react';
 
+// Organization Context
 export const OrganizationContext = createContext({});
-
 const reducer = (state, pair) => ({...state, ...pair});
-
 const initialState = {
     selectedOrg: {organizationID: 0, organizationName: "defaultname", organizationEmail: "defaultemail"}
 }
-
 export function OrganizationProvider(props){
     const [state, update] = useReducer(reducer, initialState)
 
@@ -31,5 +29,21 @@ export function OrganizationProvider(props){
         <OrganizationContext.Provider value={{state, update}}>
             {props.children}
         </OrganizationContext.Provider>
+    )
+}
+
+// Selected Event Context
+export const EventContext = createContext({});
+const eventReducer = (eventState, eventPair) => ({...eventState, ...eventPair});
+const EventInitialState = {
+    selectedEvent: null
+}
+export function EventProvider(props){
+    const [state, update] = useReducer(eventReducer, EventInitialState);
+
+    return (
+        <EventContext.Provider value={{state, update}}>
+            {props.children}
+        </EventContext.Provider>
     )
 }

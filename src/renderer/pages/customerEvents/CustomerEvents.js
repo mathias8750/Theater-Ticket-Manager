@@ -3,19 +3,25 @@ import ScrollableSidebar from "../../components/ScrollableSidebar";
 import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
-import {useState} from "react";
+import {useState, useContext} from "react";
 import CustomerEvent from "./components/CustomerEvent";
 import Playhouse from "../seatViewer/components/Playhouse";
+import { EventContext } from "renderer/context/Context";
 
 
 const CustomerEvents = ({}) => {
 
   const [selectedEvent, setSelectedEvent] = useState(null)
+  const {state, update} = useContext(EventContext);
 
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
+
+    if (state.selectedEvent) {
+      setSelectedEvent(state.selectedEvent)
+    }
 
     return events;
   }

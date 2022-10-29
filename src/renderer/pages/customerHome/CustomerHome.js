@@ -1,12 +1,13 @@
 import {Button, Typography, Box, Grid} from "@mui/material";
-import {Link as NavLink} from 'react-router-dom';
+import {Link as NavLink, useNavigate} from 'react-router-dom';
 import CustomerHeader from "../../components/CustomerHeader";
 import TextField from '@mui/material/TextField';
 import ScrollableSidebar from "../../components/ScrollableSidebar";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import CustomerEvent from "../customerEvents/components/CustomerEvent";
+import { EventContext } from "renderer/context/Context";
 
 
 
@@ -21,7 +22,8 @@ const CustomerHome = ({}) => {
   const numEvents = 4;
 
   const currentDateTime = new Date();
-  const [selectedEvent, setSelectedEvent] = useState(null)
+  const {state, update} = useContext(EventContext);
+  const navigate = useNavigate();
 
   // Compares the datetime of two event objects; used for array sort
   const compareDateTime = (a,b) => {
@@ -54,6 +56,8 @@ const CustomerHome = ({}) => {
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
 
+    update({selectedEvent: null});
+
     return events;
   }
 
@@ -68,7 +72,8 @@ const CustomerHome = ({}) => {
   }
 
   const onEventClick = (event) => {
-    setSelectedEvent(event)
+    update({selectedEvent: event});
+    navigate("/customer/events");
   }
 
   return (
