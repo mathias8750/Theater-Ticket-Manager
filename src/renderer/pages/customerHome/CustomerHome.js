@@ -8,6 +8,7 @@ import {useQuery} from "@tanstack/react-query";
 import React, {useState, useContext} from "react";
 import CustomerEvent from "../customerEvents/components/CustomerEvent";
 import { EventContext } from "renderer/context/Context";
+import { compareDateTime } from "renderer/utils/DateTime";
 
 
 
@@ -24,18 +25,6 @@ const CustomerHome = ({}) => {
   const currentDateTime = new Date();
   const {state, update} = useContext(EventContext);
   const navigate = useNavigate();
-
-  // Compares the datetime of two event objects; used for array sort
-  const compareDateTime = (a,b) => {
-    let aDateTime = new Date(a.eventDateTime);
-    let bDateTime = new Date(b.eventDateTime);
-
-    if (aDateTime > bDateTime) {
-      return 1;
-    } else {
-      return -1;
-    }
-  }
 
   // Returns array of the closest upcoming events
   const getUpcomingEvents = (events) => {
