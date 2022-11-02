@@ -58,11 +58,12 @@ const CustomerHome = ({}) => {
           <Button>
             See All Events
           </Button>
+
         </NavLink>
       </Box>
-      
+
     </CustomerHeader>
-    
+
   )
 }
 
