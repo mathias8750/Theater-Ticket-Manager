@@ -62,7 +62,6 @@ const toggleDeleteAlert = () => {
         .insert([{ eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
 
         if (error) {
-            console.log(error);
             toggleFailureAlert();
         } else {
             toggleSuccessAlert();
