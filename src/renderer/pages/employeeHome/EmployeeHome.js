@@ -16,21 +16,21 @@ const EmployeeHome = ({}) => {
       </Typography>
       <NavLink to={"/employee/home/events"} style={{textDecoration : 'none'}}>
         <Button variant="text"
-              style={{fontSize: 20, marginLeft: 0, marginRight: 0, marginTop: -40}}>
+              style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
            Create/Manage Events
         </Button>
       </NavLink>
 
       <NavLink to={"/employee/home/seasons"} style={{textDecoration : 'none'}}>
         <Button variant="text"
-              style={{fontSize: 20, marginLeft: -285, marginRight: 0, marginTop: 100}}>
+              style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
            Create/Manage Seasons
         </Button>
       </NavLink>
 
       <NavLink to={"/employee/home/organizations"} style={{textDecoration : 'none'}}>
         <Button variant="text"
-              style={{fontSize: 20, marginLeft: -303, marginRight: 0, marginTop: 240}}>
+              style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
            Create/Manage Organizations
         </Button>
       </NavLink>

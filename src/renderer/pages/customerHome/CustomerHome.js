@@ -22,7 +22,7 @@ const CustomerHome = ({}) => {
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
+      .select('*, Organizations(organizationName), Venues(venueName)');
 
     return events;
   }

@@ -24,6 +24,7 @@ export const formatAMPM = (date) => {
 }
 
 // Returns the event date/time/organization info to be printed as a card subheader
-export const eventDateTimeSubheader = (date, event) => {
-    return (event.Organizations.organizationName + " - " + (date.getMonth()+1).toString() + "/" + date.getDate() + "/" + date.getFullYear() + "  " + formatAMPM(date));
+export const eventDateTimeSubheader = (event) => {
+    const date = new Date(event.eventDateTime);
+    return (<ul><li>{event.Organizations.organizationName}</li><li>{event.Venues.venueName}</li><li>{date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + formatAMPM(date)}</li></ul>);
 }
