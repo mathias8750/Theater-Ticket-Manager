@@ -1,11 +1,23 @@
-import {Box, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
+import {
+  Box,
+  Alert,
+  AlertTitle,
+  Card,
+  TextField,
+  CardContent,
+  Grid,
+  Typography,
+  Button,
+  Snackbar,
+  Dialog,
+} from "@mui/material";
 import ScrollableSidebar from "../../components/ScrollableSidebar";
 import {Link as NavLink} from "react-router-dom";
-import EmployeeHeader from "../../components/EmployeeHeader"; 
-import supabase from "../../utils/Supabase";
+import EmployeeHeader from "../../components/EmployeeHeader";
 import {useQuery} from "@tanstack/react-query";
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import SnackbarAlert from 'renderer/components/SnackbarAlert';
+import supabase from "../../utils/Supabase";
 
 const EmployeeEvents = ({event}) => {
 
@@ -21,20 +33,20 @@ const EmployeeEvents = ({event}) => {
   // Toggles the success alert
   const toggleSuccessAlert = () => {
     setSuccessAlert(!successAlertOpen);
-}
+  }
 
 // Toggles the failure alert
-const toggleFailureAlert = () => {
+  const toggleFailureAlert = () => {
     setFailureAlert(!failureAlertOpen);
-}
+  }
 
 // Toggles the delete alert
-const toggleDeleteAlert = () => {
+  const toggleDeleteAlert = () => {
     setDeleteAlert(!deleteAlertOpen);
-}
+  }
 
   const fetchEvents = async () => {
-    const { data: events } = await supabase
+    const {data: events} = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
 
@@ -42,7 +54,7 @@ const toggleDeleteAlert = () => {
   }
 
   const {status, data, error} = useQuery(['events'], fetchEvents)
-  
+
   if (status === 'loading') {
     return <span>Loading...</span>
   }
@@ -56,92 +68,115 @@ const toggleDeleteAlert = () => {
   }
 
   const addEvent = async () => {
-    if(eventdatetimeRef.current.value.trim() != '' && eventnameRef.current.value.trim()) {
-        const {data: events, error} = await supabase
+    if (eventdatetimeRef.current.value.trim() != '' && eventnameRef.current.value.trim()) {
+      const {data: events, error} = await supabase
         .from('Events')
-        .insert([{ eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
+        .insert([{eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
 
-        if (error) {
-            toggleFailureAlert();
-        } else {
-            toggleSuccessAlert();
-        }
+      if (error) {
+        toggleFailureAlert();
+      } else {
+        toggleSuccessAlert();
+      }
     }
-    
+
     eventdatetimeRef.current.value = '';
     eventnameRef.current.value = '';
   }
 
-  const removeEvent = async(event) => {
+  const removeEvent = async (event) => {
     const {deleteEvent, error} = await supabase
-        .from("Events")
-        .delete()
-        .eq('', event.eventID);
+      .from("Events")
+      .delete()
+      .eq('', event.eventID);
   }
 
+
+  const [open, setOpen] = useState(false)
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+
   return (
-   <>
-     <EmployeeHeader>
-          
-       <Typography>Event Management</Typography>
-       <div
-            style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '5px',
-            }} >
-          <Typography>Add A New Event</Typography>
-        </div>
-      <div
-        style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '5px',
-            height: '10%',
-            }} >
+    <>
+      <EmployeeHeader>
 
-                <TextField
-                    id='eventdatetimeTextField'
-                    label='Event Date/Time'
-                    inputRef={eventdatetimeRef}
-                />
+        <Grid container style={{height: '100%'}}>
+          <Grid container direction={'column'} item md={4} style={{height: '100%'}}>
+            <Grid item style={{height: '80%'}}>
+              <ScrollableSidebar events={data}/>
+            </Grid>
 
-                <TextField
-                    id='eventDateTimeTextField'
-                    label='Event Name'
-                    inputRef={eventnameRef}
-                />   
+            <Grid item style={{height: '20%'}}>
 
-                <Button
-                    variant='contained'
-                    color='primary'
-                    size='small'
-                    onClick={addEvent}
-                >
-                    Create Event
-                </Button>
-       </div>
 
-       <SnackbarAlert 
-                alertOpen={failureAlertOpen} 
-                toggleAlert={toggleFailureAlert}
-                alertSeverity={'error'}
-                alertText={'Event Already Exists'}
-                />
+              <Button
+                variant='contained'
+                color='primary'
+                size='small'
+                onClick={() => handleOpen()}
+              >
+                New Event
+              </Button>
 
-                <SnackbarAlert 
-                alertOpen={successAlertOpen} 
-                toggleAlert={toggleSuccessAlert}
-                alertSeverity={'success'}
-                alertText={'New Event Added Successfully'}
-                />
+            </Grid>
+          </Grid>
 
-                <SnackbarAlert 
-                alertOpen={deleteAlertOpen} 
-                toggleAlert={toggleDeleteAlert}
-                alertSeverity={'success'}
-                alertText={'Event Deleted Successfully'}
-                />
+          <Grid item md={8}>
+            <Typography>Manage event here</Typography>
+          </Grid>
+        </Grid>
+
+
+        <Dialog open={open} onClose={handleClose}>
+          <TextField
+            id='eventdatetimeTextField'
+            label='Event Date/Time'
+            inputRef={eventdatetimeRef}
+          />
+
+          <TextField
+            id='eventDateTimeTextField'
+            label='Event Name'
+            inputRef={eventnameRef}
+          />
+
+          <Button
+            variant='contained'
+            color='primary'
+            size='small'
+            onClick={addEvent}
+          >
+            Create Event
+          </Button>
+        </Dialog>
+
+
+        <SnackbarAlert
+          alertOpen={failureAlertOpen}
+          toggleAlert={toggleFailureAlert}
+          alertSeverity={'error'}
+          alertText={'Event Already Exists'}
+        />
+
+        <SnackbarAlert
+          alertOpen={successAlertOpen}
+          toggleAlert={toggleSuccessAlert}
+          alertSeverity={'success'}
+          alertText={'New Event Added Successfully'}
+        />
+
+        <SnackbarAlert
+          alertOpen={deleteAlertOpen}
+          toggleAlert={toggleDeleteAlert}
+          alertSeverity={'success'}
+          alertText={'Event Deleted Successfully'}
+        />
       </EmployeeHeader>
     </>
   )

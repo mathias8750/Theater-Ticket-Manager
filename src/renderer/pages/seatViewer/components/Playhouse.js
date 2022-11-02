@@ -66,7 +66,6 @@ const Playhouse = ({ tickets, selectedSeats, setSelectedSeats }) => {
     let tempSelectedSeats = [...selectedSeats];
 
     if (selected) {
-
       tempSelectedSeats = tempSelectedSeats.filter((element) => {
         if (element.id !== tempSeat.id) {
           return element
