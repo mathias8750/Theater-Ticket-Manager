@@ -1,12 +1,15 @@
 import {Typography, Button} from "@mui/material";
 import {Link as NavLink} from "react-router-dom";
-import EmployeeHeader from "../../components/EmployeeHeader"; 
+import EmployeeHeader from "../../components/EmployeeHeader";
 
 const EmployeeSeasons = ({}) => {
 
     return (
         <>
-          <EmployeeHeader/>
+          <EmployeeHeader>
+            <Typography variant="h6" align="center" style={{padding: '10px'}}>Create / Manage Seasons</Typography>
+
+          </EmployeeHeader>
         </>
       )
 }
