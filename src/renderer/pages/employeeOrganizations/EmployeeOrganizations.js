@@ -5,10 +5,12 @@ import EmployeeHeader from "../../components/EmployeeHeader";
 const EmployeeOrganizations = ({}) => {
 
     return (
-        <>
-          <EmployeeHeader/>
-        </>
-      )
+    <>
+      <EmployeeHeader>
+        <Typography variant="h6" align="center" style={{padding: '10px'}}>Create / Manage Organizations</Typography>
+      </EmployeeHeader>
+    </>
+  )
 }
 
 export default EmployeeOrganizations;
