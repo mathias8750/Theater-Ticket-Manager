@@ -18,9 +18,7 @@ const EmployeeEvents = ({event}) => {
   const eventdatetimeRef = useRef('');
   const eventnameRef = useRef('');
   const organizationidRef = useRef('');
-  const eventidRef = useRef('');
   const venueidRef = useRef('');
-  const seasonidRef = useRef('');
 
   // Toggles the success alert
   const toggleSuccessAlert = () => {
@@ -37,10 +35,37 @@ const toggleDeleteAlert = () => {
     setDeleteAlert(!deleteAlertOpen);
 }
 
+const addEvent = async () => {
+  if(organizationidRef.current.value.trim() != '' && venueidRef.current.value.trim() != '' && eventdatetimeRef.current.value.trim() != '' && eventnameRef.current.value.trim() != '') {
+      const {data: Events, error} = await supabase
+      .from('Events')
+      .insert([{ organizationID: organizationidRef.current.value.trim(), venueID: venueidRef.current.value.trim(), eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
+
+      if (error) {
+          toggleFailureAlert();
+      } else {
+          toggleSuccessAlert();
+          fetchEvents();
+      }
+  }
+  
+  eventdatetimeRef.current.value = '';
+  eventnameRef.current.value = '';
+  organizationidRef.current.value = '';
+  venueidRef.current.value = '';
+}
+
+const removeEvent = async(event) => {
+  const {deleteEvent, error} = await supabase
+      .from("Events")
+      .delete()
+      .eq('', event.eventID);
+}
+
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('*, Organizations(organizationName), Venues(venueName)');
+      .select('*');
 
     return events;
   }
@@ -57,34 +82,6 @@ const toggleDeleteAlert = () => {
 
   const onEventClick = (event) => {
     setSelectedEvent(event)
-  }
-
-  const addEvent = async () => {
-    if(eventidRef.current.value.trim() != '' && organizationidRef.current.value.trim() != '' && venueidRef.current.value.trim() != '' && eventdatetimeRef.current.value.trim() != '' && eventnameRef.current.value.trim() != '' && seasonidRef.current.value.trim() != '') {
-        const {data: Events, error} = await supabase
-        .from('Events')
-        .insert([{ eventID: eventidRef.current.value.trim(), organizationID: organizationidRef.current.value.trim(), venueID: venueidRef.current.value.trim(), seasonID: seasonidRef.current.value.trim(), eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
-
-        if (error) {
-            toggleFailureAlert();
-        } else {
-            toggleSuccessAlert();
-        }
-    }
-    
-    eventdatetimeRef.current.value = '';
-    eventnameRef.current.value = '';
-    eventidRef.current.value = '';
-    organizationidRef.current.value = '';
-    venueidRef.current.value = '';
-    seasonidRef.current.value = '';
-  }
-
-  const removeEvent = async(event) => {
-    const {deleteEvent, error} = await supabase
-        .from("Events")
-        .delete()
-        .eq('', event.eventID);
   }
 
   return (
@@ -109,28 +106,10 @@ const toggleDeleteAlert = () => {
             }} >
 
                 <TextField
-                    id='eventidTextField'
-                    label='Event ID'
-                    inputRef={eventidRef}
-                />
-
-                <TextField
-                    id='organizationidTextField'
-                    label='Organization ID'
-                    inputRef={organizationidRef}
-                />
-
-                <TextField
                     id='venueidTextField'
                     label='Venue ID'
                     inputRef={venueidRef}
                 />
-
-                <TextField
-                    id='seasonidTextField'
-                    label='Season ID'
-                    inputRef={seasonidRef}
-                /> 
 
                 <TextField
                     id='eventdatetimeTextField'
