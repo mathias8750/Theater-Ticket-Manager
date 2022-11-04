@@ -6,11 +6,38 @@ import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import {useState} from "react";
 
+
 const EmployeeEvents = ({event}) => {
 
-    return (
-        <>
-          <EmployeeHeader/>
+
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const fetchEvents = async () => {
+    const { data: events } = await supabase
+      .from('Events')
+      .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
+
+    return events;
+  }
+
+  const {status, data, error} = useQuery(['events'], fetchEvents);
+  
+  if (status === 'loading') {
+    return <span>Loading...</span>
+  }
+
+  if (status === 'error') {
+    return <span>Error: {error.message}</span>
+  }
+
+  const onEventClick = (event) => {
+    setSelectedEvent(event)
+  }
+
+
+  return (
+   <>
+     <EmployeeHeader/>
           
           
         </>

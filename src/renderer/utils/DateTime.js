@@ -28,3 +28,15 @@ export const eventDateTimeSubheader = (event) => {
     const date = new Date(event.eventDateTime);
     return (<ul><li>{event.Organizations.organizationName}</li><li>{event.Venues.venueName}</li><li>{date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + formatAMPM(date)}</li></ul>);
 }
+
+// Compares the datetime of two event objects; used as argument for array.sort() function
+export const compareDateTime = (a,b) => {
+    let aDateTime = new Date(a.eventDateTime);
+    let bDateTime = new Date(b.eventDateTime);
+
+    if (aDateTime > bDateTime) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }

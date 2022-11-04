@@ -8,10 +8,10 @@ import CustomerHome from "./pages/customerHome/CustomerHome";
 import EmployeeEvents from "./pages/employeeEvents/EmployeeEvents";
 import EmployeeSeasons from "./pages/employeeSeasons/EmployeeSeasons";
 import EmployeeOrganizations from "./pages/employeeOrganizations/EmployeeOrganizations";
+import SeatViewer from './pages/seatViewer/SeatViewer';
 import AdminPage from './pages/adminPage/AdminPage';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import { OrganizationProvider } from './context/Context';
-import SeatViewer from "./pages/seatViewer/SeatViewer";
+import { OrganizationProvider, EventProvider } from './context/Context';
 
 
 const queryClient = new QueryClient()
@@ -20,6 +20,7 @@ export default function App() {
   return (
       <QueryClientProvider client={queryClient}>
         <Router>
+        <EventProvider>
         <OrganizationProvider>
             <Routes>
               <Route path="/" element={<CustomerHome/>} />
@@ -30,10 +31,11 @@ export default function App() {
               <Route path={"/employee/home"} element={<EmployeeHome/>}/>
               <Route path={"/employee/home/events"} element={<EmployeeEvents/>}/>
               <Route path={"/employee/home/seasons"} element={<EmployeeSeasons/>}/>
-              <Route path={"/employee/home/organizations"} element={<EmployeeOrganizations/>}/>
+              <Route path={"/employee/home/organizations"} element={<EmployeeOrganizations/>}/> 
               <Route path={"/customer/events/seat-viewer"} element={<SeatViewer/>}/>
             </Routes>
           </OrganizationProvider>
+          </EventProvider> 
         </Router>
       </QueryClientProvider>
   );

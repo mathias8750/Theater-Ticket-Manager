@@ -2,6 +2,7 @@ import Section from "./Section";
 import {useState} from "react";
 import {PlayhouseLoges, PlayhouseSections} from "../../../data/PlayhouseSeatMapJson";
 
+
 const StageSections = ({sections, handleSeatClick}) => {
   return (
     <>
