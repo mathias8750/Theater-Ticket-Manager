@@ -17,6 +17,10 @@ const EmployeeEvents = ({event}) => {
 
   const eventdatetimeRef = useRef('');
   const eventnameRef = useRef('');
+  const organizationidRef = useRef('');
+  const eventidRef = useRef('');
+  const venueidRef = useRef('');
+  const seasonidRef = useRef('');
 
   // Toggles the success alert
   const toggleSuccessAlert = () => {
@@ -56,10 +60,10 @@ const toggleDeleteAlert = () => {
   }
 
   const addEvent = async () => {
-    if(eventdatetimeRef.current.value.trim() != '' && eventnameRef.current.value.trim()) {
-        const {data: events, error} = await supabase
+    if(eventidRef.current.value.trim() != '' && organizationidRef.current.value.trim() != '' && venueidRef.current.value.trim() != '' && eventdatetimeRef.current.value.trim() != '' && eventnameRef.current.value.trim() != '' && seasonidRef.current.value.trim() != '') {
+        const {data: Events, error} = await supabase
         .from('Events')
-        .insert([{ eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
+        .insert([{ eventID: eventidRef.current.value.trim(), organizationID: organizationidRef.current.value.trim(), venueID: venueidRef.current.value.trim(), seasonID: seasonidRef.current.value.trim(), eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
 
         if (error) {
             toggleFailureAlert();
@@ -70,6 +74,10 @@ const toggleDeleteAlert = () => {
     
     eventdatetimeRef.current.value = '';
     eventnameRef.current.value = '';
+    eventidRef.current.value = '';
+    organizationidRef.current.value = '';
+    venueidRef.current.value = '';
+    seasonidRef.current.value = '';
   }
 
   const removeEvent = async(event) => {
@@ -101,17 +109,42 @@ const toggleDeleteAlert = () => {
             }} >
 
                 <TextField
-                    id='eventdatetimeTextField'
-                    label='Event Date/Time'
-                    inputRef={eventdatetimeRef}
+                    id='eventidTextField'
+                    label='Event ID'
+                    inputRef={eventidRef}
                 />
 
                 <TextField
-                    id='eventDateTimeTextField'
-                    label='Event Name'
-                    inputRef={eventnameRef}
+                    id='organizationidTextField'
+                    label='Organization ID'
+                    inputRef={organizationidRef}
+                />
+
+                <TextField
+                    id='venueidTextField'
+                    label='Venue ID'
+                    inputRef={venueidRef}
+                />
+
+                <TextField
+                    id='seasonidTextField'
+                    label='Season ID'
+                    inputRef={seasonidRef}
+                /> 
+
+                <TextField
+                    id='eventdatetimeTextField'
+                    label='Event Date/Time'
+                    inputRef={eventdatetimeRef}
                 />   
 
+                <TextField
+                    id='eventnameTextField'
+                    label='Event Name'
+                    inputRef={eventnameRef}
+                />
+
+            
                 <Button
                     variant='contained'
                     color='primary'
