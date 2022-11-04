@@ -32,6 +32,7 @@ const ScrollableSidebar = ({ events, onEventClick }) => {
               })}
             </div>
           </div>
+
         </Grid>
       </Grid>
     </>

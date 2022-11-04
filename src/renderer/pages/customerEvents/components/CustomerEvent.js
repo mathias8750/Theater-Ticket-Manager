@@ -7,7 +7,7 @@ const CustomerEvent = ({event}) => {
 
   const date = new Date(event.eventDateTime);
 
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   const onTicketSelectButton = () => {
     navigate("/customer/events/seat-viewer")
