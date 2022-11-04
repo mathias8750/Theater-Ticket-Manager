@@ -7,33 +7,33 @@ const EmployeeHome = ({}) => {
 
   return (
     <>
-      <EmployeeHeader/>
-      <Typography
+      <EmployeeHeader>
+        <Typography
           variant="h3"
-          color="primary"
-          style={{marginTop: -625}}>
+          color="primary">
           Employee Home
-      </Typography>
-      <NavLink to={"/employee/home/events"} style={{textDecoration : 'none'}}>
-        <Button variant="text"
+        </Typography>
+        <NavLink to={"/employee/home/events"} style={{textDecoration : 'none'}}>
+          <Button variant="text"
               style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
-           Create/Manage Events
-        </Button>
-      </NavLink>
+            Create/Manage Events
+         </Button>
+        </NavLink>
 
-      <NavLink to={"/employee/home/seasons"} style={{textDecoration : 'none'}}>
-        <Button variant="text"
+        <NavLink to={"/employee/home/seasons"} style={{textDecoration : 'none'}}>
+          <Button variant="text"
               style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
-           Create/Manage Seasons
-        </Button>
-      </NavLink>
+             Create/Manage Seasons
+          </Button>
+        </NavLink>
 
-      <NavLink to={"/employee/home/organizations"} style={{textDecoration : 'none'}}>
-        <Button variant="text"
+        <NavLink to={"/employee/home/organizations"} style={{textDecoration : 'none'}}>
+         <Button variant="text"
               style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
-           Create/Manage Organizations
-        </Button>
-      </NavLink>
+            Create/Manage Organizations
+          </Button>
+        </NavLink>
+      </EmployeeHeader>
     </>
   )
 }
