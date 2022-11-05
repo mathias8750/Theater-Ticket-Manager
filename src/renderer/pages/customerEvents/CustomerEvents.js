@@ -8,7 +8,6 @@ import CustomerEvent from "./components/CustomerEvent";
 import Playhouse from "../seatViewer/components/Playhouse";
 import { EventContext } from "renderer/context/Context";
 
-
 const CustomerEvents = ({}) => {
 
   const [selectedEvent, setSelectedEvent] = useState(null)
@@ -49,7 +48,7 @@ const CustomerEvents = ({}) => {
           </Grid>
 
 
-          <Grid item md={8} style={{paddingRight: '10px', height: '100%'}}>
+          <Grid item md={8} style={{paddingRight: '10px', height: '75%', diplay: 'flex'}}>
             {selectedEvent !== null ? (
               <CustomerEvent event={selectedEvent}/>
             ) : (
