@@ -80,6 +80,7 @@
     "@mui/material": "^5.10.2",
     "@supabase/supabase-js": "^1.35.7",
     "@tanstack/react-query": "^4.10.3",
+    "dayjs": "^1.11.6",
     "dotenv": "^16.0.2",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
@@ -90,6 +91,7 @@
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
+    "@mui/x-date-pickers": "^5.0.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
     "@testing-library/jest-dom": "^5.16.5",
