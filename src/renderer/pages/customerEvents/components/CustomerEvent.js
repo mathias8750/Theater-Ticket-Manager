@@ -49,7 +49,6 @@ const CustomerEvent = ({event}) => {
   }
 
 
-  // TODO: get recommended tickets working
   const handleTicketNumChange = (event) => {
     setNumTickets(event.target.value);
     setRecommendedSeats(recommendSeats(eventTickets, event.target.value, eventLocation));
@@ -67,12 +66,13 @@ const CustomerEvent = ({event}) => {
           subheader={eventDateTimeSubheader(event)}
         />
       </Card>
-        <Box style={{display: 'flex', height: '100%'}}>
+        <Box style={{display: 'flex', height: '100%', paddingLeft: '1%'}}>
+          <div style={{height: '100%', width: '100%'}}>
           <div style={{
             alignItems: 'center',
             paddingTop: '2%',
-            width: '35%',
-            height: '40%',
+            width: '100%',
+            height: '10%',
           }}>
           <FormControl fullWidth>
           <InputLabel id="ticket-select-label">Number of Tickets</InputLabel>
@@ -93,24 +93,31 @@ const CustomerEvent = ({event}) => {
         </FormControl>
         </div>
         <div style={{
-            paddingTop: '2%',
+            paddingTop: '1%',
             width: '100%',
+            height: '100%',
             overflow: 'auto',
           }}>
         <Box style={{ flexGrow: 0, background: 'white', height: '60%', display: 'flex'}}>
         <SeatList recommendedSeats={recommendedSeats} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
         </Box>
-        </div>
-          <div>
-            <Button
+        <div style={{
+          alignItems: 'center',
+          paddingTop: '2%',
+          paddingLeft: '37%',
+          }}>
+        <Button
               variant='contained'
               type='submit'
               color='primary'
               size='small'
               onClick={onTicketSelectButton}
             >
-              Select Tickets
+              Select Tickets From Chart
             </Button>
+            </div>
+        </div>
+          
           </div>
         </Box>
     </>
