@@ -7,7 +7,8 @@ import {
   SEAT_SIZE,
   SECTION_PADDING
 } from "../utils/SeatViewerConsts";
-import {useEffect, useState} from "react";
+import {useContext, useState} from "react";
+import {TicketViewerContext} from "./TicketViewer";
 
 function calculateSeatNumberTextXMargin(seatNumber) {
   if (seatNumber < 10) {
@@ -17,7 +18,12 @@ function calculateSeatNumberTextXMargin(seatNumber) {
   }
 }
 
-const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionIndex, rowIndex, seatIndex, offset, handleSeatClick}) => {
+const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionIndex, rowIndex, seatIndex, offset}) => {
+
+  let {onSeatClick} = useContext(TicketViewerContext)
+
+  const [selected, setSelected] = useState(false)
+
   let rectX;
   let textX;
   if (sectionNumber === 4) {
@@ -45,7 +51,8 @@ const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionInde
     <div
       onClick={() => {
         if (!seat.reserved) {
-            handleSeatClick(seat.selected, seat, seatNumber, rowLetter, sectionIndex, sectionNumber)
+          onSeatClick(seat, selected)
+          setSelected(!selected)
         }
       }
       }
@@ -55,7 +62,7 @@ const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionInde
         y={offset + RECT_Y_MARGIN + RECT_Y_PADDING * rowIndex}
         width={SEAT_SIZE}
         height={SEAT_SIZE}
-        fill={setFill(seat.reserved, seat.selected)}
+        fill={setFill(seat.reserved, selected)}
       />
 
       <Text

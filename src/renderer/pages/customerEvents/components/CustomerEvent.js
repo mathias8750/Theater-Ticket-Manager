@@ -10,7 +10,7 @@ const CustomerEvent = ({event}) => {
   let navigate = useNavigate();
 
   const onTicketSelectButton = () => {
-    navigate("/customer/events/seat-viewer")
+    navigate("/customer/events/seat-viewer", {state: event})
   }
 
   return (

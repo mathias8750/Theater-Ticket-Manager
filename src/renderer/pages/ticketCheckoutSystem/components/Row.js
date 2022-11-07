@@ -1,7 +1,7 @@
 import Seat from "./Seat";
 
 
-const Row = ({ row, rowLetter, sectionNumber, rowIndex, maxSeats, sectionIndex, offset, handleSeatClick}) => {
+const Row = ({ row, rowLetter, sectionNumber, rowIndex, maxSeats, sectionIndex, offset }) => {
   return (
     <>
       {Object.keys(row).map((key, seatIndex) => {
@@ -19,7 +19,6 @@ const Row = ({ row, rowLetter, sectionNumber, rowIndex, maxSeats, sectionIndex, 
               rowIndex={rowIndex}
               seatIndex={seatIndex}
               offset={offset}
-              handleSeatClick={handleSeatClick}
             />
           )
         }

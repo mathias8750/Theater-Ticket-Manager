@@ -2,7 +2,9 @@ import Row from "./Row";
 import {Text} from "react-konva";
 import {SECTION_PADDING} from "../utils/SeatViewerConsts";
 
-const Section = ({ section, sectionIndex, offset, sectionTextOffset, sectionText, handleSeatClick }) => {
+const Section = ({ section, sectionIndex, offset, sectionTextOffset, sectionText }) => {
+
+
   return (
     <>
       <Text
@@ -11,6 +13,7 @@ const Section = ({ section, sectionIndex, offset, sectionTextOffset, sectionText
         text={`${sectionText} ${section.data.section_id}`}
       />
       {Object.keys(section).map((key, rowIndex) => {
+
         if (key !== "data") {
           return (
             <Row
@@ -22,7 +25,6 @@ const Section = ({ section, sectionIndex, offset, sectionTextOffset, sectionText
               rowLetter={key}
               rowIndex={rowIndex}
               offset={offset}
-              handleSeatClick={handleSeatClick}
             />
           )
         }
