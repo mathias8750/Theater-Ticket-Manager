@@ -80,6 +80,7 @@
     "@mui/material": "^5.10.2",
     "@supabase/supabase-js": "^1.35.7",
     "@tanstack/react-query": "^4.10.3",
+    "dayjs": "^1.11.6",
     "dotenv": "^16.0.2",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",

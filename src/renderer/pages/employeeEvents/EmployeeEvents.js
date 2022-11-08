@@ -15,31 +15,29 @@ const EmployeeEvents = ({event}) => {
   const [successAlertOpen, setSuccessAlert] = useState(false);
   const [failureAlertOpen, setFailureAlert] = useState(false);
 
-  const eventdatetimeRef = useRef('');
-  const eventnameRef = useRef('');
-  const organizationidRef = useRef('');
-  const venueidRef = useRef('');
+  const [eventdatetime, setEventDateTime] = useState('');
+  const [eventname, setEventName] = useState('');
+  const [venueid, setVenueID] = useState('');
 
   // Toggles the success alert
   const toggleSuccessAlert = () => {
     setSuccessAlert(!successAlertOpen);
-}
+  }
 
-// Toggles the failure alert
-const toggleFailureAlert = () => {
+  // Toggles the failure alert
+  const toggleFailureAlert = () => {
     setFailureAlert(!failureAlertOpen);
-}
+  }
 
-// Toggles the delete alert
-const toggleDeleteAlert = () => {
+  // Toggles the delete alert
+  const toggleDeleteAlert = () => {
     setDeleteAlert(!deleteAlertOpen);
-}
+  }
 
-const addEvent = async () => {
-  if(organizationidRef.current.value.trim() != '' && venueidRef.current.value.trim() != '' && eventdatetimeRef.current.value.trim() != '' && eventnameRef.current.value.trim() != '') {
+  const addEvent = async () => {
       const {data: Events, error} = await supabase
       .from('Events')
-      .insert([{ organizationID: organizationidRef.current.value.trim(), venueID: venueidRef.current.value.trim(), eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
+      .insert([{venueID: venueid, eventDateTime: eventdatetime, eventName: eventname}]);
 
       if (error) {
           toggleFailureAlert();
@@ -48,18 +46,12 @@ const addEvent = async () => {
           fetchEvents();
       }
   }
-  
-  eventdatetimeRef.current.value = '';
-  eventnameRef.current.value = '';
-  organizationidRef.current.value = '';
-  venueidRef.current.value = '';
-}
 
 const removeEvent = async(event) => {
   const {deleteEvent, error} = await supabase
       .from("Events")
       .delete()
-      .eq('', event.eventID);
+      .eq('', event.eventName);
 }
 
   const fetchEvents = async () => {
@@ -108,19 +100,19 @@ const removeEvent = async(event) => {
                 <TextField
                     id='venueidTextField'
                     label='Venue ID'
-                    inputRef={venueidRef}
+                    inputRef={setVenueID(venueid)}
                 />
 
                 <TextField
                     id='eventdatetimeTextField'
                     label='Event Date/Time'
-                    inputRef={eventdatetimeRef}
+                    inputRef={setEventDateTime(eventdatetime)}
                 />   
 
                 <TextField
                     id='eventnameTextField'
                     label='Event Name'
-                    inputRef={eventnameRef}
+                    inputRef={setEventName(eventname)}
                 />
 
             
