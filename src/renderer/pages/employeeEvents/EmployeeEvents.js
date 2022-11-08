@@ -1,4 +1,4 @@
-import {Box, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
+import {Box, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
 import ScrollableSidebar from "../../components/ScrollableSidebar";
 import {Link as NavLink} from "react-router-dom";
 import EmployeeHeader from "../../components/EmployeeHeader"; 
@@ -17,7 +17,8 @@ const EmployeeEvents = ({event}) => {
 
   const [eventdatetime, setEventDateTime] = useState('');
   const [eventname, setEventName] = useState('');
-  const [venueid, setVenueID] = useState('');
+  const [venueid, setVenueID] = useState(0);
+  const [organizationid, setOrganizationID] = useState(0);
 
   // Toggles the success alert
   const toggleSuccessAlert = () => {
@@ -37,7 +38,7 @@ const EmployeeEvents = ({event}) => {
   const addEvent = async () => {
       const {data: Events, error} = await supabase
       .from('Events')
-      .insert([{venueID: venueid, eventDateTime: eventdatetime, eventName: eventname}]);
+      .insert([{organizationID: organizationid, venueID: venueid, eventDateTime: eventdatetime, eventName: eventname}]);
 
       if (error) {
           toggleFailureAlert();
@@ -96,25 +97,34 @@ const removeEvent = async(event) => {
             paddingLeft: '5px',
             height: '10%',
             }} >
-
-                <TextField
-                    id='venueidTextField'
-                    label='Venue ID'
-                    inputRef={setVenueID(venueid)}
+              <Typography>Organization ID
+                <input 
+                    name = 'Organization ID'
+                    type ="text"
+                    onChange={event => setOrganizationID(event.target.value)}
                 />
-
-                <TextField
-                    id='eventdatetimeTextField'
-                    label='Event Date/Time'
-                    inputRef={setEventDateTime(eventdatetime)}
+              </Typography>
+              <Typography>Venue ID
+                <input
+                    name='Venue ID'
+                    type="text"
+                    onChange={event => setVenueID(event.target.value)}
+                />
+              </Typography>
+              <Typography>Event Date/Time
+                <input
+                    name='Event Date/Time'
+                    type="text"
+                    onChange={event => setEventDateTime(event.target.value)}
                 />   
-
-                <TextField
-                    id='eventnameTextField'
-                    label='Event Name'
-                    inputRef={setEventName(eventname)}
+              </Typography>
+              <Typography>Event Name
+                <input
+                    name='Event Name'
+                    type="text"
+                    onChange={event => setEventName(event.target.value)}
                 />
-
+              </Typography>
             
                 <Button
                     variant='contained'
