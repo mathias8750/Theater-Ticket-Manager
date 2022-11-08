@@ -81,15 +81,7 @@ const removeEvent = async(event) => {
    <>
      <EmployeeHeader>
           
-       <Typography>Event Management</Typography>
-       <div
-            style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '5px',
-            }} >
-          <Typography>Add A New Event</Typography>
-        </div>
+      <Typography variant= "h6" align= "center" style={{padding:'10px'}}>Event Management
       <div
         style={{
             display: 'flex',
@@ -135,7 +127,7 @@ const removeEvent = async(event) => {
                     Create Event
                 </Button>
        </div>
-
+      </Typography>
        <SnackbarAlert 
                 alertOpen={failureAlertOpen} 
                 toggleAlert={toggleFailureAlert}

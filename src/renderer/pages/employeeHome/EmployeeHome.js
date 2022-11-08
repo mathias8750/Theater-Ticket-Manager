@@ -10,29 +10,47 @@ const EmployeeHome = ({}) => {
       <EmployeeHeader>
         <Typography
           variant="h3"
-          color="primary">
+          align="center">
           Employee Home
         </Typography>
-        <NavLink to={"/employee/home/events"} style={{textDecoration : 'none'}}>
-          <Button variant="text"
-              style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
-            Create/Manage Events
-         </Button>
-        </NavLink>
-
-        <NavLink to={"/employee/home/seasons"} style={{textDecoration : 'none'}}>
-          <Button variant="text"
-              style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
-             Create/Manage Seasons
+        <div 
+          display= "block"
+          margin= "auto"
+          align="center"
+          style={{marginTop: '70px'}}>
+          <NavLink to={"/employee/home/events"} style={{textDecoration : 'none'}}>
+            <Button variant="text"
+                style={{fontSize: 30}}>
+              Create/Manage Events
           </Button>
-        </NavLink>
-
-        <NavLink to={"/employee/home/organizations"} style={{textDecoration : 'none'}}>
-         <Button variant="text"
-              style={{fontSize: 20, justifyContent: 'center', alignItems: 'center'}}>
-            Create/Manage Organizations
-          </Button>
-        </NavLink>
+          </NavLink>
+        </div>
+        <div 
+          display= "block"
+          margin="auto"
+          align="center"
+          style={{marginTop: '70px'}}>
+            <NavLink to={"/employee/home/seasons"} style={{textDecoration : 'none'}}>
+              <Button variant="text"
+                style={{fontSize: 30}}>
+                  Create/Manage Seasons
+              </Button>
+            </NavLink>
+        </div>
+        
+        <div 
+          display= "block"
+          margin="auto"
+          align="center"
+          style={{marginTop: '70px'}}>
+            <NavLink to={"/employee/home/organizations"} style={{textDecoration : 'none'}}>
+              <Button variant="text" 
+                style={{fontSize: 30}}>
+                  Create/Manage Organizations
+              </Button>
+            </NavLink>
+        </div>
+        
       </EmployeeHeader>
     </>
   )
