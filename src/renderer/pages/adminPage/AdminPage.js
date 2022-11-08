@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import LoginHeader from 'renderer/components/LoginHeader';
 import { useNavigate } from "react-router-dom";
-import { Typography, TextField, Button,  Dialog, Alert, AlertTitle, Snackbar } from '@mui/material';
+import { Typography, TextField, Button,  Dialog, Alert, AlertTitle, Snackbar, DialogTitle, DialogActions } from '@mui/material';
 import supabase from 'renderer/utils/Supabase';
 import { useQuery } from "@tanstack/react-query";
 import AdminSidebar from 'renderer/components/AdminSidebar';
@@ -10,6 +10,8 @@ import SnackbarAlert from 'renderer/components/SnackbarAlert';
 const AdminPage = ({}) => {
 
     const [userList, setUserList] = useState([]);
+    const [selectedUser, setSelectedUser] = useState({});
+    const [confirmationOpen, setConfirmationOpen] = useState(false);
     const [deleteAlertOpen, setDeleteAlert] = useState(false);
     const [successAlertOpen, setSuccessAlert] = useState(false);
     const [failureAlertOpen, setFailureAlert] = useState(false);
@@ -66,6 +68,23 @@ const AdminPage = ({}) => {
     // When the user clicks the remove account button, remove the account
     const onUserClick = (user) => {
         removeUserAccount(user);
+    }
+
+    // Confirmation dialog for user deletion
+    const openConfirmationDialog = (user) => {
+        setSelectedUser(user);
+        setConfirmationOpen(!confirmationOpen);
+    }
+
+    // User confirmed; delete user account
+    const handleConfirm = (event) => {
+        removeUserAccount(selectedUser);
+        setConfirmationOpen(!confirmationOpen);
+    }
+
+    // User cancelled; close dialog and do nothing
+    const handleCancel = (event) => {
+        setConfirmationOpen(!confirmationOpen);
     }
     
     // Get data from users table to use in the user list (this also refreshes the user list)
@@ -132,7 +151,7 @@ const AdminPage = ({}) => {
                 </Button>
                 </div>
                 
-                <AdminSidebar users={userList} onUserClick={onUserClick} />
+                <AdminSidebar users={userList} onUserClick={openConfirmationDialog} />
 
                 <SnackbarAlert 
                 alertOpen={failureAlertOpen} 
@@ -154,6 +173,20 @@ const AdminPage = ({}) => {
                 alertSeverity={'success'}
                 alertText={'User Deleted Successfully'}
                 />
+
+                <Dialog
+                open={confirmationOpen}
+                >
+                    <DialogTitle>Delete User?</DialogTitle>
+                    <DialogActions>
+                        <Button autoFocus onClick={handleCancel}>
+                            Cancel
+                        </Button>
+                        <Button onClick={handleConfirm}>
+                            Confirm
+                        </Button>
+                    </DialogActions>
+                </Dialog>
                 </div>
             </LoginHeader>
         </>
