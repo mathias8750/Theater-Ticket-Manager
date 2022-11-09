@@ -62,28 +62,10 @@ const EmployeeOrganizations = ({}) => {
   }
 
   const deleteOrg = async () => {
-    console.log(currentOrganization.organizationID);
     const {data, error} = await supabase
       .from('Organizations')
       .delete()
       .eq('organizationID', currentOrganization.organizationID);
-
-
-    /*
-    for (let i = 0; i < events.length; i++) {
-      const {tickets, tickets_error} = await supabase
-        .from('Tickets')
-        .delete()
-        .eq('eventID', events[i].eventID);
-    }
-
-    const {seasons, seasons_error} = await supabase
-      .from('Seasons')
-      .delete()
-      .eq('organizationID', currentOrganization.organizationID);
-
-    console.log(seasons);
-    */
   }
 
   const handleConfirm = () => {
@@ -220,7 +202,7 @@ const EmployeeOrganizations = ({}) => {
             open={deleteConfirmationOpen}
           >
             <DialogTitle>Delete Organization?</DialogTitle>
-            <DialogContentText> This will delete all related events and seasons</DialogContentText>
+            <DialogContentText> This will log you out</DialogContentText>
               <DialogActions>
                   <Button autoFocus onClick={handleDeleteCancel}>
                       Cancel
