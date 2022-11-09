@@ -6,6 +6,8 @@ import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import React, { useState, useRef, useEffect } from 'react';
 import SnackbarAlert from 'renderer/components/SnackbarAlert';
+import {OrganizationContext} from "renderer/context/Context";
+import {useContext} from "react";
 
 const EmployeeEvents = ({event}) => {
 
@@ -15,10 +17,11 @@ const EmployeeEvents = ({event}) => {
   const [successAlertOpen, setSuccessAlert] = useState(false);
   const [failureAlertOpen, setFailureAlert] = useState(false);
 
+  const {state} = useContext(OrganizationContext);
+
   const [eventdatetime, setEventDateTime] = useState('');
   const [eventname, setEventName] = useState('');
   const [venueid, setVenueID] = useState(0);
-  const [organizationid, setOrganizationID] = useState(0);
 
   // Toggles the success alert
   const toggleSuccessAlert = () => {
@@ -38,7 +41,7 @@ const EmployeeEvents = ({event}) => {
   const addEvent = async () => {
       const {data: Events, error} = await supabase
       .from('Events')
-      .insert([{organizationID: organizationid, venueID: venueid, eventDateTime: eventdatetime, eventName: eventname}]);
+      .insert([{organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: eventdatetime, eventName: eventname}]);
 
       if (error) {
           toggleFailureAlert();
@@ -89,13 +92,6 @@ const removeEvent = async(event) => {
             paddingLeft: '5px',
             height: '10%',
             }} >
-              <Typography>Organization ID
-                <input 
-                    name = 'Organization ID'
-                    type ="text"
-                    onChange={event => setOrganizationID(event.target.value)}
-                />
-              </Typography>
               <Typography>Venue ID
                 <input
                     name='Venue ID'
