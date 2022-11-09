@@ -100,21 +100,23 @@ export const recommendSeats = (ticketList, ticketNum, eventLocation) => {
             }
             }
         }
-        switch (i) {
-            case 0:
-                arr.push({result: seats.resultData, section: 'S1'});
-                break;
-            case 1:
-                arr.push({result: seats.resultData, section: 'S2'});
-                break;
-            case 2:
-                arr.push({result: seats.resultData, section: 'S3'});
-                break;
-            case 3:
-                arr.push({result: seats.resultData, section: 'S4'});
-                break;
-            default:
-                break;
+        if (seats.resultValid) {
+          switch (i) {
+              case 0:
+                  arr.push({result: seats.resultData, section: 'S1'});
+                  break;
+              case 1:
+                  arr.push({result: seats.resultData, section: 'S2'});
+                  break;
+              case 2:
+                  arr.push({result: seats.resultData, section: 'S3'});
+                  break;
+              case 3:
+                  arr.push({result: seats.resultData, section: 'S4'});
+                  break;
+              default:
+                  break;
+          }
         }
     }
 
