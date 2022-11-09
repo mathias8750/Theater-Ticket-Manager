@@ -1,6 +1,6 @@
 import {Typography, Button, TextField, Dialog, DialogActions, DialogTitle, DialogContentText} from "@mui/material";
 import { useContext, useState, useRef } from "react";
-import {Link as NavLink} from "react-router-dom";
+import {Link as NavLink, useNavigate} from "react-router-dom";
 import { OrganizationContext } from "renderer/context/Context";
 import EmployeeHeader from "../../components/EmployeeHeader"; 
 import supabase from "renderer/utils/Supabase";
@@ -20,6 +20,7 @@ const EmployeeOrganizations = ({}) => {
   const orgEmailRef = useRef("");
   const orgMinPriceRef = useRef("");
   const orgMaxPriceRef = useRef("");
+  let navigate = useNavigate();
 
   const [tickets, setTickets] = useState([]);
 
@@ -61,6 +62,7 @@ const EmployeeOrganizations = ({}) => {
   }
 
   const deleteOrg = async () => {
+    console.log(currentOrganization.organizationID);
     const {data, error} = await supabase
       .from('Organizations')
       .delete()
@@ -95,7 +97,7 @@ const EmployeeOrganizations = ({}) => {
   }
 
   const handleDeleteConfirm = () => {
-    deleteOrg();
+    deleteOrg().then(navigate("/employee/login"));
     toggleDeleteConfirmationDialog();
   }
 
@@ -108,7 +110,7 @@ const EmployeeOrganizations = ({}) => {
   }
 
   const onDeleteClick = () => {
-    //toggleDeleteConfirmationDialog();
+    toggleDeleteConfirmationDialog();
   }
 
     return (

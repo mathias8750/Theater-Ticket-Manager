@@ -60,14 +60,13 @@ const CustomerEvent = ({event}) => {
 
   return (
     <>
+    <div style={{height: '100%', width: '100%'}}>
       <Card>
         <CardHeader
           title={event.eventName}
           subheader={eventDateTimeSubheader(event)}
         />
       </Card>
-        <Box style={{display: 'flex', height: '100%', paddingLeft: '1%'}}>
-          <div style={{height: '100%', width: '100%'}}>
           <div style={{
             alignItems: 'center',
             paddingTop: '2%',
@@ -119,7 +118,6 @@ const CustomerEvent = ({event}) => {
         </div>
           
           </div>
-        </Box>
     </>
   )
 }
