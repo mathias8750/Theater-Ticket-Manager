@@ -18,8 +18,6 @@ export default function Review() {
 
   const location = useLocation();
 
-  console.log(location)
-
   const sumPrices = (seats) => {
     let sum = 0;
 
@@ -38,7 +36,7 @@ export default function Review() {
       <List disablePadding>
         {location.state.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={`${product.sectionNumber} Row ${product.rowLetter} Seat ${product.seatNumber}`}/>
+            <ListItemText primary={`${product.sectionNumber} Row ${product.rowNumber} Seat ${product.seatNumber}`}/>
             <Typography variant="body2">${product.price}</Typography>
           </ListItem>
         ))}

@@ -14,18 +14,10 @@ const Playhouse = ({tickets}) => {
     let tempSectionTickets = PlayhouseSections
     let tempLogeTickets = PlayhouseLoges
 
-    console.log(tickets[0])
 
     tickets.map((ticket) => {
       let tempTicket = {
-        ticketID: ticket.ticketID,
-        selected: ticket.selected,
-        disabled: false,
-        price: ticket.priceValue,
-        reserved: ticket.soldBool,
-        seatNumber: ticket.seatNumber,
-        rowLetter: ticket.rowNumber,
-        sectionNumber: ticket.sectionNumber,
+        ...ticket,
       }
 
       if (ticket.sectionNumber.startsWith("S")) {

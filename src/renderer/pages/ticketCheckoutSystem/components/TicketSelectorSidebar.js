@@ -48,8 +48,8 @@ const TicketSelectorSidebar = ({event, selectedSeats}) => {
                     sx={{
                       paddingLeft: '0px'
                     }}>
-                    <ListItemText primary={`${seat.sectionNumber} Row ${seat.rowLetter} Seat ${seat.seatNumber}`}
-                                  secondary={`$${seat.price}`}
+                    <ListItemText primary={`${seat.sectionNumber} Row ${seat.rowNumber} Seat ${seat.seatNumber}`}
+                                  secondary={`$${seat.priceValue}`}
                                   primaryTypographyProps={{
                                     variant: 'h5'
                                   }}

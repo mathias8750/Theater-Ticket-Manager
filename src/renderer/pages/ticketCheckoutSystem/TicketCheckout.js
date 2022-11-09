@@ -11,13 +11,14 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useLocation} from "react-router-dom";
 import CustomerInformationForm from "./components/CustomerInformationForm";
 import PaymentForm from "./components/PaymentForm";
 import Review from "./components/ReviewForm";
 import {useState} from "react";
 import CustomerHeader from "../../components/CustomerHeader";
+import supabase from "../../utils/Supabase";
 
 
 const steps = ['Customer Info', 'Payment details', 'Review your order'];
@@ -25,11 +26,11 @@ const steps = ['Customer Info', 'Payment details', 'Review your order'];
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <CustomerInformationForm />;
+      return <CustomerInformationForm/>;
     case 1:
-      return <PaymentForm />;
+      return <PaymentForm/>;
     case 2:
-      return <Review />;
+      return <Review/>;
     default:
       throw new Error('Unknown step');
   }
@@ -39,27 +40,78 @@ const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
+  const [error, setError] = useState(null);
 
-  const handleNext = () => {
+  const location = useLocation();
+
+
+  const handleNext = async () => {
+    if (activeStep === 2) {
+      const {data, error} = await supabase
+        .from('Tickets')
+        .upsert(location.state.map((ticket) => {
+          return {
+            ticketID: ticket.ticketID,
+            seasonTicketHolderID: ticket.seasonTicketHolderID,
+            soldBool: true,
+            priceValue: ticket.priceValue,
+            eventID: ticket.eventID,
+            seasonID: ticket.seasonID,
+            seatNumber: ticket.seatNumber,
+            rowNumber: ticket.rowNumber,
+            sectionNumber: ticket.sectionNumber
+          }
+        }))
+        .select()
+
+      if (error) {
+        console.log(error)
+        setError(error)
+      }
+
+    }
+
     setActiveStep(activeStep + 1);
+
+
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const location = useLocation();
+
+  function checkoutResult() {
+    if (error) {
+      return (
+        <>oh god oh fuck I "{error.message}"!!!!!!!</>
+      )
+    } else {
+      return (
+        <React.Fragment>
+          <Typography variant="h5" gutterBottom>
+            Thank you for your order.
+          </Typography>
+          <Typography variant="subtitle1">
+            Your order number is #2001539. We have emailed your order
+            confirmation, and will send you an update when your order has
+            shipped.
+          </Typography>
+        </React.Fragment>
+      )
+    }
+  }
 
   return (
     <CustomerHeader>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-          <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <CssBaseline/>
+        <Container component="main" maxWidth="sm" sx={{mb: 4}}>
+          <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}>
             <Typography component="h1" variant="h4" align="center">
               Checkout
             </Typography>
-            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+            <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
@@ -67,22 +119,13 @@ export default function Checkout() {
               ))}
             </Stepper>
             {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-              </React.Fragment>
+              <>{checkoutResult()}</>
             ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                    <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
                       Back
                     </Button>
                   )}
@@ -90,7 +133,7 @@ export default function Checkout() {
                   <Button
                     variant="contained"
                     onClick={handleNext}
-                    sx={{ mt: 3, ml: 1 }}
+                    sx={{mt: 3, ml: 1}}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                   </Button>

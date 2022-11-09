@@ -50,7 +50,7 @@ const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionInde
   return (
     <div
       onClick={() => {
-        if (!seat.reserved) {
+        if (!seat.soldBool) {
           onSeatClick(seat, selected)
           setSelected(!selected)
         }
@@ -62,7 +62,7 @@ const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionInde
         y={offset + RECT_Y_MARGIN + RECT_Y_PADDING * rowIndex}
         width={SEAT_SIZE}
         height={SEAT_SIZE}
-        fill={setFill(seat.reserved, selected)}
+        fill={setFill(seat.soldBool, selected)}
       />
 
       <Text

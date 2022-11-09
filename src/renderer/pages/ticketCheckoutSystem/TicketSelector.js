@@ -21,8 +21,6 @@ const TicketSelector = ({}) => {
       .select('*')
       .eq('eventID', event.eventID)
 
-    console.log(tickets)
-
     return tickets
   }
 
