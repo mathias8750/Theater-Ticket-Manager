@@ -1,9 +1,12 @@
-import {useEffect, useRef, useState} from "react";
+import {Card, CardContent} from "@mui/material";
 import {Layer, Stage} from "react-konva";
+import {createContext, useEffect, useRef, useState} from "react";
+import CivicCenter from "./CivicCenter";
 import Playhouse from "./Playhouse";
 
+export const TicketViewerContext = createContext({})
 
-const TicketSelector = ({ event, tickets, selectedSeats, setSelectedSeats }) => {
+const TicketViewer = ({ venue, tickets, onSeatClick }) => {
 
   const containerRef = useRef(null)
 
@@ -35,8 +38,8 @@ const TicketSelector = ({ event, tickets, selectedSeats, setSelectedSeats }) => 
   };
 
   const [stageSize, setStageSize] = useState({
-    width: 1000,
-    height: 1000,
+    width: 500,
+    height: 500,
   });
 
   useEffect(() => {
@@ -46,30 +49,32 @@ const TicketSelector = ({ event, tickets, selectedSeats, setSelectedSeats }) => 
         height: containerRef.current.offsetHeight
       });
     }
-  });
+  }, [containerRef]);
+
 
   return (
-    <div
-      style={{ height: '100%', width: '100%' }}
-      ref={containerRef}
+    <TicketViewerContext.Provider
+      value={{ onSeatClick: onSeatClick }}
     >
-      <Stage
-        width={stageSize.width}
-        height={stageSize.height}
-        onWheel={handleWheel}
-        scaleX={stage.scale}
-        scaleY={stage.scale}
-        draggable={true}
-        x={stage.x}
-        y={stage.y}
+      <Card style={{ height: '100%', margin: '10px'}}>
+        <CardContent style={{ height: '100%', padding: '0px'}} ref={containerRef}>
+          <Stage
+            width={stageSize.width}
+            height={stageSize.height}
+            onWheel={handleWheel}
+            scaleX={stage.scale}
+            scaleY={stage.scale}
+            draggable={true}
+            x={stage.x}
+            y={stage.y}
+          >
+            {venue === 2 ? <Playhouse tickets={tickets}/> : <CivicCenter/>}
+          </Stage>
+        </CardContent>
+      </Card>
+    </TicketViewerContext.Provider>
 
-      >
-        <Layer>
-          <Playhouse selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}/>
-        </Layer>
-      </Stage>
-    </div>
   )
 }
 
-export default TicketSelector;
+export default TicketViewer;

@@ -14,7 +14,8 @@ const ScrollableSidebar = ({ events, onEventClick }) => {
             id="standard-search"
             label="Search field"
             type="search"
-            variant="standard"
+            variant="outlined"
+            fullWidth={true}
           />
         </Grid>
 
