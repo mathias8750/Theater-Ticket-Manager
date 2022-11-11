@@ -1,4 +1,4 @@
-import {Box, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
+import {Box, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
 import ScrollableSidebar from "../../components/ScrollableSidebar";
 import {Link as NavLink} from "react-router-dom";
 import EmployeeHeader from "../../components/EmployeeHeader"; 
@@ -6,6 +6,8 @@ import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import React, { useState, useRef, useEffect } from 'react';
 import SnackbarAlert from 'renderer/components/SnackbarAlert';
+import {OrganizationContext} from "renderer/context/Context";
+import {useContext} from "react";
 
 const EmployeeEvents = ({event}) => {
 
@@ -15,32 +17,51 @@ const EmployeeEvents = ({event}) => {
   const [successAlertOpen, setSuccessAlert] = useState(false);
   const [failureAlertOpen, setFailureAlert] = useState(false);
 
-  const eventdatetimeRef = useRef('');
-  const eventnameRef = useRef('');
-  const organizationidRef = useRef('');
-  const eventidRef = useRef('');
-  const venueidRef = useRef('');
-  const seasonidRef = useRef('');
+  const {state} = useContext(OrganizationContext);
+
+  const [eventdatetime, setEventDateTime] = useState('');
+  const [eventname, setEventName] = useState('');
+  const [venueid, setVenueID] = useState(0);
 
   // Toggles the success alert
   const toggleSuccessAlert = () => {
     setSuccessAlert(!successAlertOpen);
-}
+  }
 
-// Toggles the failure alert
-const toggleFailureAlert = () => {
+  // Toggles the failure alert
+  const toggleFailureAlert = () => {
     setFailureAlert(!failureAlertOpen);
-}
+  }
 
-// Toggles the delete alert
-const toggleDeleteAlert = () => {
+  // Toggles the delete alert
+  const toggleDeleteAlert = () => {
     setDeleteAlert(!deleteAlertOpen);
+  }
+
+  const addEvent = async () => {
+      const {data: Events, error} = await supabase
+      .from('Events')
+      .insert([{organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: eventdatetime, eventName: eventname}]);
+
+      if (error) {
+          toggleFailureAlert();
+      } else {
+          toggleSuccessAlert();
+          fetchEvents();
+      }
+  }
+
+const removeEvent = async(event) => {
+  const {deleteEvent, error} = await supabase
+      .from("Events")
+      .delete()
+      .eq('', event.eventName);
 }
 
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('*, Organizations(organizationName), Venues(venueName)');
+      .select('*');
 
     return events;
   }
@@ -59,47 +80,11 @@ const toggleDeleteAlert = () => {
     setSelectedEvent(event)
   }
 
-  const addEvent = async () => {
-    if(eventidRef.current.value.trim() != '' && organizationidRef.current.value.trim() != '' && venueidRef.current.value.trim() != '' && eventdatetimeRef.current.value.trim() != '' && eventnameRef.current.value.trim() != '' && seasonidRef.current.value.trim() != '') {
-        const {data: Events, error} = await supabase
-        .from('Events')
-        .insert([{ eventID: eventidRef.current.value.trim(), organizationID: organizationidRef.current.value.trim(), venueID: venueidRef.current.value.trim(), seasonID: seasonidRef.current.value.trim(), eventDateTime: eventdatetimeRef.current.value.trim(), eventName: eventnameRef.current.value.trim()}]);
-
-        if (error) {
-            toggleFailureAlert();
-        } else {
-            toggleSuccessAlert();
-        }
-    }
-    
-    eventdatetimeRef.current.value = '';
-    eventnameRef.current.value = '';
-    eventidRef.current.value = '';
-    organizationidRef.current.value = '';
-    venueidRef.current.value = '';
-    seasonidRef.current.value = '';
-  }
-
-  const removeEvent = async(event) => {
-    const {deleteEvent, error} = await supabase
-        .from("Events")
-        .delete()
-        .eq('', event.eventID);
-  }
-
   return (
    <>
      <EmployeeHeader>
           
-       <Typography>Event Management</Typography>
-       <div
-            style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '5px',
-            }} >
-          <Typography>Add A New Event</Typography>
-        </div>
+      <Typography variant= "h6" align= "center" style={{padding:'10px'}}>Event Management
       <div
         style={{
             display: 'flex',
@@ -107,43 +92,27 @@ const toggleDeleteAlert = () => {
             paddingLeft: '5px',
             height: '10%',
             }} >
-
-                <TextField
-                    id='eventidTextField'
-                    label='Event ID'
-                    inputRef={eventidRef}
+              <Typography>Venue ID
+                <input
+                    name='Venue ID'
+                    type="text"
+                    onChange={event => setVenueID(event.target.value)}
                 />
-
-                <TextField
-                    id='organizationidTextField'
-                    label='Organization ID'
-                    inputRef={organizationidRef}
-                />
-
-                <TextField
-                    id='venueidTextField'
-                    label='Venue ID'
-                    inputRef={venueidRef}
-                />
-
-                <TextField
-                    id='seasonidTextField'
-                    label='Season ID'
-                    inputRef={seasonidRef}
-                /> 
-
-                <TextField
-                    id='eventdatetimeTextField'
-                    label='Event Date/Time'
-                    inputRef={eventdatetimeRef}
+              </Typography>
+              <Typography>Event Date/Time
+                <input
+                    name='Event Date/Time'
+                    type="text"
+                    onChange={event => setEventDateTime(event.target.value)}
                 />   
-
-                <TextField
-                    id='eventnameTextField'
-                    label='Event Name'
-                    inputRef={eventnameRef}
+              </Typography>
+              <Typography>Event Name
+                <input
+                    name='Event Name'
+                    type="text"
+                    onChange={event => setEventName(event.target.value)}
                 />
-
+              </Typography>
             
                 <Button
                     variant='contained'
@@ -154,7 +123,7 @@ const toggleDeleteAlert = () => {
                     Create Event
                 </Button>
        </div>
-
+      </Typography>
        <SnackbarAlert 
                 alertOpen={failureAlertOpen} 
                 toggleAlert={toggleFailureAlert}

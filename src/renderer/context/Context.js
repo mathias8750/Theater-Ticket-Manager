@@ -32,6 +32,22 @@ export function OrganizationProvider(props){
     )
 }
 
+// Employee account Context
+export const UserContext = createContext({});
+const userReducer = (state, pair) => ({...state, ...pair});
+const userInitialState = {
+    selectedUser: {username: "defaultusername", password: "defaultpassword"}
+}
+export function UserProvider(props){
+    const [state, update] = useReducer(userReducer, userInitialState)
+
+    return (
+        <UserContext.Provider value={{state, update}}>
+            {props.children}
+        </UserContext.Provider>
+    )
+}
+
 // Selected Event Context
 export const EventContext = createContext({});
 const eventReducer = (eventState, eventPair) => ({...eventState, ...eventPair});

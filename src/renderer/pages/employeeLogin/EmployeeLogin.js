@@ -4,6 +4,7 @@ import React, {useRef, useState, Component, useContext, useEffect} from "react";
 import supabase from '../../utils/Supabase.js';
 import LoginHeader from "renderer/components/LoginHeader.js";
 import SnackbarAlert from "renderer/components/SnackbarAlert.js";
+import { UserContext } from "renderer/context/Context";
 
 
 const EmployeeLogin = ({}) => {
@@ -11,6 +12,7 @@ const EmployeeLogin = ({}) => {
   const [failureAlertOpen, setFailureAlert] = useState(false);
   const usernameRef = useRef('');
   const passwordRef = useRef('');
+  const [selectedUser, setSelectedUser] = useState(null)
   let navigate = useNavigate();
 
   const toggleFailureAlert = () => {

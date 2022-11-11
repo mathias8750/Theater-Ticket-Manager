@@ -8,7 +8,6 @@ import CustomerEvent from "./components/CustomerEvent";
 import Playhouse from "../seatViewer/components/Playhouse";
 import { EventContext } from "renderer/context/Context";
 
-
 const CustomerEvents = ({}) => {
 
   const [selectedEvent, setSelectedEvent] = useState(null)
@@ -40,6 +39,21 @@ const CustomerEvents = ({}) => {
     setSelectedEvent(event)
   }
 
+  // seats.section gives section,
+  // seats.result[] array gives rowNumber and seatNumber for each seat (row will be same for each seat)
+  const onRecommendedSeatsClick = (seats) => {
+    console.log("Clicked on Seat"
+                + "\nSection: "
+                + seats.section
+                + "\nRow: "
+                + seats.result[0].rowNumber
+                + "\nSeat(s): "
+                );
+    for (const seat of seats.result) {
+      console.log(seat.seatNumber);
+    }
+  }
+
   return (
     <CustomerHeader>
       <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
@@ -49,9 +63,9 @@ const CustomerEvents = ({}) => {
           </Grid>
 
 
-          <Grid item md={8} style={{paddingRight: '10px', height: '100%'}}>
+          <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
             {selectedEvent !== null ? (
-              <CustomerEvent event={selectedEvent}/>
+              <CustomerEvent event={selectedEvent} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
             ) : (
               <></>
             )}
