@@ -8,7 +8,7 @@ import SeatList from "./SeatList";
 import supabase from "renderer/utils/Supabase";
 import { recommendSeats } from "../utils/SeatRecommender";
 
-const CustomerEvent = ({event}) => {
+const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
 
   const [eventTickets, setEventTickets] = useState([]);
   const [numTickets, setNumTickets] = useState(2);
@@ -52,10 +52,6 @@ const CustomerEvent = ({event}) => {
   const handleTicketNumChange = (event) => {
     setNumTickets(event.target.value);
     setRecommendedSeats(recommendSeats(eventTickets, event.target.value, eventLocation));
-  }
-
-  const onRecommendedSeatsClick = () => {
-
   }
 
   return (
