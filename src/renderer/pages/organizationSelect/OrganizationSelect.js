@@ -1,4 +1,5 @@
-import {Button, Typography, TextField} from "@mui/material";
+import {Button, Typography, TextField, Dialog, DialogTitle} from "@mui/material";
+import Stack from "@mui/material/Stack";
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import React, {useRef, useState, useContext} from "react";
 import { OrganizationContext } from "renderer/context/Context";
@@ -14,6 +15,7 @@ const OrganizationSelect = ({}) => {
   const {state, update} = useContext(OrganizationContext);
   const [newOrgErrOpen, setNewOpen] = useState(false);
   const [orgAddedOpen, setAddedOpen] = useState(false);
+  const [orgAddOpen, setAddOpen] = useState(false);
   const [orgs, setOrgs] = useState([]);
   const newOrgNameRef = useRef('');
   const newOrgEmailRef = useRef('');
@@ -76,6 +78,7 @@ const OrganizationSelect = ({}) => {
         // Org added; pass new org to org list to update the list
         let newOrgs = orgs_compare.concat(orgs);
         setOrgs(newOrgs);
+        toggleAddOrgDialog();
       }
     }
 
@@ -94,6 +97,11 @@ const OrganizationSelect = ({}) => {
     setAddedOpen(!orgAddedOpen);
   }
 
+  // Function to toggle the add org dialog
+  const toggleAddOrgDialog = () => {
+    setAddOpen(!orgAddOpen);
+  }
+
   return (
 
       <LoginHeader>
@@ -101,30 +109,77 @@ const OrganizationSelect = ({}) => {
             <div
             style={{
             display: 'flex',
-            alignItems: 'center',
             paddingLeft: '5px',
+            justifyContent: 'center',
             }} >
-            <Typography>Add New Organization</Typography>
             </div>
+            <div
+            style={{
+              display: 'flex',
+              height: '50%',
+              justifyContent: 'center',
+            }}>
+            <OrganizationScrollableList orgs={orgs} onOrgClick={onSelectButton}/>
+            </div>
+            <div
+            style={{
+              paddingTop: '7%',
+              display: 'flex',
+              justifyContent: 'center',
+            }}>
+              <Button
+              color='primary'
+              size='small'
+              onClick={toggleAddOrgDialog}
+              >
+                Create New Organization
+              </Button>
+            </div>
+            <Dialog
+              open={orgAddOpen}
+              onClose={toggleAddOrgDialog}
+              style={{
+                justifyContent: 'center',
+              }}
+            >
+            <DialogTitle>Create Organization</DialogTitle>
             <div
             style={{
             display: 'flex',
             alignItems: 'center',
-            paddingLeft: '5px',
-            height: '10%',
+            paddingLeft: '2%',
+            paddingBottom: '4%',
             }} >
+            <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingRight: '2%',
+            }}>
             <TextField
             id='newOrgNameTextField'
             label='Organization Name'
             inputRef={newOrgNameRef}
             />
-
+            </div>
+            <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingRight: '2%',
+            }}>
             <TextField
             id='newOrgEmailTextField'
             label='Organization Email'
             inputRef={newOrgEmailRef}
             />
-
+            </div>
+            <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingRight: '2%',
+            }}>
             <Button
             variant='contained'
             type='submit'
@@ -135,7 +190,8 @@ const OrganizationSelect = ({}) => {
               Add Organization
             </Button>
             </div>
-            <OrganizationScrollableList orgs={orgs} onOrgClick={onSelectButton}/>
+            </div>
+            </Dialog>
         </div>
         <SnackbarAlert 
         alertOpen={newOrgErrOpen} 
