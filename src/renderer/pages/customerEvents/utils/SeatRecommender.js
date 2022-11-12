@@ -8,7 +8,7 @@
 
 
 // Function to find numSeats consecutive unsold seats in a row
-const findConsecutiveSeats = (tickets, numSeats, venue) => {
+const findConsecutiveSeats = (tickets, numSeats) => {
     let arr = [];
     let validResult = false;
       if (numSeats === 1) {                       // find 1 seat
@@ -76,7 +76,7 @@ export const recommendSeats = (ticketList, ticketNum, eventLocation) => {
         // Get consecutive seats in row if they exist
         for (let row = 'A'.charCodeAt(0); row <= 'G'.charCodeAt(0); row++) {
           let tickets_sample = tickets.filter(ticket => {return ticket.rowNumber === String.fromCharCode(row)})
-          seats = findConsecutiveSeats(tickets_sample, ticketNum, eventLocation);
+          seats = findConsecutiveSeats(tickets_sample, ticketNum);
 
           // consecutive seats exist; add them to the array and stop looking in this section
           if (seats.resultValid) {
@@ -106,7 +106,7 @@ export const recommendSeats = (ticketList, ticketNum, eventLocation) => {
         // Get consecutive seats in row if they exist
         for (let row = 'A'.charCodeAt(0); row <= 'C'.charCodeAt(0); row++) {
           let tickets_sample = tickets.filter(ticket => {return ticket.rowNumber === String.fromCharCode(row)})
-          seats = findConsecutiveSeats(tickets_sample, ticketNum, eventLocation);
+          seats = findConsecutiveSeats(tickets_sample, ticketNum);
 
           // consecutive seats exist; add them to the array and stop looking in this loge
           if (seats.resultValid) {
