@@ -106,13 +106,7 @@ const OrganizationSelect = ({}) => {
 
       <LoginHeader>
         <div style={{height: '100%'}}>
-            <div
-            style={{
-            display: 'flex',
-            paddingLeft: '5px',
-            justifyContent: 'center',
-            }} >
-            </div>
+            
             <div
             style={{
               display: 'flex',
