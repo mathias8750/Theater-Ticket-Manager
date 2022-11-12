@@ -45,6 +45,11 @@ export const generateTickets = (event) => {
     // get the org related to the event, then create tickets
     fetchOrg(event).then(() => {
 
+        // TODO: create tickets for concert hall
+        if (event.venueID === 1) {
+            
+        }
+
         // create tickets for playhouse
         if (event.venueID === 2) {
 
@@ -72,7 +77,7 @@ export const generateTickets = (event) => {
                 Object.entries(section[1]).map(row => {
                     if(row[0] != 'data') {
                         Object.entries(row[1]).map(seat => {
-                            
+
                             // TODO: if seat belongs to season ticket holder, mark it sold
 
                             // calculate default ticket price then push ticket to tickets array
@@ -82,11 +87,6 @@ export const generateTickets = (event) => {
                     }
                 })
             })   
-        }
-
-        // TODO: create tickets for concert hall
-        if (event.venueID === 1) {
-            
         }
 
         // insert the new tickets into the supabase
