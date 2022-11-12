@@ -11,8 +11,7 @@
 const findConsecutiveSeats = (tickets, numSeats, venue) => {
     let arr = [];
     let validResult = false;
-    if (venue === 2) {
-      if (numSeats === 1) {
+      if (numSeats === 1) {                       // find 1 seat
         for (let i = 0; i < tickets.length; i++) {
           if (tickets[i].soldBool === false) {
             validResult = true;
@@ -20,7 +19,7 @@ const findConsecutiveSeats = (tickets, numSeats, venue) => {
             break;
           }
         }
-      } else {
+      } else {                                    // find numSeats consecutive seats
         if (tickets.length >= numSeats) {
           let tickets_sorted = tickets.sort((a,b) => (a.seatNumber > b.seatNumber) ? 1 : -1);
           let consecutiveSeats = [];
@@ -33,12 +32,13 @@ const findConsecutiveSeats = (tickets, numSeats, venue) => {
                 break;
               }
             } else {
-              consecutiveSeats = [];
-            }
+            consecutiveSeats = [];
           }
         }
       }
     }
+    
+    // return bool for if seats were found, array of seats data
     return {resultValid: validResult, resultData: arr}; 
   }
 
@@ -46,6 +46,7 @@ const findConsecutiveSeats = (tickets, numSeats, venue) => {
 export const recommendSeats = (ticketList, ticketNum, eventLocation) => {
 
     let arr = [];
+    let seats = {};
 
     // Recommend seats for Playhouse
     if (eventLocation === 2) {
@@ -66,40 +67,17 @@ export const recommendSeats = (ticketList, ticketNum, eventLocation) => {
                     break;
             }
         });
-        let tickets_a = tickets.filter((ticket) => {return ticket.rowNumber === 'A'});
-        let seats = findConsecutiveSeats(tickets_a, ticketNum, eventLocation);
-        if (seats.resultValid) {
-        } else {
-            let tickets_b = tickets.filter((ticket) => {return ticket.rowNumber === 'B'});
-            seats = findConsecutiveSeats(tickets_b, ticketNum, eventLocation);
-            if (seats.resultValid) {
-            } else {
-            let tickets_c = tickets.filter((ticket => {return ticket.rowNumber === 'C'}));
-            seats = findConsecutiveSeats(tickets_c, ticketNum, eventLocation);
-            if (seats.resultValid) {
-            } else {
-                let tickets_d = tickets.filter((ticket => {return ticket.rowNumber === 'D'}));
-                seats = findConsecutiveSeats(tickets_d, ticketNum, eventLocation);
-                if (seats.resultValid) {
-                } else {
-                let tickets_e = tickets.filter((ticket => {return ticket.rowNumber === 'E'}));
-                seats = findConsecutiveSeats(tickets_e, ticketNum, eventLocation);
-                if (seats.resultValid) {
-                } else {
-                    let tickets_f = tickets.filter((ticket => {return ticket.rowNumber === 'F'}));
-                    seats = findConsecutiveSeats(tickets_f, ticketNum, eventLocation);
-                    if (seats.resultValid) {
-                    } else {
-                    let tickets_g = tickets.filter((ticket => {return ticket.rowNumber === 'G'}));
-                    seats = findConsecutiveSeats(tickets_g, ticketNum, eventLocation);
-                    if (seats.resultValid) {
-                    }
-                    }
-                }
-                }
-            }
-            }
+
+        // Get consecutive seats in row if they exist
+        for (let row = 'A'.charCodeAt(0); row <= 'G'.charCodeAt(0); row++) {
+          let tickets_sample = tickets.filter(ticket => {return ticket.rowNumber === String.fromCharCode(row)})
+          seats = findConsecutiveSeats(tickets_sample, ticketNum, eventLocation);
+          if (seats.resultValid) {
+            break;
+          }
         }
+
+        // If seats exist add them to the array
         if (seats.resultValid) {
           switch (i) {
               case 0:
@@ -118,7 +96,7 @@ export const recommendSeats = (ticketList, ticketNum, eventLocation) => {
                   break;
           }
         }
-    }
+      }
 
       // Recommend one set of seats from each loge
       for (let i = 0; i < 4; i++) {
@@ -136,20 +114,17 @@ export const recommendSeats = (ticketList, ticketNum, eventLocation) => {
                     break;
             }
         });
-        let tickets_a = tickets.filter((ticket) => {return ticket.rowNumber === 'A'});
-        let seats = findConsecutiveSeats(tickets_a, ticketNum, eventLocation);
-        if (seats.resultValid) {
-        } else {
-            let tickets_b = tickets.filter((ticket) => {return ticket.rowNumber === 'B'});
-            seats = findConsecutiveSeats(tickets_b, ticketNum, eventLocation);
-            if (seats.resultValid) {
-            } else {
-            let tickets_c = tickets.filter((ticket => {return ticket.rowNumber === 'C'}));
-            seats = findConsecutiveSeats(tickets_c, ticketNum, eventLocation);
-            if (seats.resultValid) {
-            } 
+
+        // Get consecutive seats in row if they exist
+        for (let row = 'A'.charCodeAt(0); row <= 'C'.charCodeAt(0); row++) {
+          let tickets_sample = tickets.filter(ticket => {return ticket.rowNumber === String.fromCharCode(row)})
+          seats = findConsecutiveSeats(tickets_sample, ticketNum, eventLocation);
+          if (seats.resultValid) {
+            break;
           }
         }
+
+        // If seats exist add them to the array
         if (seats.resultValid) {
           switch (i) {
               case 0:
@@ -169,6 +144,10 @@ export const recommendSeats = (ticketList, ticketNum, eventLocation) => {
           }
         }
       }
+    }
+    // TODO: recommend seats for concert hall
+    if (eventLocation === 1) {
+
     }
     return arr;
 }
