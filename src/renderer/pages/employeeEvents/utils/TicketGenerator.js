@@ -42,40 +42,56 @@ export const generateTickets = (event) => {
     // array of tickets to be added to the supabase
     const tickets = [];
 
-    // create tickets for playhouse
-    if (event.venueID === 2) {
+    // get the org related to the event, then create tickets
+    fetchOrg(event).then(() => {
 
-        // create tickets for sections
-        Object.entries(PlayhouseSections).map(section => {
-            Object.entries(section[1]).map(row => {
-                if(row[0] != 'data') {
-                    Object.entries(row[1]).map(seat => {
-                        // TODO: if seat belongs to season ticket holder, mark it sold
-                        tickets.push({soldBool: false, priceValue: 0.0, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
-                    })
-                }
+        // create tickets for playhouse
+        if (event.venueID === 2) {
+
+            // calculate diff used in seat price calculation
+            let diff = (eventOrg.organizationMaxPrice - eventOrg.organizationMinPrice) / 9;
+
+            // create tickets for sections
+            Object.entries(PlayhouseSections).map(section => {
+                Object.entries(section[1]).map(row => {
+                    if(row[0] != 'data') {
+                        Object.entries(row[1]).map(seat => {
+                            // TODO: if seat belongs to season ticket holder, mark it sold
+
+                            // calculate default ticket price then push ticket to tickets array
+                            let price = parseFloat((eventOrg.organizationMaxPrice - (((row[0].charCodeAt(0)-'A'.charCodeAt(0))) * diff)).toFixed(2));
+                            tickets.push({soldBool: false, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                        })
+                    }
+                })
             })
-        })
 
-        // create tickets for loges
-        Object.entries(PlayhouseLoges).map(section => {
-            Object.entries(section[1]).map(row => {
-                if(row[0] != 'data') {
-                    Object.entries(row[1]).map(seat => {
-                        // TODO: if seat belongs to season ticket holder, mark it sold
-                        tickets.push({soldBool: false, priceValue: 0.0, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
-                    })
-                }
-            })
-        })   
-    }
+            // create tickets for loges
+            Object.entries(PlayhouseLoges).map(section => {
+                Object.entries(section[1]).map(row => {
+                    if(row[0] != 'data') {
+                        Object.entries(row[1]).map(seat => {
+                            // TODO: if seat belongs to season ticket holder, mark it sold
 
-    // TODO: create tickets for concert hall
-    if (event.venueID === 1) {
-        
-    }
+                            // calculate default ticket price then push ticket to tickets array
+                            let price = parseFloat((eventOrg.organizationMinPrice + ((('C'.charCodeAt(0) - row[0].charCodeAt(0))) * diff)).toFixed(2));
+                            tickets.push({soldBool: false, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                        })
+                    }
+                })
+            })   
+        }
 
+        // TODO: create tickets for concert hall
+        if (event.venueID === 1) {
+            
+        }
+
+        // insert the new tickets into the supabase
+        insertTickets(tickets);
+    });
     // calculate ticket prices based on org's min and max default prices
+    /*
     fetchOrg(event).then(() => {
         if (event.venueID === 2) {
             let diff = (eventOrg.organizationMaxPrice - eventOrg.organizationMinPrice) / 9;
@@ -103,4 +119,5 @@ export const generateTickets = (event) => {
         // insert the new tickets into the supabase
         insertTickets(tickets);
     });
+    */
 }
