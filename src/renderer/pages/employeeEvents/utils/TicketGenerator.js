@@ -103,6 +103,4 @@ export const generateTickets = (event) => {
         // insert the new tickets into the supabase
         insertTickets(tickets);
     });
-
-    console.log(tickets);
 }
