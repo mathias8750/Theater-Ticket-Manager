@@ -4,14 +4,11 @@
     To generate set of tickets for an event,
     call the 'generateTickets(event)' function
 
-    NOTE: Right now this only works for the playhouse,
-          and it doesn't mark season ticket holders'
-          seats as sold
-
 */
 
 import { useState } from "react";
 import { PlayhouseLoges, PlayhouseSections } from "renderer/data/PlayhouseSeatMapJson";
+import { ConcertHallStageLevelSection, ConcertHallBalconyLevelSection } from "renderer/data/ConcerthallSeatMapJson";
 import supabase from "renderer/utils/Supabase";
 
 // Event org object
@@ -41,13 +38,43 @@ export const generateTickets = (event) => {
 
     // array of tickets to be added to the supabase
     const tickets = [];
+    let count = 0;
 
     // get the org related to the event, then create tickets
     fetchOrg(event).then(() => {
 
-        // TODO: create tickets for concert hall
+        // create tickets for concert hall
         if (event.venueID === 1) {
             
+            // create tickets for stage-level sections
+            Object.entries(ConcertHallStageLevelSection).map(section => {
+                Object.entries(section[1]).map(row => {
+                    if(row[0] != 'data') {
+                        Object.entries(row[1]).map(seat => {
+
+                            // TODO: if seat belongs to season ticket holder, mark it sold
+
+                            // TODO: calculate default ticket price
+                            tickets.push({soldBool: false, priceValue: 0.0, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                        })
+                    }
+                })
+            })
+
+            // create tickets for balcony-level sections
+            Object.entries(ConcertHallBalconyLevelSection).map(section => {
+                Object.entries(section[1]).map(row => {
+                    if(row[0] != 'data') {
+                        Object.entries(row[1]).map(seat => {
+
+                            // TODO: if seat belongs to season ticket holder, mark it sold
+
+                            // TODO: calculate default ticket price
+                            tickets.push({soldBool: false, priceValue: 0.0, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                        })
+                    }
+                })
+            })
         }
 
         // create tickets for playhouse
@@ -91,5 +118,6 @@ export const generateTickets = (event) => {
 
         // insert the new tickets into the supabase
         insertTickets(tickets);
+
     });
 }
