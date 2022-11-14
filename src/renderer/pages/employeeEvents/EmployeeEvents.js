@@ -49,7 +49,7 @@ const EmployeeEvents = ({event}) => {
       } else {
           toggleSuccessAlert();
           generateTickets(Events[0]);
-          fetchEvents();
+          FetchEvents();
       }
   }
 
@@ -60,15 +60,15 @@ const removeEvent = async(event) => {
       .eq('', event.eventName);
 }
 
-  const fetchEvents = async () => {
+  const FetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('*');
+      .select('*, Organizations(organizationName), Venues(venueName)');
 
     return events;
   }
 
-  const {status, data, error} = useQuery(['events'], fetchEvents)
+  const {status, data, error} = useQuery(['events'], FetchEvents)
   
   if (status === 'loading') {
     return <span>Loading...</span>
@@ -130,7 +130,7 @@ const removeEvent = async(event) => {
                 alertOpen={failureAlertOpen} 
                 toggleAlert={toggleFailureAlert}
                 alertSeverity={'error'}
-                alertText={'Event Already Exists'}
+                alertText={'Cannot complete action'}
                 />
 
                 <SnackbarAlert 

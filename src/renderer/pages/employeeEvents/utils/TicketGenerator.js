@@ -11,8 +11,11 @@ import { PlayhouseLoges, PlayhouseSections } from "renderer/data/PlayhouseSeatMa
 import { ConcertHallStageLevelSection, ConcertHallBalconyLevelSection } from "renderer/data/ConcerthallSeatMapJson";
 import supabase from "renderer/utils/Supabase";
 
+// add event, have event object, call generate events on that object
+
 // Event org object
 let eventOrg = {};
+
 
 // Function to add array of tickets to the tickets table in supabase
 const insertTickets = async (tickets) => {
