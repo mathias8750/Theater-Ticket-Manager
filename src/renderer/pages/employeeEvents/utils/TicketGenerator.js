@@ -12,7 +12,7 @@
 
 import { PlayhouseLoges, PlayhouseSections } from "renderer/data/PlayhouseSeatMapJson";
 import supabase from "renderer/utils/Supabase";
-
+// add event, have event object, call generate events on that object
 // Function to add array of tickets to the tickets table in supabase
 const insertTickets = async (tickets) => {
     const {data, error} = await supabase
