@@ -45,6 +45,9 @@ export const generateTickets = (event) => {
 
         // create tickets for concert hall
         if (event.venueID === 1) {
+
+            // calculate diff used in seat price calculation
+            let diff = (eventOrg.organizationMaxPrice - eventOrg.organizationMinPrice) / 37;
             
             // create tickets for stage-level sections
             Object.entries(ConcertHallStageLevelSection).map(section => {
@@ -54,8 +57,9 @@ export const generateTickets = (event) => {
 
                             // TODO: if seat belongs to season ticket holder, mark it sold
 
-                            // TODO: calculate default ticket price
-                            tickets.push({soldBool: false, priceValue: 0.0, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            // calculate default ticket price then push ticket to tickets array
+                            let price = parseFloat((eventOrg.organizationMaxPrice - (((row[0].charCodeAt(0)-'A'.charCodeAt(0))) * diff)).toFixed(2));
+                            tickets.push({soldBool: false, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
@@ -69,8 +73,9 @@ export const generateTickets = (event) => {
 
                             // TODO: if seat belongs to season ticket holder, mark it sold
 
-                            // TODO: calculate default ticket price
-                            tickets.push({soldBool: false, priceValue: 0.0, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            // calculate default ticket price then push ticket to tickets array
+                            let price = parseFloat((eventOrg.organizationMinPrice + ((('L'.charCodeAt(0) - row[0].charCodeAt(0))) * diff)).toFixed(2));
+                            tickets.push({soldBool: false, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
