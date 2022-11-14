@@ -1,12 +1,13 @@
 import {Card, CardContent} from "@mui/material";
 import {Layer, Stage} from "react-konva";
 import {createContext, useEffect, useRef, useState} from "react";
-import CivicCenter from "./CivicCenter";
+import ConcertHall from "./ConcertHall";
 import Playhouse from "./Playhouse";
+import {PlayhouseLoges, PlayhouseSections} from "../../../data/PlayhouseSeatMapJson";
 
 export const TicketViewerContext = createContext({})
 
-const TicketViewer = ({ venue, tickets, onSeatClick }) => {
+const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedSeats, maxSeats }) => {
 
   const containerRef = useRef(null)
 
@@ -51,10 +52,50 @@ const TicketViewer = ({ venue, tickets, onSeatClick }) => {
     }
   }, [containerRef]);
 
+  const updateSelectedSeats = (seat, selected) => {
+
+    let tempSelectedSeats = [...selectedSeats];
+
+    if (selected) {
+
+      tempSelectedSeats = tempSelectedSeats.filter((element) => {
+        if (element.ticketID !== seat.ticketID) {
+          return element
+        }
+      })
+
+    } else {
+      if (tempSelectedSeats.length < maxSeats) {
+        tempSelectedSeats.push(seat)
+      }
+    }
+
+    setSelectedSeats(tempSelectedSeats)
+  }
+
+
+  function playhouseConvert(tickets) {
+    let tempSectionTickets = PlayhouseSections
+    let tempLogeTickets = PlayhouseLoges
+
+    tickets.map((ticket) => {
+      let tempTicket = {
+        ...ticket,
+      }
+
+      if (ticket.sectionNumber.startsWith("S")) {
+        tempSectionTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
+      } else if (ticket.sectionNumber.startsWith("L")) {
+        tempLogeTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
+      }
+    })
+
+    return {section: tempSectionTickets, loge: tempLogeTickets};
+  }
 
   return (
     <TicketViewerContext.Provider
-      value={{ onSeatClick: onSeatClick }}
+      value={{ updateSelectedSeats: updateSelectedSeats, selectedSeats: selectedSeats, maxSelectableSeats: maxSeats, venue: venue }}
     >
       <Card style={{ height: '100%', margin: '10px'}}>
         <CardContent style={{ height: '100%', padding: '0px'}} ref={containerRef}>
@@ -68,7 +109,8 @@ const TicketViewer = ({ venue, tickets, onSeatClick }) => {
             x={stage.x}
             y={stage.y}
           >
-            {venue === 2 ? <Playhouse tickets={tickets}/> : <CivicCenter/>}
+            <ConcertHall/>
+            {/*{venue === 2 ? <Playhouse tickets={playhouseConvert(tickets)}/> : <ConcertHall/>}*/}
           </Stage>
         </CardContent>
       </Card>
