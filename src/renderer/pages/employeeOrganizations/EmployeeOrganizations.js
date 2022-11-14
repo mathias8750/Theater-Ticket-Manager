@@ -99,7 +99,7 @@ const EmployeeOrganizations = ({}) => {
     <>
       <EmployeeHeader>
         <div style={{height: '100%'}}>
-        <Typography variant="h6" align="center" style={{paddingTop: '10%', paddingBottom: '1%'}}>Organization Settings</Typography>
+        <Typography variant="h6" align="center" style={{paddingTop: '5%', paddingBottom: '1%'}}>Organization Settings</Typography>
         <div style={{
           display: 'flex',
           paddingBottom: '1%',

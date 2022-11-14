@@ -46,38 +46,39 @@ const EmployeeLogin = ({}) => {
   return (
     
     <LoginHeader>
-
-      <Typography>Employee Login</Typography>
-
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      <Typography variant="h6" align="center" style={{padding: '2%'}}>Employee Login</Typography>
+    </div>
+    <div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1%'}}>
       <TextField
       id='usernameTextField'
       label='Username'
       inputRef={usernameRef}
       />
-
+    </div>
+    <div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1%'}}>
       <TextField
       id='passwordTextField'
       label='Password'
       type='password'
       inputRef={passwordRef}
       />
-
+    </div>
+    <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
       <Button
-      variant='contained'
       color='primary'
       size='small'
       onClick={() => login()}
       >
         Login
       </Button>
-
+    </div>
       <SnackbarAlert 
       alertOpen={failureAlertOpen} 
       toggleAlert={toggleFailureAlert}
       alertSeverity={'error'}
       alertText={'Invalid Username/Password'}
       />
-
     </LoginHeader>
   )
 }
