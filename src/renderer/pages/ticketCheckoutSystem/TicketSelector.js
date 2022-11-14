@@ -36,27 +36,6 @@ const TicketSelector = ({}) => {
     return <span>Error: {error.message}</span>
   }
 
-
-  const onSeatClick = (seat, selected) => {
-
-    let tempSelectedSeats = [...selectedSeats];
-
-    if (selected) {
-
-      tempSelectedSeats = tempSelectedSeats.filter((element) => {
-        if (element.ticketID !== seat.ticketID) {
-          return element
-        }
-      })
-
-    } else {
-      tempSelectedSeats.push(seat)
-    }
-
-    setSelectedSeats(tempSelectedSeats)
-  }
-
-
   return (
     <CustomerHeader>
       <Grid container style={{ height: '100%'}}>
@@ -64,7 +43,13 @@ const TicketSelector = ({}) => {
         <TicketSelectorSidebar event={event} selectedSeats={selectedSeats}/>
 
         <Grid item md={8}>
-          <TicketViewer venue={event.venueID} tickets={tickets} onSeatClick={onSeatClick}/>
+          <TicketViewer
+            venue={event.venueID}
+            tickets={tickets}
+            selectedSeats={selectedSeats}
+            setSelectedSeats={setSelectedSeats}
+            maxSeats={6}
+          />
         </Grid>
       </Grid>
     </CustomerHeader>

@@ -47,19 +47,3 @@ export function UserProvider(props){
         </UserContext.Provider>
     )
 }
-
-// Selected Event Context
-export const EventContext = createContext({});
-const eventReducer = (eventState, eventPair) => ({...eventState, ...eventPair});
-const EventInitialState = {
-    selectedEvent: null
-}
-export function EventProvider(props){
-    const [state, update] = useReducer(eventReducer, EventInitialState);
-
-    return (
-        <EventContext.Provider value={{state, update}}>
-            {props.children}
-        </EventContext.Provider>
-    )
-}

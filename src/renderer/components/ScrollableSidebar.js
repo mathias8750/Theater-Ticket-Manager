@@ -20,8 +20,7 @@ const ScrollableSidebar = ({ events, onEventClick }) => {
         </Grid>
 
         <Grid item style={{
-          border: '1px solid rgba(0, 0, 0, 0.05)',
-          height: '75%',
+          height: '90%',
         }}>
           <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
             <div style={{ height: '100%', overflow: 'auto'}}>
