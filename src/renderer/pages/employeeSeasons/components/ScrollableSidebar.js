@@ -1,5 +1,5 @@
 import {Grid, TextField} from "@mui/material";
-import SidebarEventItem from "./SidebarEventItem";
+import SidebarSeasonItem from "./SidebarSeasonItem";
 
 
 const ScrollableSidebar = ({ seasons, onSeasonClick }) => {
@@ -24,7 +24,7 @@ const ScrollableSidebar = ({ seasons, onSeasonClick }) => {
             <div style={{ height: '100%', overflow: 'auto'}}>
               {seasons.map((season) => {
                 return (
-                  <SidebarEventItem season={season} onSeasonClick={onSeasonClick}/>
+                  <SidebarSeasonItem season={season} onSeasonClick={onSeasonClick}/>
                 )
               })}
             </div>

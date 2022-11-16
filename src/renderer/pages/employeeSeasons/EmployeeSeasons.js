@@ -7,12 +7,14 @@ import ScrollableSidebar from "./components/ScrollableSidebar";
 import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Season from "./components/Season";
+import { OrganizationContext } from "renderer/context/Context";
 
 const EmployeeSeasons = ({}) => {
 
   const [selectedSeason, setselectedSeason] = useState(null)
+  const {state} = useContext(OrganizationContext)
 
   const fetchSeasons = async () => {
     const { data: seasons } = await supabase
@@ -20,6 +22,7 @@ const EmployeeSeasons = ({}) => {
      // .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
       .from('Seasons')
       .select('*')
+      .eq('organizationID', state.selectedOrg.organizationID)
 
 
     return seasons;
