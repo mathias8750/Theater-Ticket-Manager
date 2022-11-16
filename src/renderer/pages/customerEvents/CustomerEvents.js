@@ -3,18 +3,24 @@ import ScrollableSidebar from "../../components/ScrollableSidebar";
 import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
-import {useState} from "react";
+import {useState, useContext} from "react";
 import CustomerEvent from "./components/CustomerEvent";
-
+import Playhouse from "../seatViewer/components/Playhouse";
+import { EventContext } from "renderer/context/Context";
 
 const CustomerEvents = ({}) => {
 
   const [selectedEvent, setSelectedEvent] = useState(null)
+  const {state, update} = useContext(EventContext);
 
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
+      .select('*, Organizations(organizationName), Venues(venueName)');
+
+    if (state.selectedEvent) {
+      setSelectedEvent(state.selectedEvent)
+    }
 
     return events;
   }
@@ -33,6 +39,21 @@ const CustomerEvents = ({}) => {
     setSelectedEvent(event)
   }
 
+  // seats.section gives section,
+  // seats.result[] array gives rowNumber and seatNumber for each seat (row will be same for each seat)
+  const onRecommendedSeatsClick = (seats) => {
+    console.log("Clicked on Seat"
+                + "\nSection: "
+                + seats.section
+                + "\nRow: "
+                + seats.result[0].rowNumber
+                + "\nSeat(s): "
+                );
+    for (const seat of seats.result) {
+      console.log(seat.seatNumber);
+    }
+  }
+
   return (
     <CustomerHeader>
       <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
@@ -42,9 +63,9 @@ const CustomerEvents = ({}) => {
           </Grid>
 
 
-          <Grid item md={8} style={{paddingRight: '10px', height: '100%'}}>
+          <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
             {selectedEvent !== null ? (
-              <CustomerEvent event={selectedEvent}/>
+              <CustomerEvent event={selectedEvent} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
             ) : (
               <></>
             )}

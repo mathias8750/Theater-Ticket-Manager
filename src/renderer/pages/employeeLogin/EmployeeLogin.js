@@ -3,17 +3,20 @@ import {Link as NavLink, useNavigate} from "react-router-dom";
 import React, {useRef, useState, Component, useContext, useEffect} from "react";
 import supabase from '../../utils/Supabase.js';
 import LoginHeader from "renderer/components/LoginHeader.js";
+import SnackbarAlert from "renderer/components/SnackbarAlert.js";
+import { UserContext } from "renderer/context/Context";
 
 
 const EmployeeLogin = ({}) => {
 
-  const [open, setOpen] = useState(false);
+  const [failureAlertOpen, setFailureAlert] = useState(false);
   const usernameRef = useRef('');
   const passwordRef = useRef('');
+  const [selectedUser, setSelectedUser] = useState(null)
   let navigate = useNavigate();
 
-  const toggleAlert = () => {
-    setOpen(!open);
+  const toggleFailureAlert = () => {
+    setFailureAlert(!failureAlertOpen)
   }
 
   // Function to login as employee and access the org select screen
@@ -29,7 +32,7 @@ const EmployeeLogin = ({}) => {
     // If the username and password are valid, navigate to the employee login screen
     if(Users.length == 0) {
       // Invalid login info, alert the user
-      toggleAlert();
+      toggleFailureAlert();
     } else {
       if (usernameRef.current.value.trim() == 'admin') {
         navigate('/employee/login/admin');
@@ -43,38 +46,39 @@ const EmployeeLogin = ({}) => {
   return (
     
     <LoginHeader>
-      <Typography>Employee Login</Typography>
-
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      <Typography variant="h6" align="center" style={{padding: '2%'}}>Employee Login</Typography>
+    </div>
+    <div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1%'}}>
       <TextField
       id='usernameTextField'
       label='Username'
       inputRef={usernameRef}
       />
-
+    </div>
+    <div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1%'}}>
       <TextField
       id='passwordTextField'
       label='Password'
       type='password'
       inputRef={passwordRef}
       />
-
+    </div>
+    <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
       <Button
-      variant='contained'
       color='primary'
       size='small'
       onClick={() => login()}
       >
         Login
       </Button>
-
-      <Dialog open={open} onClose={toggleAlert}>
-        <Alert
-        severity="error"
-        >
-          <AlertTitle>Error</AlertTitle>
-          Invalid Username/Password
-        </Alert>
-      </Dialog>
+    </div>
+      <SnackbarAlert 
+      alertOpen={failureAlertOpen} 
+      toggleAlert={toggleFailureAlert}
+      alertSeverity={'error'}
+      alertText={'Invalid Username/Password'}
+      />
     </LoginHeader>
   )
 }

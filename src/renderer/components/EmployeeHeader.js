@@ -1,14 +1,17 @@
-import {AppBar, Box, Button, Grid, TextField, Toolbar} from "@mui/material";
+import {AppBar, Box, Button, Grid, TextField, Toolbar, Typography} from "@mui/material";
 import SidebarEventItem from "./SidebarEventItem";
 import {Link as NavLink, useLocation} from "react-router-dom";
 import { useState, } from "react";
 import HelpBackdrop from "./HelpBackdrop";
+import {UserContext} from "renderer/context/Context";
+import {useContext} from "react";
 
 
 const EmployeeHeader = (props) => {
 
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const {state} = useContext(UserContext);
 
   return (
     <>
@@ -18,11 +21,10 @@ const EmployeeHeader = (props) => {
             <NavLink to={"/employee/home"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button
                 color="inherit">
-                  Employee Home
+                  Homepage
               </Button>
             </NavLink>
             <div style={{ flexGrow: 1}}/>
-    
               <Button
                 color="inherit"
                 style={{alignItems: 'right'}}
@@ -31,10 +33,10 @@ const EmployeeHeader = (props) => {
                 }}>
                     Help
               </Button>
-            <NavLink to={"/"} style={{ color: 'inherit', textDecoration: 'none' }}>
+            <NavLink to={"/employee/login"} style={{ color: 'inherit', textDecoration: 'none' }}>
               <Button
                 color="inherit">
-                    Logout
+                    Logout 
               </Button>
             </NavLink>
             <HelpBackdrop open={open} setOpen={setOpen}/>
