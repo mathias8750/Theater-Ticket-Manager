@@ -12,7 +12,6 @@ import { ConcertHallStageLevelSection, ConcertHallBalconyLevelSection } from "re
 import supabase from "renderer/utils/Supabase";
 
 // add event, have event object, call generate events on that object
-
 // Event org object
 let eventOrg = {};
 

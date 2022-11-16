@@ -9,6 +9,7 @@ import SnackbarAlert from 'renderer/components/SnackbarAlert';
 import {OrganizationContext} from "renderer/context/Context";
 import {useContext} from "react";
 import { generateTickets } from "./utils/TicketGenerator";
+import {AddEventDialog} from "./components/AddEventDialog";
 
 const EmployeeEvents = ({event}) => {
 
@@ -20,6 +21,8 @@ const EmployeeEvents = ({event}) => {
 
   const {state} = useContext(OrganizationContext);
 
+
+  const [open, handleClose] = useState(false);
   const [eventdatetime, setEventDateTime] = useState('');
   const [eventname, setEventName] = useState('');
   const [venueid, setVenueID] = useState(0);
@@ -123,6 +126,16 @@ const removeEvent = async(event) => {
                     onClick={addEvent}
                 >
                     Create Event
+                </Button>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    size='small'
+                    onClick={() => {
+                      handleClose(!open);
+                  }}
+                >
+                    Make Event
                 </Button>
        </div>
       </Typography>
