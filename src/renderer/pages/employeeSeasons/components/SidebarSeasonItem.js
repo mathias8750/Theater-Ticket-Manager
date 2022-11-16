@@ -2,21 +2,21 @@ import {Button, Card, CardHeader, Typography} from "@mui/material";
 import { formatAMPM } from "renderer/utils/DateTime";
 
 
-const SidebarEventItem = ({event, onEventClick}) => {
+const SidebarSeasonItem = ({season, onSeasonClick}) => {
 
-  const date = new Date(event.eventDateTime);
+  //const date = new Date(event.eventDateTime);
   //const subtitle = <ul><li>{event.Organizations.organizationName}</li><li>{date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + formatAMPM(date)}</li></ul>
-  const subtitle = "Hello"
+  const subtitle = season.startDate + " to " +  season.endDate
 
   return (
     <>
       <Card>
         <CardHeader
-          title={event.eventName}
+          title={season.seasonName}
           subheader={subtitle}
           action={
             <Button
-              onClick={() => onEventClick(event)}
+              onClick={() => onSeasonClick(season)}
             >View</Button>
           }
         />
@@ -25,4 +25,4 @@ const SidebarEventItem = ({event, onEventClick}) => {
   )
 }
 
-export default SidebarEventItem;
+export default SidebarSeasonItem;

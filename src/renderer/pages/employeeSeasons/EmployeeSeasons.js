@@ -7,24 +7,28 @@ import ScrollableSidebar from "./components/ScrollableSidebar";
 import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
-import {useState} from "react";
-import CustomerEvent from "./components/Season";
+import {useContext, useState} from "react";
+import Season from "./components/Season";
+import { OrganizationContext } from "renderer/context/Context";
 
 const EmployeeSeasons = ({}) => {
 
-  const [selectedEvent, setSelectedEvent] = useState(null)
+  const [selectedSeason, setselectedSeason] = useState(null)
+  const {state} = useContext(OrganizationContext)
 
-  const fetchEvents = async () => {
-    const { data: events } = await supabase
+  const fetchSeasons = async () => {
+    const { data: seasons } = await supabase
       //.from('Events')
      // .select('eventName, eventDateTime, eventID, Organizations(organizationName)');
       .from('Seasons')
-      .select('seasonName')
+      .select('*')
+      .eq('organizationID', state.selectedOrg.organizationID)
 
-    return events;
+
+    return seasons;
   }
 
-  const {status, data, error} = useQuery(['events'], fetchEvents)
+  const {status, data, error} = useQuery(['seasons'], fetchSeasons)
 
   if (status === 'loading') {
     return <span>Loading...</span>
@@ -35,7 +39,7 @@ const EmployeeSeasons = ({}) => {
   }
 
   const onEventClick = (event) => {
-    setSelectedEvent(event)
+    setselectedSeason(event)
   }
 
     return (
@@ -44,13 +48,13 @@ const EmployeeSeasons = ({}) => {
         <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
         <Grid container style={{padding: '10px', height: '100%'}}>
           <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
-            <ScrollableSidebar events={data} onEventClick={onEventClick}/>
+            <ScrollableSidebar seasons={data} onSeasonClick={onEventClick}/>
           </Grid>
 
 
           <Grid item md={8} style={{paddingRight: '10px', height: '100%'}}>
-            {selectedEvent !== null ? (
-              <CustomerEvent event={selectedEvent}/>
+            {selectedSeason !== null ? (
+              <Season event={selectedSeason}/>
             ) : (
               <></>
             )}
