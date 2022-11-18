@@ -5,6 +5,7 @@ import { useState, } from "react";
 import HelpBackdrop from "./HelpBackdrop";
 import {UserContext} from "renderer/context/Context";
 import {useContext} from "react";
+import { OrganizationContext } from "renderer/context/Context";
 
 
 const EmployeeHeader = (props) => {
@@ -12,6 +13,7 @@ const EmployeeHeader = (props) => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const {state} = useContext(UserContext);
+  const {orgState} = useContext(OrganizationContext);
 
   return (
     <>
@@ -34,7 +36,7 @@ const EmployeeHeader = (props) => {
                     Help
               </Button>
             <NavLink to={"/employee/login"} style={{ color: 'inherit', textDecoration: 'none' }}>
-              <Button
+              <Button  
                 color="inherit">
                     Logout 
               </Button>
