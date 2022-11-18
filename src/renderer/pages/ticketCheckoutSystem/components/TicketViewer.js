@@ -4,6 +4,7 @@ import {createContext, useEffect, useRef, useState} from "react";
 import ConcertHall from "./ConcertHall";
 import Playhouse from "./Playhouse";
 import {PlayhouseLoges, PlayhouseSections} from "../../../data/PlayhouseSeatMapJson";
+import {ConcertHallBalconyLevelSection, ConcertHallStageLevelSection} from "../../../data/ConcerthallSeatMapJson";
 
 export const TicketViewerContext = createContext({})
 
@@ -93,6 +94,23 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
     return {section: tempSectionTickets, loge: tempLogeTickets};
   }
 
+  function concertHallConvert(tickets) {
+    let tempStageTickets = ConcertHallStageLevelSection
+    let tempBalconyTickets = ConcertHallBalconyLevelSection
+
+    tickets.map((ticket) => {
+      let tempTicket = {
+        ...ticket,
+      }
+
+      if (ticket.sectionNumber.startsWith("S")) {
+        tempStageTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
+      } else if (ticket.sectionNumber.startsWith("L")) {
+        tempBalconyTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
+      }
+    })
+  }
+
   return (
     <TicketViewerContext.Provider
       value={{ updateSelectedSeats: updateSelectedSeats, selectedSeats: selectedSeats, maxSelectableSeats: maxSeats, venue: venue }}
@@ -109,8 +127,7 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
             x={stage.x}
             y={stage.y}
           >
-            <ConcertHall/>
-            {/*{venue === 2 ? <Playhouse tickets={playhouseConvert(tickets)}/> : <ConcertHall/>}*/}
+            {venue === 2 ? <Playhouse tickets={playhouseConvert(tickets)}/> : <ConcertHall tickets={concertHallConvert(tickets)}/>}
           </Stage>
         </CardContent>
       </Card>
