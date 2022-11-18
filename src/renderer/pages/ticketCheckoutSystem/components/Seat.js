@@ -40,7 +40,7 @@ const Seat = ({
 
   let rectX;
   let textX;
-  if (venue === 1) {
+  if (venue === 2) {
     if (sectionNumber === 4) {
       rectX = RECT_X_MARGIN + SECTION_PADDING - 87 + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
       textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING - 87 + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
