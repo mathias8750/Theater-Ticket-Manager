@@ -7,8 +7,9 @@ import {
   SEAT_SIZE,
   SECTION_PADDING
 } from "../utils/SeatViewerConsts";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {TicketViewerContext} from "./TicketViewer";
+import {ConcertHallStageLevelSection} from "../../../data/ConcerthallSeatMapJson";
 
 function calculateSeatNumberTextXMargin(seatNumber) {
   if (seatNumber < 10) {
@@ -18,24 +19,69 @@ function calculateSeatNumberTextXMargin(seatNumber) {
   }
 }
 
-const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionIndex, rowIndex, seatIndex, offset}) => {
+const Seat = ({
+                seat,
+                seatNumber,
+                maxSeats,
+                rowLength,
+                rowLetter,
+                sectionNumber,
+                sectionIndex,
+                rowIndex,
+                seatIndex,
+                offset,
+                sectionInfo
+              }) => {
 
-  let {onSeatClick} = useContext(TicketViewerContext)
+  let {updateSelectedSeats, maxSelectableSeats, selectedSeats, venue} = useContext(TicketViewerContext)
 
   const [selected, setSelected] = useState(false)
 
+
   let rectX;
   let textX;
-  if (sectionNumber === 4) {
-    rectX = RECT_X_MARGIN + SECTION_PADDING - 87 + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
-    textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING - 87 + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
-  } else if (sectionNumber === 3) {
-    rectX = RECT_X_MARGIN + SECTION_PADDING * sectionIndex + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
-    textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING * sectionIndex + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
+  if (venue === 2) {
+    if (sectionNumber === 4) {
+      rectX = RECT_X_MARGIN + SECTION_PADDING - 87 + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
+      textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING - 87 + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
+    } else if (sectionNumber === 3) {
+      rectX = RECT_X_MARGIN + SECTION_PADDING * sectionIndex + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
+      textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING * sectionIndex + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
+    } else {
+      rectX = RECT_X_MARGIN + SECTION_PADDING * sectionIndex + RECT_X_PADDING * seatIndex
+      textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING * sectionIndex + RECT_X_PADDING * seatIndex
+    }
   } else {
-    rectX = RECT_X_MARGIN + SECTION_PADDING * sectionIndex + RECT_X_PADDING * seatIndex
-    textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING * sectionIndex + RECT_X_PADDING * seatIndex
+    if (sectionInfo === 'S1') {
+      rectX = 340 - RECT_X_PADDING * (rowLength - seatIndex)
+      textX = 340 - RECT_X_PADDING * (rowLength - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
+    } else if (sectionInfo === 'S2') {
+      rectX = 350 + RECT_X_PADDING * seatIndex
+      textX = 350 + RECT_X_PADDING * seatIndex + calculateSeatNumberTextXMargin(seatNumber) - 100
+    } else if (sectionInfo === 'B1') {
+      rectX = 80 - RECT_X_PADDING * (rowLength - seatIndex)
+      textX = 80 - RECT_X_PADDING * (rowLength - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
+    } else if (sectionInfo === 'B2') {
+      rectX = 250 - RECT_X_PADDING * (rowLength - seatIndex)
+      textX = 250 - RECT_X_PADDING * (rowLength - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
+    } else if (sectionInfo === 'B3') {
+      if (rowIndex !== 12) {
+        rectX = 430 - RECT_X_PADDING * (rowLength - seatIndex)
+        textX = 430 - RECT_X_PADDING * (rowLength - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
+      } else {
+        rectX = 430 - RECT_X_PADDING * (14 - seatIndex)
+        textX = 430 - RECT_X_PADDING * (14 - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
+      }
+    } else if (sectionInfo === 'B4') {
+      rectX = 620 - RECT_X_PADDING * (rowLength - seatIndex)
+      textX = 620 - RECT_X_PADDING * (rowLength - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
+    } else if (sectionInfo === 'B5') {
+      rectX = 725 - RECT_X_PADDING * (rowLength - seatIndex)
+      textX = 725 - RECT_X_PADDING * (rowLength - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
+
+    }
   }
+
 
   function setFill(reserved, selected) {
     if (selected) {
@@ -51,8 +97,17 @@ const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionInde
     <div
       onClick={() => {
         if (!seat.soldBool) {
-          onSeatClick(seat, selected)
-          setSelected(!selected)
+          console.log(sectionNumber, venue, seatNumber, rowLetter, sectionNumber)
+
+          updateSelectedSeats(seat, selected)
+
+          if (selected) {
+            setSelected(false)
+          } else {
+            if (selectedSeats.length < maxSelectableSeats) {
+              setSelected(true)
+            }
+          }
         }
       }
       }
@@ -63,6 +118,8 @@ const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionInde
         width={SEAT_SIZE}
         height={SEAT_SIZE}
         fill={setFill(seat.soldBool, selected)}
+        perfectDrawEnabled={false}
+        listening={seat.soldBool}
       />
 
       <Text
@@ -70,6 +127,7 @@ const Seat = ({seat, seatNumber, maxSeats, rowLetter, sectionNumber, sectionInde
         x={textX}
         y={offset + 103 + 12 * rowIndex}
         fontSize={5}
+        perfectDrawEnabled={false}
       >
       </Text>
     </div>

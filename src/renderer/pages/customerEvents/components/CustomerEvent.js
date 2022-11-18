@@ -1,12 +1,23 @@
-import {Typography, Card, CardHeader, Button, Box, FormControl, Select, MenuItem, InputLabel, Grid} from "@mui/material";
+import {
+  Typography,
+  Card,
+  CardHeader,
+  Button,
+  Box,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+  Grid, Stack
+} from "@mui/material";
 import React, {useEffect, useState} from 'react';
-import { eventDateTimeSubheader } from "renderer/utils/DateTime";
+import {eventDateTimeSubheader} from "renderer/utils/DateTime";
 import {useNavigate} from "react-router-dom";
-import { width } from "@mui/system";
-import { useQuery } from "@tanstack/react-query";
+import {width} from "@mui/system";
+import {useQuery} from "@tanstack/react-query";
 import SeatList from "./SeatList";
 import supabase from "renderer/utils/Supabase";
-import { recommendSeats } from "../utils/SeatRecommender";
+import {recommendSeats} from "../utils/SeatRecommender";
 
 const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
 
@@ -27,7 +38,7 @@ const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
       .from('Tickets')
       .select('*')
       .eq('eventID', event.eventID)
-    
+
     setEventTickets(tickets);
     setEventLocation(event.venueID);
     setRecommendedSeats(recommendSeats(tickets, numTickets, eventLocation));
@@ -56,52 +67,57 @@ const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
 
   return (
     <>
-    <div style={{height: '100%', width: '100%'}}>
-      <Card>
-        <CardHeader
-          title={event.eventName}
-          subheader={eventDateTimeSubheader(event)}
-        />
-      </Card>
+      <div style={{height: '100%', width: '100%'}}>
+
+          <Card>
+            <CardHeader
+              title={event.eventName}
+              subheader={eventDateTimeSubheader(event)}
+            />
+          </Card>
+
           <div style={{
             alignItems: 'center',
             paddingTop: '2%',
             width: '100%',
-            height: '10%',
           }}>
-          <FormControl fullWidth>
-          <InputLabel id="ticket-select-label">Number of Tickets</InputLabel>
-          <Select
-            labelId="ticket-select-label"
-            id="ticket-select"
-            value={numTickets}
-            label="Number of Tickets"
-            onChange={handleTicketNumChange}
-          >
-            <MenuItem value={1}>1</MenuItem>
-            <MenuItem value={2}>2</MenuItem>
-            <MenuItem value={3}>3</MenuItem>
-            <MenuItem value={4}>4</MenuItem>
-            <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={6}>6</MenuItem>
-          </Select>
-        </FormControl>
-        </div>
-        <div style={{
+            <FormControl fullWidth>
+              <InputLabel id="ticket-select-label">Number of Tickets</InputLabel>
+              <Select
+                labelId="ticket-select-label"
+                id="ticket-select"
+                value={numTickets}
+                label="Number of Tickets"
+                onChange={handleTicketNumChange}
+              >
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={6}>6</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+
+          <div style={{
             paddingTop: '1%',
             width: '100%',
-            height: '100%',
             overflow: 'auto',
+            height: '85%'
           }}>
-        <Box style={{ flexGrow: 0, background: 'white', height: '60%', display: 'flex'}}>
-        <SeatList recommendedSeats={recommendedSeats} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
-        </Box>
-        <div style={{
-          alignItems: 'center',
-          paddingTop: '2%',
-          paddingLeft: '37%',
+            <Box style={{flexGrow: 0, background: 'white', height: '100%', display: 'flex'}}>
+              <SeatList recommendedSeats={recommendedSeats} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
+            </Box>
+
+          </div>
+
+          <div style={{
+            margin: 'auto',
+            width: '25%',
+            padding: '10px',
           }}>
-        <Button
+            <Button
               variant='contained'
               type='submit'
               color='primary'
@@ -110,10 +126,11 @@ const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
             >
               Select Tickets From Chart
             </Button>
-            </div>
-        </div>
-          
           </div>
+
+
+
+      </div>
     </>
   )
 }
