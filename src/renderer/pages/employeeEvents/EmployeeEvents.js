@@ -8,6 +8,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import SnackbarAlert from 'renderer/components/SnackbarAlert';
 import {OrganizationContext} from "renderer/context/Context";
 import {useContext} from "react";
+import { generateTickets } from "./utils/TicketGenerator";
 
 const EmployeeEvents = ({event}) => {
 
@@ -47,6 +48,7 @@ const EmployeeEvents = ({event}) => {
           toggleFailureAlert();
       } else {
           toggleSuccessAlert();
+          generateTickets(Events[0]);
           fetchEvents();
       }
   }

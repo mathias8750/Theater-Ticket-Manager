@@ -8,11 +8,11 @@ const OrganizationScrollableList = ({ orgs, onOrgClick }) => {
 
   return (
     <>
-      <div style={{height: '80%'}}>
+      <div style={{height: '100%', width: '70%'}}>
         <div style={{height: '5%', paddingLeft: '5px'}}>
-          <Typography>Select an Organization:</Typography>
+        <Typography variant="h6" align="center" style={{padding: '2%'}}>Select an Organization</Typography>
         </div>
-        <div style={{height: '100%'}}>
+        <div style={{height: '100%', paddingTop: '5%'}}>
         <Grid item style={{
           border: '1px solid rgba(0, 0, 0, 0.05)',
           height: '100%',

@@ -8,10 +8,7 @@ const AdminSidebar = ({ users, onUserClick }) => {
 
   return (
     <>
-      <div style={{height: '80%'}}>
-        <div style={{height: '5%', paddingLeft: '5px'}}>
-          <Typography>Users:</Typography>
-        </div>
+      <div style={{height: '100%', width: '70%'}}>
         <div style={{height: '100%'}}>
         <Grid item style={{
           border: '1px solid rgba(0, 0, 0, 0.05)',

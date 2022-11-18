@@ -15,8 +15,11 @@ const AdminPage = ({}) => {
     const [deleteAlertOpen, setDeleteAlert] = useState(false);
     const [successAlertOpen, setSuccessAlert] = useState(false);
     const [failureAlertOpen, setFailureAlert] = useState(false);
+    const [userAddOpen, setUserAddOpen] = useState(false);
+    const [passwordFailureOpen, setPasswordFailureOpen] = useState(false);
     const usernameRef = useRef('');
     const passwordRef = useRef('');
+    const passwordConfirmRef = useRef('');
 
     // Toggles the success alert
     const toggleSuccessAlert = () => {
@@ -28,14 +31,25 @@ const AdminPage = ({}) => {
         setFailureAlert(!failureAlertOpen);
     }
 
+    // Toggles password mismatch error alert
+    const togglePasswordFailureAlert = () => {
+        setPasswordFailureOpen(!passwordFailureOpen);
+    }
+
     // Toggles the delete alert
     const toggleDeleteAlert = () => {
         setDeleteAlert(!deleteAlertOpen);
     }
 
+    // Toggles the add user dialog
+    const toggleAddUserDialog = () => {
+        setUserAddOpen(!userAddOpen);
+    }
+
     // Adds a user to the db if the username is not already taken
     const addUser = async () => {
         if(usernameRef.current.value.trim() != '' && passwordRef.current.value.trim() != '') {
+          if(passwordRef.current.value.trim() === passwordConfirmRef.current.value.trim()) {
             const {data: Users, error} = await supabase
             .from('Users')
             .insert([{ username: usernameRef.current.value.trim(), password: passwordRef.current.value.trim()}]);
@@ -43,12 +57,17 @@ const AdminPage = ({}) => {
             if (error) {
                 toggleFailureAlert();
             } else {
+                usernameRef.current.value = '';
+                passwordRef.current.value = '';
+                passwordConfirmRef.current.value = '';
+                toggleAddUserDialog();
                 toggleSuccessAlert();
                 fetchUsers();
             }
+          } else {
+            togglePasswordFailureAlert();
+          }  
         }
-        usernameRef.current.value = '';
-        passwordRef.current.value = '';
     }
 
     // Remove account from users table and list
@@ -113,45 +132,33 @@ const AdminPage = ({}) => {
         <>
             <LoginHeader>
             <div style={{height: '100%'}}>
-            <div
-            style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '5px',
-            }} >
-            <Typography>Add New User</Typography>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <Typography variant="h6" align="center" style={{padding: '2%'}}>Employee Accounts</Typography>
             </div>
-            <div
-            style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '5px',
-            height: '10%',
-            }} >
-                <TextField
-                    id='usernameTextField'
-                    label='Username'
-                    inputRef={usernameRef}
-                />
-
-                <TextField
-                    id='passwordTextField'
-                    label='Password'
-                    type='password'
-                    inputRef={passwordRef}
-                />
-
-                <Button
-                    variant='contained'
-                    color='primary'
-                    size='small'
-                    onClick={addUser}
-                >
-                    Add User
-                </Button>
+            <div style={{display: 'flex', height: '50%', justifyContent: 'center'}}>
+              <AdminSidebar users={userList} onUserClick={openConfirmationDialog} />
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center', paddingTop: '1%'}}>
+              <Button color='primary' size='small' onClick={toggleAddUserDialog}>Add Employee Account</Button>
+            </div>
+            <Dialog open={userAddOpen} onClose={toggleAddUserDialog} style={{justifyContent: 'center'}}>
+              <DialogTitle>Create Employee Account</DialogTitle>
+                <div style={{display: 'flex', justifyContent: 'center', paddingRight: '2%', paddingBottom: '4%'}}>
+                  <TextField id='usernameTextField' label='Username' inputRef={usernameRef}/>
                 </div>
+                <div style={{display: 'flex', justifyContent: 'center', paddingRight: '2%', paddingBottom: '4%'}}>
+                  <TextField id='passwordTextField' label='Password' type='password' inputRef={passwordRef}/>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center', paddingRight: '2%', paddingBottom: '6%'}}>
+                  <TextField id='passwordConfirmTextField' label='Confirm Password' type='password' inputRef={passwordConfirmRef}/>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center', paddingRight: '2%', paddingBottom: '6%'}}>
+                  <Button variant='contained' color='primary' size='small' onClick={addUser}>Create Account</Button>
+                </div>
+            </Dialog>
+            
                 
-                <AdminSidebar users={userList} onUserClick={openConfirmationDialog} />
+                
 
                 <SnackbarAlert 
                 alertOpen={failureAlertOpen} 
@@ -172,6 +179,13 @@ const AdminPage = ({}) => {
                 toggleAlert={toggleDeleteAlert}
                 alertSeverity={'success'}
                 alertText={'User Deleted Successfully'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={passwordFailureOpen} 
+                toggleAlert={togglePasswordFailureAlert}
+                alertSeverity={'error'}
+                alertText={'Passwords do not match'}
                 />
 
                 <Dialog
