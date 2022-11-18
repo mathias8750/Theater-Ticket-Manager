@@ -30,7 +30,7 @@ const AddEventDialog = ({ open, handleClose }) => {
         />
 
         <FormControl fullWidth>
-          <InputLabel id="venue-select-label">Age</InputLabel>
+          <InputLabel id="venue-select-label">Venue</InputLabel>
           <Select
             labelId="venue-select-label"
             id="venue-select"
@@ -44,7 +44,7 @@ const AddEventDialog = ({ open, handleClose }) => {
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel id="venue-select-label">Age</InputLabel>
+          <InputLabel id="venue-select-label">Season</InputLabel>
           <Select
             labelId="venue-select-label"
             id="venue-select"
@@ -57,16 +57,7 @@ const AddEventDialog = ({ open, handleClose }) => {
           </Select>
         </FormControl>
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DesktopDateTimePicker
-            label="For desktop"
-            value={eventDate}
-            onChange={(newValue) => {
-              setEventDate(newValue);
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
+        
       </Stack>
     </Dialog>
   )
