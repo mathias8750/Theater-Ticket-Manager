@@ -24,7 +24,7 @@ const ScrollableSidebar = ({ seasons, onSeasonClick, onCreateClick }) => {
         <Grid item style={{height: '10%'}}>
           <Button
             color='primary'
-            size='small'
+            size='large'
             onClick={onCreateClick}
             >
               Create Season

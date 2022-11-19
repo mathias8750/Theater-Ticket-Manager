@@ -1,6 +1,7 @@
 import {Typography, Card, CardHeader, Button, Box} from "@mui/material";
 import React, {useState} from 'react';
 import { eventDateTimeSubheader } from "renderer/utils/DateTime";
+import { seasonDateTimeSubheader } from "renderer/utils/DateTime";
 
 const Season = ({season}) => {
 
@@ -15,7 +16,7 @@ const Season = ({season}) => {
       <Card>
         <CardHeader
           title={season.seasonName}
-          subheader={season.startDate + ' to ' + season.endDate}
+          subheader={seasonDateTimeSubheader(season)}
         />
       </Card>
         <Box style={{display: 'flex'}}>
