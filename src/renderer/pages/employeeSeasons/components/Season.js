@@ -2,20 +2,20 @@ import {Typography, Card, CardHeader, Button, Box} from "@mui/material";
 import React, {useState} from 'react';
 import { eventDateTimeSubheader } from "renderer/utils/DateTime";
 
-const CustomerEvent = ({event}) => {
+const Season = ({season}) => {
 
-  const date = new Date(event.eventDateTime);
+  //const date = new Date(event.eventDateTime);
 
-  const onTicketSelectButton = () => {
-
+  const onAddButton = () => {
+    console.log('add season ticket holder');
   }
 
   return (
     <>
       <Card>
         <CardHeader
-          title={event.eventName}
-          subheader={eventDateTimeSubheader(date, event)}
+          title={season.seasonName}
+          subheader={season.startDate + ' to ' + season.endDate}
         />
       </Card>
         <Box style={{display: 'flex'}}>
@@ -25,9 +25,9 @@ const CustomerEvent = ({event}) => {
               type='submit'
               color='primary'
               size='small'
-              onClick={onTicketSelectButton}
+              onClick={onAddButton}
             >
-              Select Tickets
+              Add Season Ticket Holder
             </Button>
           </div>
         </Box>
@@ -35,4 +35,4 @@ const CustomerEvent = ({event}) => {
   )
 }
 
-export default CustomerEvent;
+export default Season;
