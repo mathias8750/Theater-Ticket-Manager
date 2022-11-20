@@ -26,6 +26,7 @@ const EmployeeEvents = ({event}) => {
   const [open, setOpen] = useState(false);
   const [eventname, setEventName] = useState('');
   const [venueid, setVenueID] = useState(0);
+  const [seasonID, setSeasonID] = useState(0);
   const [eventdatetime, setDateTime] = useState(dayjs('2023-01-01T00:00:00.000Z'));
 
   // Toggles the success alert
@@ -49,10 +50,13 @@ const EmployeeEvents = ({event}) => {
 
   const addEvent = async () => {
       const dt = new Date(eventdatetime);
-
+      let season = null;
+      if (seasonID != 0) {
+        season = seasonID;
+      }
       const {data: Events, error} = await supabase
       .from('Events')
-      .insert([{organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: dt.toString(), eventName: eventname}]);
+      .insert([{seasonID: season, organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: dt.toString(), eventName: eventname}]);
 
       if (error) {
           toggleFailureAlert();
@@ -129,6 +133,14 @@ const removeEvent = async(event) => {
                     name='Event Name'
                     type="text"
                     onChange={event => setEventName(event.target.value)}
+                />
+              </Typography>
+
+              <Typography>Season ID
+                <input
+                    name='Season ID'
+                    type="text"
+                    onChange={event => setSeasonID(event.target.value)}
                 />
               </Typography>
             

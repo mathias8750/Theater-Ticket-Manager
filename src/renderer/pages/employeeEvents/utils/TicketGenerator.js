@@ -15,6 +15,9 @@ import supabase from "renderer/utils/Supabase";
 // Event org object
 let eventOrg = {};
 
+// Season ticket holders array
+let seasonTicketHolders = [];
+
 
 // Function to add array of tickets to the tickets table in supabase
 const insertTickets = async (tickets) => {
@@ -35,6 +38,17 @@ const fetchOrg = async (event) => {
     }
 }
 
+// Function to fetch season ticket holder data from supabase
+const fetchSeasonTicketHolders = async() => {
+    const {data, error} = await supabase
+      .from('SeasonTicketHolders')
+      .select('*');
+
+    if (!error) {
+        seasonTicketHolders = data;
+    }
+}
+
 // Function to generate the initial tickets for an event and add them to the supabase
 export const generateTickets = (event) => {
 
@@ -42,8 +56,9 @@ export const generateTickets = (event) => {
     const tickets = [];
     let count = 0;
 
-    // get the org related to the event, then create tickets
+    // get the org related to the event, then get the season ticket holders, then create tickets
     fetchOrg(event).then(() => {
+        fetchSeasonTicketHolders().then(() => {
 
         // create tickets for concert hall
         if (event.venueID === 1) {
@@ -57,11 +72,19 @@ export const generateTickets = (event) => {
                     if(row[0] != 'data') {
                         Object.entries(row[1]).map(seat => {
 
-                            // TODO: if seat belongs to season ticket holder, mark it sold
+                            // if seat belongs to season ticket holder, mark it sold
+                            let sold = false;
+                            for (const ticketHolder in seasonTicketHolders) {
+                                if (ticketHolder.seasonID === event.seasonID) {
+                                    if ((ticketHolder.concertHallSeatNumber === seat[0]) && (ticketHolder.concertHallRowNumber === row[0]) && (ticketHolder.concertHallSectionNumber === section[0])) {
+                                        sold = true;
+                                    }
+                                }
+                            }
 
                             // calculate default ticket price then push ticket to tickets array
                             let price = parseFloat((eventOrg.organizationMaxPrice - (((row[0].charCodeAt(0)-'A'.charCodeAt(0))) * diff)).toFixed(2));
-                            tickets.push({soldBool: false, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            tickets.push({soldBool: sold, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
@@ -73,11 +96,19 @@ export const generateTickets = (event) => {
                     if(row[0] != 'data') {
                         Object.entries(row[1]).map(seat => {
 
-                            // TODO: if seat belongs to season ticket holder, mark it sold
+                            // if seat belongs to season ticket holder, mark it sold
+                            let sold = false;
+                            for (const ticketHolder in seasonTicketHolders) {
+                                if (ticketHolder.seasonID === event.seasonID) {
+                                    if ((ticketHolder.concertHallSeatNumber === seat[0]) && (ticketHolder.concertHallRowNumber === row[0]) && (ticketHolder.concertHallSectionNumber === section[0])) {
+                                        sold = true;
+                                    }
+                                }
+                            }
 
                             // calculate default ticket price then push ticket to tickets array
                             let price = parseFloat((eventOrg.organizationMinPrice + ((('L'.charCodeAt(0) - row[0].charCodeAt(0))) * diff)).toFixed(2));
-                            tickets.push({soldBool: false, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            tickets.push({soldBool: sold, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
@@ -96,11 +127,19 @@ export const generateTickets = (event) => {
                     if(row[0] != 'data') {
                         Object.entries(row[1]).map(seat => {
 
-                            // TODO: if seat belongs to season ticket holder, mark it sold
+                            // if seat belongs to season ticket holder, mark it sold
+                            let sold = false;
+                            for (const ticketHolder in seasonTicketHolders) {
+                                if (ticketHolder.seasonID === event.seasonID) {
+                                    if ((ticketHolder.playhouseSeatNumber === seat[0]) && (ticketHolder.playhouseRowNumber === row[0]) && (ticketHolder.playhouseSectionNumber === section[0])) {
+                                        sold = true;
+                                    }
+                                }
+                            }
 
                             // calculate default ticket price then push ticket to tickets array
                             let price = parseFloat((eventOrg.organizationMaxPrice - (((row[0].charCodeAt(0)-'A'.charCodeAt(0))) * diff)).toFixed(2));
-                            tickets.push({soldBool: false, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            tickets.push({soldBool: sold, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
@@ -112,11 +151,19 @@ export const generateTickets = (event) => {
                     if(row[0] != 'data') {
                         Object.entries(row[1]).map(seat => {
 
-                            // TODO: if seat belongs to season ticket holder, mark it sold
+                            // if seat belongs to season ticket holder, mark it sold
+                            let sold = false;
+                            for (const ticketHolder in seasonTicketHolders) {
+                                if (ticketHolder.seasonID === event.seasonID) {
+                                    if ((ticketHolder.playhouseSeatNumber === seat[0]) && (ticketHolder.playhouseRowNumber === row[0]) && (ticketHolder.playhouseSectionNumber === section[0])) {
+                                        sold = true;
+                                    }
+                                }
+                            }
 
                             // calculate default ticket price then push ticket to tickets array
                             let price = parseFloat((eventOrg.organizationMinPrice + ((('C'.charCodeAt(0) - row[0].charCodeAt(0))) * diff)).toFixed(2));
-                            tickets.push({soldBool: false, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            tickets.push({soldBool: sold, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
@@ -126,5 +173,6 @@ export const generateTickets = (event) => {
         // insert the new tickets into the supabase
         insertTickets(tickets);
 
+    });
     });
 }

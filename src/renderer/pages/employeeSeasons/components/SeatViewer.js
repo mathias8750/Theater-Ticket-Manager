@@ -8,7 +8,7 @@ import {ConcertHallBalconyLevelSection, ConcertHallStageLevelSection} from "../.
 
 export const TicketViewerContext = createContext({})
 
-const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedSeats, maxSeats }) => {
+const SeatViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedSeats, maxSeats }) => {
 
   const containerRef = useRef(null)
 
@@ -136,4 +136,4 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
   )
 }
 
-export default TicketViewer;
+export default SeatViewer;
