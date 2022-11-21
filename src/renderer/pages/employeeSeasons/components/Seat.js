@@ -1,4 +1,4 @@
-import {Group, Rect, Text} from "react-konva";
+import {Rect, Text} from "react-konva";
 import {
   RECT_X_MARGIN,
   RECT_X_PADDING,
@@ -8,7 +8,8 @@ import {
   SECTION_PADDING
 } from "../utils/SeatViewerConsts";
 import {useContext, useEffect, useState} from "react";
-import {TicketViewerContext} from "./TicketViewer";
+import {TicketViewerContext} from "./SeatViewer";
+import {ConcertHallStageLevelSection} from "../../../data/ConcerthallSeatMapJson";
 
 function calculateSeatNumberTextXMargin(seatNumber) {
   if (seatNumber < 10) {
@@ -96,6 +97,8 @@ const Seat = ({
     <div
       onClick={() => {
         if (!seat.soldBool) {
+          console.log(sectionNumber, venue, seatNumber, rowLetter, sectionNumber)
+
           updateSelectedSeats(seat, selected)
 
           if (selected) {
@@ -125,8 +128,8 @@ const Seat = ({
         y={offset + 103 + 12 * rowIndex}
         fontSize={5}
         perfectDrawEnabled={false}
-      />
-
+      >
+      </Text>
     </div>
   )
 }

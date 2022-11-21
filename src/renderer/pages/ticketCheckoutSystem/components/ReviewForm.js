@@ -22,7 +22,7 @@ export default function Review() {
     let sum = 0;
 
     seats.map((seat) => {
-      sum += seat.price
+      sum += seat.priceValue
     })
 
     return sum
@@ -37,7 +37,7 @@ export default function Review() {
         {location.state.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
             <ListItemText primary={`${product.sectionNumber} Row ${product.rowNumber} Seat ${product.seatNumber}`}/>
-            <Typography variant="body2">${product.price}</Typography>
+            <Typography variant="body2">${product.priceValue}</Typography>
           </ListItem>
         ))}
 

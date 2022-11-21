@@ -29,6 +29,13 @@ export const eventDateTimeSubheader = (event) => {
     return (<ul><li>{event.Organizations.organizationName}</li><li>{event.Venues.venueName}</li><li>{date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + formatAMPM(date)}</li></ul>);
 }
 
+export const seasonDateTimeSubheader = (season) => {
+  const startDate = new Date(season.startDate);
+  const endDate = new Date(season.endDate);
+
+  return ((startDate.getMonth()+1) + '/' + startDate.getDate() + '/' + startDate.getFullYear() + '  ' + formatAMPM(startDate) + ' to ' + (endDate.getMonth()+1) + '/' + endDate.getDate() + '/' + endDate.getFullYear() + '  ' + formatAMPM(endDate));
+}
+
 // Compares the datetime of two event objects; used as argument for array.sort() function
 export const compareDateTime = (a,b) => {
     let aDateTime = new Date(a.eventDateTime);

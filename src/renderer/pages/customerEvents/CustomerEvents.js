@@ -5,21 +5,23 @@ import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import {useState, useContext} from "react";
 import CustomerEvent from "./components/CustomerEvent";
-import Playhouse from "../seatViewer/components/Playhouse";
-import { EventContext } from "renderer/context/Context";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const CustomerEvents = ({}) => {
 
+  const location = useLocation()
+
+  const navigate = useNavigate()
+
   const [selectedEvent, setSelectedEvent] = useState(null)
-  const {state, update} = useContext(EventContext);
 
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
 
-    if (state.selectedEvent) {
-      setSelectedEvent(state.selectedEvent)
+    if (location.state) {
+      setSelectedEvent(location.state)
     }
 
     return events;
@@ -52,6 +54,8 @@ const CustomerEvents = ({}) => {
     for (const seat of seats.result) {
       console.log(seat.seatNumber);
     }
+
+    navigate("/customer/events/checkout", {state: seats.result})
   }
 
   return (
@@ -65,7 +69,7 @@ const CustomerEvents = ({}) => {
 
           <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
             {selectedEvent !== null ? (
-              <CustomerEvent event={selectedEvent} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
+              <CustomerEvent key={selectedEvent.eventID} event={selectedEvent} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
             ) : (
               <></>
             )}

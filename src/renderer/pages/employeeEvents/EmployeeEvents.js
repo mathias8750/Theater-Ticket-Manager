@@ -1,6 +1,5 @@
 import {Box, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
 import ScrollableSidebar from "../../components/ScrollableSidebar";
-import {Link as NavLink} from "react-router-dom";
 import EmployeeHeader from "../../components/EmployeeHeader"; 
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
@@ -9,6 +8,11 @@ import SnackbarAlert from 'renderer/components/SnackbarAlert';
 import {OrganizationContext} from "renderer/context/Context";
 import {useContext} from "react";
 import { generateTickets } from "./utils/TicketGenerator";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
+import dayjs from 'dayjs';
+
 
 const EmployeeEvents = ({event}) => {
 
@@ -19,10 +23,11 @@ const EmployeeEvents = ({event}) => {
   const [failureAlertOpen, setFailureAlert] = useState(false);
 
   const {state} = useContext(OrganizationContext);
-
-  const [eventdatetime, setEventDateTime] = useState('');
+  const [open, setOpen] = useState(false);
   const [eventname, setEventName] = useState('');
   const [venueid, setVenueID] = useState(0);
+  const [seasonID, setSeasonID] = useState(0);
+  const [eventdatetime, setDateTime] = useState(dayjs('2023-01-01T00:00:00.000Z'));
 
   // Toggles the success alert
   const toggleSuccessAlert = () => {
@@ -39,17 +44,26 @@ const EmployeeEvents = ({event}) => {
     setDeleteAlert(!deleteAlertOpen);
   }
 
+  const handleClose = () => {
+    setOpen(false);
+  }
+
   const addEvent = async () => {
+      const dt = new Date(eventdatetime);
+      let season = null;
+      if (seasonID != 0) {
+        season = seasonID;
+      }
       const {data: Events, error} = await supabase
       .from('Events')
-      .insert([{organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: eventdatetime, eventName: eventname}]);
+      .insert([{seasonID: season, organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: dt.toString(), eventName: eventname}]);
 
       if (error) {
           toggleFailureAlert();
       } else {
           toggleSuccessAlert();
           generateTickets(Events[0]);
-          fetchEvents();
+          FetchEvents();
       }
   }
 
@@ -60,15 +74,15 @@ const removeEvent = async(event) => {
       .eq('', event.eventName);
 }
 
-  const fetchEvents = async () => {
+  const FetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
-      .select('*');
+      .select('*, Organizations(organizationName), Venues(venueName)');
 
     return events;
   }
 
-  const {status, data, error} = useQuery(['events'], fetchEvents)
+  const {status, data, error} = useQuery(['events'], FetchEvents)
   
   if (status === 'loading') {
     return <span>Loading...</span>
@@ -102,17 +116,31 @@ const removeEvent = async(event) => {
                 />
               </Typography>
               <Typography>Event Date/Time
-                <input
-                    name='Event Date/Time'
-                    type="text"
-                    onChange={event => setEventDateTime(event.target.value)}
-                />   
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DesktopDateTimePicker
+                    value={eventdatetime}
+                    onChange={(newValue) => {
+                      console.log(newValue);
+                      setDateTime(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
               </Typography>
+
               <Typography>Event Name
                 <input
                     name='Event Name'
                     type="text"
                     onChange={event => setEventName(event.target.value)}
+                />
+              </Typography>
+
+              <Typography>Season ID
+                <input
+                    name='Season ID'
+                    type="text"
+                    onChange={event => setSeasonID(event.target.value)}
                 />
               </Typography>
             
@@ -130,7 +158,7 @@ const removeEvent = async(event) => {
                 alertOpen={failureAlertOpen} 
                 toggleAlert={toggleFailureAlert}
                 alertSeverity={'error'}
-                alertText={'Event Already Exists'}
+                alertText={'Cannot complete action'}
                 />
 
                 <SnackbarAlert 

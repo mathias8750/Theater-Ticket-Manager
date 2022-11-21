@@ -8,7 +8,8 @@ export const PlayhouseSections = {
       1: {
         price: 0.0,
         disabled: false,
-        reserved: false, selected: false
+        reserved: false,
+        selected: false
       },
       2: {
         price: 0.0,
