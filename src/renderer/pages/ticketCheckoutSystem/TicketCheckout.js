@@ -45,28 +45,57 @@ export default function Checkout() {
   const location = useLocation();
 
 
+  const checkTicketSold = async () => {
+    let errorFound = false
+
+
+    for (const index in location.state) {
+      const { data: ticket } = await supabase
+        .from('Tickets')
+        .select('*')
+        .eq('ticketID', location.state[index].ticketID)
+
+      console.log(ticket)
+      if (ticket[0].soldBool) {
+        return true
+      }
+    }
+
+
+    return errorFound
+  }
+
+
   const handleNext = async () => {
     if (activeStep === 2) {
-      const {data, error} = await supabase
-        .from('Tickets')
-        .upsert(location.state.map((ticket) => {
-          return {
-            ticketID: ticket.ticketID,
-            seasonTicketHolderID: ticket.seasonTicketHolderID,
-            soldBool: true,
-            priceValue: ticket.priceValue,
-            eventID: ticket.eventID,
-            seasonID: ticket.seasonID,
-            seatNumber: ticket.seatNumber,
-            rowNumber: ticket.rowNumber,
-            sectionNumber: ticket.sectionNumber
-          }
-        }))
-        .select()
 
-      if (error) {
-        console.log(error)
-        setError(error)
+      let errorFound = await checkTicketSold()
+
+      if (errorFound) {
+        setError('uh oh sphagettios')
+
+      } else {
+        const {data, error} = await supabase
+          .from('Tickets')
+          .upsert(location.state.map((ticket) => {
+            return {
+              ticketID: ticket.ticketID,
+              seasonTicketHolderID: ticket.seasonTicketHolderID,
+              soldBool: true,
+              priceValue: ticket.priceValue,
+              eventID: ticket.eventID,
+              seasonID: ticket.seasonID,
+              seatNumber: ticket.seatNumber,
+              rowNumber: ticket.rowNumber,
+              sectionNumber: ticket.sectionNumber
+            }
+          }))
+          .select()
+
+        if (error) {
+          console.log(error)
+          setError(error)
+        }
       }
 
     }
@@ -84,7 +113,7 @@ export default function Checkout() {
   function checkoutResult() {
     if (error) {
       return (
-        <>oh god oh fuck I "{error.message}"!!!!!!!</>
+        <>We're sorry, there was an issue on our end. Please try again later.</>
       )
     } else {
       return (

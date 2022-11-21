@@ -13,14 +13,16 @@ const CustomerEvents = ({}) => {
 
   const navigate = useNavigate()
 
-  const [selectedEvent, setSelectedEvent] = useState(location.state)
+  const [selectedEvent, setSelectedEvent] = useState(null)
 
   const fetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
 
-    setSelectedEvent(location.state)
+    if (location.state) {
+      setSelectedEvent(location.state)
+    }
 
     return events;
   }
