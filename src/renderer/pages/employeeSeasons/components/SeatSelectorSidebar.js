@@ -50,12 +50,8 @@ import {
                         paddingLeft: '0px'
                       }}>
                       <ListItemText primary={`${seat.sectionNumber} Row ${seat.rowNumber} Seat ${seat.seatNumber}`}
-                                    secondary={`$${seat.priceValue}`}
                                     primaryTypographyProps={{
                                       variant: 'h5'
-                                    }}
-                                    secondaryTypographyProps={{
-                                      variant: 'h6'
                                     }}
   
                       />
