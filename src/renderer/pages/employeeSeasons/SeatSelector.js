@@ -7,6 +7,7 @@ import SeatSelectorSidebar from "./components/SeatSelectorSidebar";
 import SeatViewer from "./components/SeatViewer";
 import EmployeeHeader from "renderer/components/EmployeeHeader";
 import { useNavigate } from "react-router-dom";
+import { generateTempTickets } from "./utils/TemporaryTickets";
 
 
 const SeatSelector = ({}) => {
@@ -40,10 +41,22 @@ const SeatSelector = ({}) => {
       .eq('venueID', supabaseVenue.current)
 
     if (!error) {
+       for (let i=0; i<tickets_sample.length; i++) {
+        if (tickets_sample[i].soldBool === true) {
+          for (let j=0; j<tickets_sample.length; j++) {
+            if ((tickets_sample[i].seatNumber === tickets_sample[j].seatNumber) && (tickets_sample[i].rowNumber === tickets_sample[j].rowNumber) && (tickets_sample[i].sectionNumber === tickets_sample[j].sectionNumber)) {
+              tickets_sample[j].soldBool = true;
+            }
+          }
+        }
+       }
         tickets.current = tickets_sample;
-        console.log(tickets.current);
-    }
 
+        if (tickets_sample.length === 0) {
+          tickets.current = generateTempTickets(supabaseVenue.current, newTicketHolderData.season.seasonID);
+        }
+    }
+    
     return tickets_sample;
   }
 

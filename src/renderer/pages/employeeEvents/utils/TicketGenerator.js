@@ -74,9 +74,9 @@ export const generateTickets = (event) => {
 
                             // if seat belongs to season ticket holder, mark it sold
                             let sold = false;
-                            for (const ticketHolder in seasonTicketHolders) {
-                                if (ticketHolder.seasonID === event.seasonID) {
-                                    if ((ticketHolder.concertHallSeatNumber === seat[0]) && (ticketHolder.concertHallRowNumber === row[0]) && (ticketHolder.concertHallSectionNumber === section[0])) {
+                            for (let i=0; i<seasonTicketHolders.length; i++) {
+                                if (seasonTicketHolders[i].seasonID === event.seasonID) {
+                                    if ((seasonTicketHolders[i].concertHallSeatNumber.toString() === seat[0]) && (seasonTicketHolders[i].concertHallRowNumber === row[0]) && (seasonTicketHolders[i].concertHallSectionNumber === section[0])) {
                                         sold = true;
                                     }
                                 }
@@ -96,11 +96,11 @@ export const generateTickets = (event) => {
                     if(row[0] != 'data') {
                         Object.entries(row[1]).map(seat => {
 
-                            // if seat belongs to season ticket holder, mark it sold
+                            // if seat belongs to season ticket holder, mark it sold ***FIX THIS***
                             let sold = false;
-                            for (const ticketHolder in seasonTicketHolders) {
-                                if (ticketHolder.seasonID === event.seasonID) {
-                                    if ((ticketHolder.concertHallSeatNumber === seat[0]) && (ticketHolder.concertHallRowNumber === row[0]) && (ticketHolder.concertHallSectionNumber === section[0])) {
+                            for (let i=0; i<seasonTicketHolders.length; i++) {
+                                if (seasonTicketHolders[i].seasonID === event.seasonID) {
+                                    if ((seasonTicketHolders[i].concertHallSeatNumber.toString() === seat[0]) && (seasonTicketHolders[i].concertHallRowNumber === row[0]) && (seasonTicketHolders[i].concertHallSectionNumber === section[0])) {
                                         sold = true;
                                     }
                                 }
@@ -129,9 +129,9 @@ export const generateTickets = (event) => {
 
                             // if seat belongs to season ticket holder, mark it sold
                             let sold = false;
-                            for (const ticketHolder in seasonTicketHolders) {
-                                if (ticketHolder.seasonID === event.seasonID) {
-                                    if ((ticketHolder.playhouseSeatNumber === seat[0]) && (ticketHolder.playhouseRowNumber === row[0]) && (ticketHolder.playhouseSectionNumber === section[0])) {
+                            for (let i = 0; i < seasonTicketHolders.length; i++) {
+                                if (seasonTicketHolders[i].seasonID === event.seasonID) {
+                                    if ((seasonTicketHolders[i].playhouseSeatNumber.toString() === seat[0]) && (seasonTicketHolders[i].playhouseRowNumber === row[0]) && (seasonTicketHolders[i].playhouseSectionNumber === section[0])) {
                                         sold = true;
                                     }
                                 }
@@ -153,9 +153,9 @@ export const generateTickets = (event) => {
 
                             // if seat belongs to season ticket holder, mark it sold
                             let sold = false;
-                            for (const ticketHolder in seasonTicketHolders) {
-                                if (ticketHolder.seasonID === event.seasonID) {
-                                    if ((ticketHolder.playhouseSeatNumber === seat[0]) && (ticketHolder.playhouseRowNumber === row[0]) && (ticketHolder.playhouseSectionNumber === section[0])) {
+                            for (let i = 0; i < seasonTicketHolders.length; i++) {
+                                if (seasonTicketHolders[i].seasonID === event.seasonID) {
+                                    if ((seasonTicketHolders[i].playhouseSeatNumber.toString() === seat[0]) && (seasonTicketHolders[i].playhouseRowNumber === row[0]) && (seasonTicketHolders[i].playhouseSectionNumber === section[0])) {
                                         sold = true;
                                     }
                                 }

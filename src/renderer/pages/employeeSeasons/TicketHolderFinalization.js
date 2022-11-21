@@ -137,7 +137,7 @@ const TicketHolderFinalization = ({}) => {
           .eq('sectionNumber', customer.concertHallSeat.current.sectionNumber);
 
         if (!error) {
-            if (ticket[0].soldBool === true) {
+            if (ticket[0]?.soldBool === true) {
                 ticketSoldCheck.current = true;
             }
         }
@@ -154,7 +154,7 @@ const TicketHolderFinalization = ({}) => {
           .eq('sectionNumber', customer.playhouseSeat.current.sectionNumber);
 
         if (!error) {
-            if (ticket[0].soldBool === true) {
+            if (ticket[0]?.soldBool === true) {
                 ticketSoldCheck.current = true;
             }
         }
