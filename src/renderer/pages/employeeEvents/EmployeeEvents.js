@@ -1,5 +1,5 @@
 import {Box, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
-import ScrollableSidebar from "../../components/ScrollableSidebar";
+import ScrollableSidebar from "./components/ScrollableSidebar";
 import EmployeeHeader from "../../components/EmployeeHeader"; 
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
@@ -78,7 +78,6 @@ const removeEvent = async(event) => {
     const { data: events } = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
-
     return events;
   }
 
@@ -99,7 +98,14 @@ const removeEvent = async(event) => {
   return (
    <>
      <EmployeeHeader>
-          
+     <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
+        <Grid container style={{padding: '10px', height: '100%'}}>
+          <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
+            <ScrollableSidebar events={data} onEventClick={onEventClick}/>
+          </Grid>
+        </Grid>
+     </Box>
+
       <Typography variant= "h6" align= "center" style={{padding:'10px'}}>Event Management
       <div
         style={{
