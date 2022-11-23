@@ -44,7 +44,7 @@ export default function Review() {
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            ${sumPrices(location.state)}
+            ${sumPrices(location.state).toFixed(2)}
           </Typography>
         </ListItem>
       </List>

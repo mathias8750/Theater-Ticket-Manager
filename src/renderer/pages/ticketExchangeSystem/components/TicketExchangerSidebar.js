@@ -16,6 +16,7 @@ import {useContext, useState} from "react";
 import supabase from "../../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import {OrganizationContext} from "../../../context/Context";
+import SelectedSeatList from "../../../components/SelectedSeatList";
 
 
 const TicketExchangerSidebar = ({tickets, originalEvent, selectedEvent, setSelectedEvent, selectedSeats, setSelectedSeats, setOpen}) => {
@@ -49,49 +50,7 @@ const TicketExchangerSidebar = ({tickets, originalEvent, selectedEvent, setSelec
   return (
     <Grid direction={'column'} container item style={{height: '100%', padding: '10px'}} md={4}>
       <Grid item style={{height: '40%'}}>
-        <Card style={{height: '100%'}}>
-          <CardHeader
-            title={originalEvent.eventName}
-            subheader={originalEvent.eventDateTime}
-          />
-
-          <Divider/>
-
-          <CardContent style={{height: '100%', paddingRight: '0px'}}>
-            <List
-              sx={{
-                width: '100%',
-                bgcolor: 'background.paper',
-                position: 'relative',
-                overflow: 'auto',
-                height: '85%',
-                '& ul': {padding: 0},
-              }}
-              subheader={<li/>}
-            >
-              {tickets.map((seat) => (
-                <>
-                  <ListItem
-                    key={seat.id}
-                    sx={{
-                      paddingLeft: '0px'
-                    }}>
-                    <ListItemText primary={`${seat.sectionNumber} Row ${seat.rowNumber} Seat ${seat.seatNumber}`}
-                                  secondary={`$${seat.priceValue}`}
-                                  primaryTypographyProps={{
-                                    variant: 'h5'
-                                  }}
-                                  secondaryTypographyProps={{
-                                    variant: 'h6'
-                                  }}
-                    />
-                  </ListItem>
-                </>
-              ))}
-            </List>
-          </CardContent>
-        </Card>
-
+       <SelectedSeatList selectedSeats={selectedSeats} event={originalEvent}/>
       </Grid>
 
       <Grid item style={{ height: '10%'}}>
