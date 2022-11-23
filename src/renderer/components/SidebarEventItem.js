@@ -1,5 +1,5 @@
 import {Button, Card, CardHeader, Typography} from "@mui/material";
-import { formatAMPM } from "renderer/utils/DateTime";
+import {formatAMPM} from "../utils/DateTime";
 
 
 const SidebarEventItem = ({event, onEventClick}) => {
