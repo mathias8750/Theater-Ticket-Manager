@@ -1,6 +1,6 @@
 import {Box, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
 import ScrollableSidebar from "./components/ScrollableSidebar";
-import EmployeeHeader from "../../components/EmployeeHeader"; 
+import EmployeeHeader from "../../components/EmployeeHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import React, { useState, useRef, useEffect } from 'react';
@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 import AddEventDialog from "./components/AddEventDialog";
 
 
-const EmployeeEvents = ({event}) => {
+const EmployeeEvents = ({}) => {
 
   const [removedEvent, setremovedEvent] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -88,7 +88,7 @@ const removeEvent = async(event) => {
   }
 
   const {status, data, error} = useQuery(['events'], FetchEvents)
-  
+
   if (status === 'loading') {
     return <span>Loading...</span>
   }
@@ -116,22 +116,22 @@ const removeEvent = async(event) => {
         </Grid>
      </Box>
      <AddEventDialog open={addEventOpen} onClose={toggleAddEventDialog} fetchEvents={FetchEvents} />
-      <SnackbarAlert 
-        alertOpen={failureAlertOpen} 
+      <SnackbarAlert
+        alertOpen={failureAlertOpen}
         toggleAlert={toggleFailureAlert}
         alertSeverity={'error'}
         alertText={'Cannot complete action'}
       />
 
-      <SnackbarAlert 
-        alertOpen={successAlertOpen} 
+      <SnackbarAlert
+        alertOpen={successAlertOpen}
         toggleAlert={toggleSuccessAlert}
         alertSeverity={'success'}
         alertText={'New Event Added Successfully'}
       />
 
-      <SnackbarAlert 
-        alertOpen={deleteAlertOpen} 
+      <SnackbarAlert
+        alertOpen={deleteAlertOpen}
         toggleAlert={toggleDeleteAlert}
         alertSeverity={'success'}
         alertText={'Event Deleted Successfully'}
@@ -186,7 +186,7 @@ export default EmployeeEvents;
                     onChange={event => setSeasonID(event.target.value)}
                 />
               </Typography>
-            
+
                 <Button
                     variant='contained'
                     color='primary'
