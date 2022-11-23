@@ -1,18 +1,15 @@
-import {Box, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
+import {Box, Grid } from "@mui/material";
 import ScrollableSidebar from "./components/ScrollableSidebar";
 import EmployeeHeader from "../../components/EmployeeHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
-import React, { useState, useRef, useEffect } from 'react';
-import SnackbarAlert from 'renderer/components/SnackbarAlert';
-import {OrganizationContext} from "renderer/context/Context";
+import React, { useState } from 'react';
 import {useContext} from "react";
 import { generateTickets } from "./utils/TicketGenerator";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import dayjs from 'dayjs';
 import AddEventDialog from "./components/AddEventDialog";
+import {OrganizationContext} from "../../context/Context";
+import SnackbarAlert from "../../components/SnackbarAlert";
 
 
 const EmployeeEvents = ({}) => {

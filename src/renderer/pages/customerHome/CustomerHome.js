@@ -1,14 +1,11 @@
-import {Box, Button, Grid, TextField, Typography} from "@mui/material";
-import {useNavigate} from 'react-router-dom';
+import {Box, Button, Grid, Typography} from "@mui/material";
 import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import React from "react";
-import {compareDateTime} from "renderer/utils/DateTime";
-
-
-import "./style.css";
 import SidebarEventItem from "../../components/SidebarEventItem";
+import {compareDateTime} from "../../utils/DateTime";
+import {useNavigate} from "react-router-dom";
 
 
 const CustomerHome = ({}) => {

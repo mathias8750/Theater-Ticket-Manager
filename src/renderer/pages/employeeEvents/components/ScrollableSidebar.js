@@ -1,7 +1,7 @@
 import {Grid, TextField, Button} from "@mui/material";
 import SidebarEventFromOrgItem from "../../../components/SidebarEventFromOrgItem";
-import { OrganizationContext } from "renderer/context/Context";
 import { useContext } from "react";
+import {OrganizationContext} from "../../../context/Context";
 
 const ScrollableSidebar = ({ events, onEventClick, onAddClick }) => {
 

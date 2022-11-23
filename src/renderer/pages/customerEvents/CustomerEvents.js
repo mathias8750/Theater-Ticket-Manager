@@ -1,9 +1,9 @@
-import {Box, Card, CardContent, Grid, Typography} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import ScrollableSidebar from "../../components/ScrollableSidebar";
 import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
-import {useState, useContext} from "react";
+import {useState} from "react";
 import CustomerEvent from "./components/CustomerEvent";
 import {useLocation, useNavigate} from "react-router-dom";
 
@@ -16,7 +16,7 @@ const CustomerEvents = ({}) => {
   const [selectedEvent, setSelectedEvent] = useState(null)
 
   const fetchEvents = async () => {
-    let { data: events } = await supabase
+    let {data: events} = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
 
@@ -56,12 +56,12 @@ const CustomerEvents = ({}) => {
   // seats.result[] array gives rowNumber and seatNumber for each seat (row will be same for each seat)
   const onRecommendedSeatsClick = (seats) => {
     console.log("Clicked on Seat"
-                + "\nSection: "
-                + seats.section
-                + "\nRow: "
-                + seats.result[0].rowNumber
-                + "\nSeat(s): "
-                );
+      + "\nSection: "
+      + seats.section
+      + "\nRow: "
+      + seats.result[0].rowNumber
+      + "\nSeat(s): "
+    );
     for (const seat of seats.result) {
       console.log(seat.seatNumber);
     }
@@ -71,7 +71,7 @@ const CustomerEvents = ({}) => {
 
   return (
     <CustomerHeader>
-      <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
+      <Box style={{flexGrow: 1, background: 'white', height: '100%'}}>
         <Grid container style={{padding: '10px', height: '100%'}}>
           <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
             <ScrollableSidebar events={data} onEventClick={onEventClick}/>
@@ -80,7 +80,8 @@ const CustomerEvents = ({}) => {
 
           <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
             {selectedEvent !== null ? (
-              <CustomerEvent key={selectedEvent.eventID} event={selectedEvent} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
+              <CustomerEvent key={selectedEvent.eventID} event={selectedEvent}
+                             onRecommendedSeatsClick={onRecommendedSeatsClick}/>
             ) : (
               <></>
             )}
