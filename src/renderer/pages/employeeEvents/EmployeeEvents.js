@@ -1,4 +1,4 @@
-import {Box, Grid } from "@mui/material";
+import {Box, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
 import ScrollableSidebar from "./components/ScrollableSidebar";
 import EmployeeHeader from "../../components/EmployeeHeader";
 import supabase from "../../utils/Supabase";
@@ -19,6 +19,8 @@ const EmployeeEvents = ({}) => {
   const [deleteAlertOpen, setDeleteAlert] = useState(false);
   const [successAlertOpen, setSuccessAlert] = useState(false);
   const [failureAlertOpen, setFailureAlert] = useState(false);
+  const [successUpdateAlertOpen, setUpdateSuccessAlert] = useState(false);
+  const [failureUpdateAlertOpen, setUpdateFailureAlert] = useState(false);
   const [eventList, setEventList] = useState([]);
 
   const {state} = useContext(OrganizationContext);
@@ -29,6 +31,11 @@ const EmployeeEvents = ({}) => {
   const [seasonID, setSeasonID] = useState(0);
   const [eventdatetime, setDateTime] = useState(dayjs('2023-01-01T00:00:00.000Z'));
 
+  // Map customer list to the screen
+  const toggleMapCustomers = () => {
+    setMapCustomers(!mapCustomers);
+  }
+
   // Toggles the success alert
   const toggleSuccessAlert = () => {
     setSuccessAlert(!successAlertOpen);
@@ -37,6 +44,15 @@ const EmployeeEvents = ({}) => {
   // Toggles the failure alert
   const toggleFailureAlert = () => {
     setFailureAlert(!failureAlertOpen);
+  }
+
+  // Toggles the success alert
+  const toggleUpdateSuccessAlert = () => {
+    setUpdateSuccessAlert(!successUpdateAlertOpen);
+  }
+
+  const toggleUpdateFailureAlert = () => {
+    setUpdateFailureAlert(!failureUpdateAlertOpen);
   }
 
   // Toggles the delete alert
@@ -67,6 +83,20 @@ const EmployeeEvents = ({}) => {
       }
   }
 
+const updateEvent = async(oldEvent) => {
+    const {data: Events, error} = await supabase
+    .from('Events')
+    .update([{seasonID: season, organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: dt.toString(), eventName: eventname}])
+
+    if (error) {
+      toggleUpdateFailureAlert();
+    } else {
+      toggleUpdateSuccessAlert();
+      generateTickets(Events[0]);
+      FetchEvents();
+    }
+}
+
 const removeEvent = async(event) => {
   const {deleteEvent, error} = await supabase
       .from("Events")
@@ -95,7 +125,7 @@ const removeEvent = async(event) => {
   }
 
   const onEventClick = (event) => {
-    setSelectedEvent(event)
+    setSelectedEvent(event);
   }
 
   const toggleAddEventDialog = () => {
@@ -105,13 +135,14 @@ const removeEvent = async(event) => {
   return (
    <>
      <EmployeeHeader>
-     <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
+      <Typography variant= "h3" align= "center" style={{padding:'10px'}}>Event Management</Typography>
+      <div style={{ flexGrow: 1, background: 'white', height: '100%'}}>
         <Grid container style={{padding: '10px', height: '100%'}}>
           <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
             <ScrollableSidebar events={eventList} onEventClick={onEventClick} onAddClick={toggleAddEventDialog}/>
           </Grid>
         </Grid>
-     </Box>
+      </div>
      <AddEventDialog open={addEventOpen} onClose={toggleAddEventDialog} fetchEvents={FetchEvents} />
       <SnackbarAlert
         alertOpen={failureAlertOpen}
@@ -193,4 +224,54 @@ export default EmployeeEvents;
                     Create Event
                 </Button>
        </div>
+      </Typography>
+      <div style={{justifyContent: 'left'}}>
+        <Box style={{ justifyContent: 'left', flexGrow: 1, background: 'white', height: '100%'}}>
+          <Grid container style={{justifyContent: 'left', padding: '10px', height: '100%'}}>
+            <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
+              <ScrollableSidebar events={data} onEventClick={onEventClick}/>
+            </Grid>
+          </Grid>
+        </Box>
+      </div>
+       <SnackbarAlert 
+                alertOpen={failureAlertOpen} 
+                toggleAlert={toggleFailureAlert}
+                alertSeverity={'error'}
+                alertText={'Error: Cannot complete action'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={successAlertOpen} 
+                toggleAlert={toggleSuccessAlert}
+                alertSeverity={'success'}
+                alertText={'New Event Added Successfully'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={deleteAlertOpen} 
+                toggleAlert={toggleDeleteAlert}
+                alertSeverity={'success'}
+                alertText={'Event Deleted Successfully'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={successUpdateAlertOpen} 
+                toggleAlert={toggleUpdateSuccessAlert}
+                alertSeverity={'success'}
+                alertText={'Event Updated Successfully'}
+                />
+
+                <SnackbarAlert 
+                alertOpen={failureUpdateAlertOpen} 
+                toggleAlert={toggleUpdateFailureAlert}
+                alertSeverity={'error'}
+                alertText={'Error: Could Not Update Event'}
+                />
+      </EmployeeHeader>
+    </>
+  )
+}
+
+export default EmployeeEvents;
        */

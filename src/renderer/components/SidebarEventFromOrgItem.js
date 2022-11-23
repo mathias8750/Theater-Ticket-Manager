@@ -16,7 +16,7 @@ const SidebarEventItem = ({event, onEventClick}) => {
           action={
             <Button
               onClick={() => onEventClick(event)}
-            >Edit</Button>
+            >View Customer List</Button>
           }
         />
       </Card>
