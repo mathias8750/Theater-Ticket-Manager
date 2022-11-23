@@ -26,7 +26,6 @@ const CustomerEvents = ({}) => {
       const eventDate = new Date(event.eventDateTime)
 
       if (today < eventDate) {
-        console.log(event)
         return event
       }
     })
@@ -55,17 +54,6 @@ const CustomerEvents = ({}) => {
   // seats.section gives section,
   // seats.result[] array gives rowNumber and seatNumber for each seat (row will be same for each seat)
   const onRecommendedSeatsClick = (seats) => {
-    console.log("Clicked on Seat"
-      + "\nSection: "
-      + seats.section
-      + "\nRow: "
-      + seats.result[0].rowNumber
-      + "\nSeat(s): "
-    );
-    for (const seat of seats.result) {
-      console.log(seat.seatNumber);
-    }
-
     navigate("/customer/events/checkout", {state: seats.result})
   }
 
