@@ -23,9 +23,6 @@ const EmployeeEvents = ({event}) => {
   const [failureAlertOpen, setFailureAlert] = useState(false);
   const [successUpdateAlertOpen, setUpdateSuccessAlert] = useState(false);
   const [failureUpdateAlertOpen, setUpdateFailureAlert] = useState(false);
-  const [mapCustomers, setMapCustomers] = useState(false);
-
-  let subtitle = null;
 
   const {state} = useContext(OrganizationContext);
   const [open, setOpen] = useState(false);
@@ -107,13 +104,6 @@ const removeEvent = async(event) => {
       .eq('', event.eventName);
 }
 
-  const FetchCustomers = async () => {
-    const { Data: customers } = await supabase 
-      .from('Customers')
-      .select('*');
-    return customers;
-  }
-
   const FetchEvents = async () => {
     const { data: events } = await supabase
       .from('Events')
@@ -121,8 +111,7 @@ const removeEvent = async(event) => {
     return events;
   }
 
-  const {status1, data, error1} = useQuery(['events'], FetchEvents)
-  const {status2, Data, error2} = useQuery(['customers', FetchCustomers])
+  const {status, data, error} = useQuery(['events'], FetchEvents)
   
   if (status === 'loading') {
     return <span>Loading...</span>
@@ -133,7 +122,7 @@ const removeEvent = async(event) => {
   }
 
   const onEventClick = (event) => {
-    toggleMapCustomers();
+    setSelectedEvent(event);
   }
 
   return (
@@ -202,18 +191,6 @@ const removeEvent = async(event) => {
           </Grid>
         </Box>
       </div>
-      <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
-            <div style={{ height: '100%', overflow: 'auto'}}>
-              {customers.map((customer) => {
-                return (
-                  <Card>
-                    <CardHeader
-                      title={customer.customerID}
-                        subheader={subtitle}/></Card>
-                )
-              })}
-            </div>
-          </div>
        <SnackbarAlert 
                 alertOpen={failureAlertOpen} 
                 toggleAlert={toggleFailureAlert}
