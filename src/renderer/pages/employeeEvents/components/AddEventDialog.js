@@ -32,6 +32,7 @@ const AddEventDialog = ({open, onClose, fetchEvents}) => {
   const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [venueAlertOpen, setVenueAlertOpen] = useState(false);
   const [seasonAlertOpen, setSeasonAlertOpen] = useState(false);
+  const [invalidFieldAlertOpen, setInvalidFieldAlertOpen] = useState(false);
   const eventTimeCheckRef = useRef(false);
   const {state} = useContext(OrganizationContext);
 
@@ -88,6 +89,7 @@ const AddEventDialog = ({open, onClose, fetchEvents}) => {
   const addEvent = () => {
     let dateCheck = false;
     let newEventDateTime = new Date(eventDateTime);
+    if ((eventNameRef.current.value.trim() != '') && (eventDateTime.toString() != 'Invalid Date')) {
     for (let i = 0; i < seasonList.length; i++) {
       if (seasonList[i].seasonID === eventSeasonID) {
         let startDate = new Date(seasonList[i].startDate);
@@ -111,6 +113,9 @@ const AddEventDialog = ({open, onClose, fetchEvents}) => {
     } else {
       toggleSeasonAlert();
     }
+   } else {
+    toggleInvalidFieldAlert();
+   }
   }
 
   const fetchSeasons = async () => {
@@ -150,6 +155,10 @@ const AddEventDialog = ({open, onClose, fetchEvents}) => {
 
   const toggleSeasonAlert = () => {
     setSeasonAlertOpen(!seasonAlertOpen);
+  }
+
+  const toggleInvalidFieldAlert = () => {
+    setInvalidFieldAlertOpen(!invalidFieldAlertOpen);
   }
 
 
@@ -296,6 +305,12 @@ const AddEventDialog = ({open, onClose, fetchEvents}) => {
         toggleAlert={toggleSeasonAlert}
         alertSeverity={'error'}
         alertText={'Event date is not within selected season'}
+      />
+      <SnackbarAlert
+        alertOpen={invalidFieldAlertOpen}
+        toggleAlert={toggleInvalidFieldAlert}
+        alertSeverity={'error'}
+        alertText={'Invalid Field(s)'}
       />
     </Dialog>
   );
