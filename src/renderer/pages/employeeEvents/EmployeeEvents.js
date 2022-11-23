@@ -12,6 +12,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import dayjs from 'dayjs';
+import AddEventDialog from "./components/AddEventDialog";
 
 
 const EmployeeEvents = ({event}) => {
@@ -23,9 +24,11 @@ const EmployeeEvents = ({event}) => {
   const [failureAlertOpen, setFailureAlert] = useState(false);
   const [successUpdateAlertOpen, setUpdateSuccessAlert] = useState(false);
   const [failureUpdateAlertOpen, setUpdateFailureAlert] = useState(false);
+  const [eventList, setEventList] = useState([]);
 
   const {state} = useContext(OrganizationContext);
   const [open, setOpen] = useState(false);
+  const [addEventOpen, setAddEventOpen] = useState(false);
   const [eventname, setEventName] = useState('');
   const [venueid, setVenueID] = useState(0);
   const [seasonID, setSeasonID] = useState(0);
@@ -105,9 +108,12 @@ const removeEvent = async(event) => {
 }
 
   const FetchEvents = async () => {
-    const { data: events } = await supabase
+    const { data: events, error } = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
+    if (!error) {
+      setEventList(events);
+    }
     return events;
   }
 
@@ -125,11 +131,51 @@ const removeEvent = async(event) => {
     setSelectedEvent(event);
   }
 
+  const toggleAddEventDialog = () => {
+    setAddEventOpen(!addEventOpen);
+  }
+
   return (
    <>
      <EmployeeHeader>
-      <Typography variant= "h3" align= "center" style={{padding:'10px'}}>Event Management
-      <div
+      <Typography variant= "h3" align= "center" style={{padding:'10px'}}>Event Management</Typography>
+      <div style={{ flexGrow: 1, background: 'white', height: '100%'}}>
+        <Grid container style={{padding: '10px', height: '100%'}}>
+          <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
+            <ScrollableSidebar events={eventList} onEventClick={onEventClick} onAddClick={toggleAddEventDialog}/>
+          </Grid>
+        </Grid>
+      </div>
+     <AddEventDialog open={addEventOpen} onClose={toggleAddEventDialog} fetchEvents={FetchEvents} />
+      <SnackbarAlert 
+        alertOpen={failureAlertOpen} 
+        toggleAlert={toggleFailureAlert}
+        alertSeverity={'error'}
+        alertText={'Cannot complete action'}
+      />
+
+      <SnackbarAlert 
+        alertOpen={successAlertOpen} 
+        toggleAlert={toggleSuccessAlert}
+        alertSeverity={'success'}
+        alertText={'New Event Added Successfully'}
+      />
+
+      <SnackbarAlert 
+        alertOpen={deleteAlertOpen} 
+        toggleAlert={toggleDeleteAlert}
+        alertSeverity={'success'}
+        alertText={'Event Deleted Successfully'}
+      />
+      </EmployeeHeader>
+    </>
+  )
+}
+
+export default EmployeeEvents;
+
+/*
+<div
         style={{
             display: 'flex',
             alignItems: 'center',
@@ -231,3 +277,4 @@ const removeEvent = async(event) => {
 }
 
 export default EmployeeEvents;
+       */
