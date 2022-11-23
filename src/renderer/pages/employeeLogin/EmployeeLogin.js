@@ -1,10 +1,9 @@
-import {Button, Typography, TextField, AlertTitle, Dialog, Alert, Box} from "@mui/material";
-import {Link as NavLink, useNavigate} from "react-router-dom";
-import React, {useRef, useState, Component, useContext, useEffect} from "react";
+import {Button, Typography, TextField} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import React, {useRef, useState} from "react";
 import supabase from '../../utils/Supabase.js';
-import LoginHeader from "renderer/components/LoginHeader.js";
-import SnackbarAlert from "renderer/components/SnackbarAlert.js";
-import { UserContext } from "renderer/context/Context";
+import LoginHeader from "../../components/LoginHeader";
+import SnackbarAlert from "../../components/SnackbarAlert";
 
 
 const EmployeeLogin = ({}) => {
@@ -28,9 +27,9 @@ const EmployeeLogin = ({}) => {
       .select('*')
       .eq('username', usernameRef.current.value.trim())
       .eq('password', passwordRef.current.value.trim());
-      
+
     // If the username and password are valid, navigate to the employee login screen
-    if(Users.length == 0) {
+    if (Users.length == 0) {
       // Invalid login info, alert the user
       toggleFailureAlert();
     } else {
@@ -44,40 +43,40 @@ const EmployeeLogin = ({}) => {
 
 
   return (
-    
+
     <LoginHeader>
-    <div style={{display: 'flex', justifyContent: 'center'}}>
-      <Typography variant="h6" align="center" style={{padding: '2%'}}>Employee Login</Typography>
-    </div>
-    <div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1%'}}>
-      <TextField
-      id='usernameTextField'
-      label='Username'
-      inputRef={usernameRef}
-      />
-    </div>
-    <div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1%'}}>
-      <TextField
-      id='passwordTextField'
-      label='Password'
-      type='password'
-      inputRef={passwordRef}
-      />
-    </div>
-    <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
-      <Button
-      color='primary'
-      size='small'
-      onClick={() => login()}
-      >
-        Login
-      </Button>
-    </div>
-      <SnackbarAlert 
-      alertOpen={failureAlertOpen} 
-      toggleAlert={toggleFailureAlert}
-      alertSeverity={'error'}
-      alertText={'Invalid Username/Password'}
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Typography variant="h6" align="center" style={{padding: '2%'}}>Employee Login</Typography>
+      </div>
+      <div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1%'}}>
+        <TextField
+          id='usernameTextField'
+          label='Username'
+          inputRef={usernameRef}
+        />
+      </div>
+      <div style={{display: 'flex', justifyContent: 'center', paddingBottom: '1%'}}>
+        <TextField
+          id='passwordTextField'
+          label='Password'
+          type='password'
+          inputRef={passwordRef}
+        />
+      </div>
+      <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+        <Button
+          color='primary'
+          size='small'
+          onClick={() => login()}
+        >
+          Login
+        </Button>
+      </div>
+      <SnackbarAlert
+        alertOpen={failureAlertOpen}
+        toggleAlert={toggleFailureAlert}
+        alertSeverity={'error'}
+        alertText={'Invalid Username/Password'}
       />
     </LoginHeader>
   )

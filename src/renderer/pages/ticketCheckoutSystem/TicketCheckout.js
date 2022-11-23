@@ -16,10 +16,12 @@ import {useLocation} from "react-router-dom";
 import CustomerInformationForm from "./components/CustomerInformationForm";
 import PaymentForm from "./components/PaymentForm";
 import Review from "./components/ReviewForm";
-import {useState} from "react";
+import {createContext, useState} from "react";
 import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
+import {matchIsValidTel} from "mui-tel-input";
 
+export const CheckoutContext = createContext({})
 
 const steps = ['Customer Info', 'Payment details', 'Review your order'];
 
@@ -44,13 +46,16 @@ export default function Checkout() {
 
   const location = useLocation();
 
+  const [customerName, setCustomerName] = useState('')
+  const [customerEmail, setCustomerEmail] = useState('')
+  const [customerPhone, setCustomerPhone] = useState('')
 
   const checkTicketSold = async () => {
     let errorFound = false
 
 
     for (const index in location.state) {
-      const { data: ticket } = await supabase
+      const {data: ticket} = await supabase
         .from('Tickets')
         .select('*')
         .eq('ticketID', location.state[index].ticketID)
@@ -65,9 +70,48 @@ export default function Checkout() {
     return errorFound
   }
 
+  const getCustomer = async () => {
+    const {data: customers, customerCheckError} = await supabase
+      .from('Customers')
+      .select('*')
+      .eq('customerEmail', customerEmail)
+
+    if (customerCheckError) {
+      return null
+    } else {
+      return customers
+    }
+  }
+
+  const addCustomer = async () => {
+    const {data: customerData, customerInsertError} = await supabase
+      .from('Customers')
+      .insert({
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerEmail: customerEmail,
+      })
+
+
+    if (customerInsertError) {
+      return false
+    } else {
+      return true
+    }
+
+  }
 
   const handleNext = async () => {
-    if (activeStep === 2) {
+
+    if (activeStep === 0) {
+      if (customerPhone === '' || customerName === '' || !matchIsValidTel(customerPhone)) {
+
+      } else {
+        setActiveStep(activeStep + 1);
+      }
+    } else if (activeStep === 1) {
+      setActiveStep(activeStep + 1);
+    } else if (activeStep === 2) {
 
       let errorFound = await checkTicketSold()
 
@@ -75,32 +119,53 @@ export default function Checkout() {
         setError('uh oh sphagettios')
 
       } else {
-        const {data, error} = await supabase
-          .from('Tickets')
-          .upsert(location.state.map((ticket) => {
-            return {
-              ticketID: ticket.ticketID,
-              seasonTicketHolderID: ticket.seasonTicketHolderID,
-              soldBool: true,
-              priceValue: ticket.priceValue,
-              eventID: ticket.eventID,
-              seasonID: ticket.seasonID,
-              seatNumber: ticket.seatNumber,
-              rowNumber: ticket.rowNumber,
-              sectionNumber: ticket.sectionNumber
+        let customers = await getCustomer();
+
+        if (customers) {
+          if (customers.length === 0) {
+            let customerInsertReturn = await addCustomer();
+
+            if (!customerInsertReturn) {
+              setError('oh god oh no')
+            } else {
+
             }
-          }))
-          .select()
+
+            customers = await getCustomer();
+
+
+          }
+
+          if (customers) {
+            const {data, error} = await supabase
+              .from('Tickets')
+              .upsert(location.state.map((ticket) => {
+                return {
+                  ticketID: ticket.ticketID,
+                  seasonTicketHolderID: ticket.seasonTicketHolderID,
+                  soldBool: true,
+                  priceValue: ticket.priceValue,
+                  eventID: ticket.eventID,
+                  seasonID: ticket.seasonID,
+                  seatNumber: ticket.seatNumber,
+                  rowNumber: ticket.rowNumber,
+                  sectionNumber: ticket.sectionNumber,
+                  customerID: customers[0].customerID,
+                }
+              }))
+              .select()
+          }
+        } else {
+          setError('oh god')
+        }
 
         if (error) {
-          console.log(error)
           setError(error)
         }
       }
 
+      setActiveStep(activeStep + 1);
     }
-
-    setActiveStep(activeStep + 1);
 
 
   };
@@ -122,7 +187,7 @@ export default function Checkout() {
             Thank you for your order.
           </Typography>
           <Typography variant="subtitle1">
-            Your order number is #2001539. We have emailed your order
+            Your order number is #{Math.trunc(Math.random() * 1000)}. We have emailed your order
             confirmation, and will send you an update when your order has
             shipped.
           </Typography>
@@ -134,43 +199,55 @@ export default function Checkout() {
   return (
     <CustomerHeader>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <Container component="main" maxWidth="sm" sx={{mb: 4}}>
-          <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}>
-            <Typography component="h1" variant="h4" align="center">
-              Checkout
-            </Typography>
-            <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            {activeStep === steps.length ? (
-              <>{checkoutResult()}</>
-            ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
-                      Back
-                    </Button>
-                  )}
+        <CheckoutContext.Provider
+          value={{
+            customerName: customerName,
+            setCustomerName: setCustomerName,
+            customerPhone: customerPhone,
+            setCustomerPhone: setCustomerPhone,
+            customerEmail: customerEmail,
+            setCustomerEmail: setCustomerEmail
+          }}
+        >
 
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{mt: 3, ml: 1}}
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
-                </Box>
-              </React.Fragment>
-            )}
-          </Paper>
-        </Container>
+          <CssBaseline/>
+          <Container component="main" maxWidth="sm" sx={{mb: 4}}>
+            <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}>
+              <Typography component="h1" variant="h4" align="center">
+                Checkout
+              </Typography>
+              <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              {activeStep === steps.length ? (
+                <>{checkoutResult()}</>
+              ) : (
+                <React.Fragment>
+                  {getStepContent(activeStep)}
+                  <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+                    {activeStep !== 0 && (
+                      <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
+                        Back
+                      </Button>
+                    )}
+
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{mt: 3, ml: 1}}
+                    >
+                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    </Button>
+                  </Box>
+                </React.Fragment>
+              )}
+            </Paper>
+          </Container>
+        </CheckoutContext.Provider>
       </ThemeProvider>
     </CustomerHeader>
 

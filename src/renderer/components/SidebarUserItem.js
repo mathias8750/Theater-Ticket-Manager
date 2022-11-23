@@ -1,6 +1,4 @@
-import {Button, Card, CardHeader, Typography} from "@mui/material";
-import { formatAMPM } from "renderer/utils/DateTime";
-
+import {Button, Card, CardHeader } from "@mui/material";
 
 const SidebarUserItem = ({user, onUserClick}) => {
 
