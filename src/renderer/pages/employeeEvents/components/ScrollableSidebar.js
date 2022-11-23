@@ -1,9 +1,9 @@
-import {Grid, TextField} from "@mui/material";
+import {Grid, TextField, Button} from "@mui/material";
 import SidebarEventFromOrgItem from "../../../components/SidebarEventFromOrgItem";
 import { OrganizationContext } from "renderer/context/Context";
 import { useContext } from "react";
 
-const ScrollableSidebar = ({ events, onEventClick }) => {
+const ScrollableSidebar = ({ events, onEventClick, onAddClick }) => {
 
   const {state} = useContext(OrganizationContext);
 
@@ -21,7 +21,8 @@ const ScrollableSidebar = ({ events, onEventClick }) => {
         </Grid>
 
         <Grid item style={{
-          height: '90%',
+          border: '1px solid rgba(0, 0, 0, 0.05)',
+          height: '75%',
         }}>
           <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
             <div style={{ height: '100%', overflow: 'auto'}}>
@@ -34,6 +35,15 @@ const ScrollableSidebar = ({ events, onEventClick }) => {
             </div>
           </div>
 
+        </Grid>
+        <Grid item style={{height: '10%'}}>
+          <Button
+            color='primary'
+            size='large'
+            onClick={onAddClick}
+            >
+              Add Event
+          </Button>
         </Grid>
       </Grid>
     </>
