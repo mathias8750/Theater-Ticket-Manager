@@ -16,9 +16,20 @@ const CustomerEvents = ({}) => {
   const [selectedEvent, setSelectedEvent] = useState(null)
 
   const fetchEvents = async () => {
-    const { data: events } = await supabase
+    let { data: events } = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
+
+
+    events = events.filter((event) => {
+      const today = new Date()
+      const eventDate = new Date(event.eventDateTime)
+
+      if (today < eventDate) {
+        console.log(event)
+        return event
+      }
+    })
 
     if (location.state) {
       setSelectedEvent(location.state)
