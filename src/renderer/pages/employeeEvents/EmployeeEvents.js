@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import AddEventDialog from "./components/AddEventDialog";
 import {OrganizationContext} from "../../context/Context";
 import SnackbarAlert from "../../components/SnackbarAlert";
+import EmployeeEvent from "./components/EmployeeEvent";
 
 
 const EmployeeEvents = ({}) => {
@@ -140,6 +141,13 @@ const removeEvent = async(event) => {
         <Grid container style={{padding: '10px', height: '100%'}}>
           <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
             <ScrollableSidebar events={eventList} onEventClick={onEventClick} onAddClick={toggleAddEventDialog}/>
+          </Grid>
+          <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
+            {selectedEvent !== null ? (
+              <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent}/>
+            ) : (
+              <></>
+            )}
           </Grid>
         </Grid>
       </div>
