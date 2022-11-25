@@ -11,7 +11,7 @@ const {state} = useContext(OrganizationContext);
 
   return (
     <>
-      <EmployeeHeader>
+      <EmployeeHeader helpID={4}>
         <Typography
           variant="h3"
           align="center"

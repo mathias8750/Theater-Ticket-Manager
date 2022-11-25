@@ -98,7 +98,7 @@ const removeEvent = async(event) => {
 
   return (
    <>
-     <EmployeeHeader>
+     <EmployeeHeader helpID={5}>
           
       <Typography variant= "h6" align= "center" style={{padding:'10px'}}>Event Management
       <div
