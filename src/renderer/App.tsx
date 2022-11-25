@@ -16,6 +16,7 @@ import TicketCheckout from "./pages/ticketCheckoutSystem/TicketCheckout";
 import SeatSelector from './pages/employeeSeasons/SeatSelector';
 import TicketHolderFinalization from './pages/employeeSeasons/TicketHolderFinalization';
 import TicketExchanger from "./pages/ticketExchangeSystem/TicketExchanger";
+import EmployeeTicketSelector from './pages/employeeEvents/EmployeeTicketSelector';
 
 
 const queryClient = new QueryClient()
@@ -40,6 +41,7 @@ export default function App() {
             <Route path={"/employee/home/seasons/seat-selector"} element={<SeatSelector/>}/>
             <Route path={"/employee/home/seasons/seat-selector/finalize"} element={<TicketHolderFinalization/>}/>
             <Route path={"/employee/home/events/ticket-exchanger"} element={<TicketExchanger/>}/>
+            <Route path={"/employee/home/events/ticket-price-manager"} element={<EmployeeTicketSelector/>}/>
           </Routes>
         </OrganizationProvider>
       </Router>

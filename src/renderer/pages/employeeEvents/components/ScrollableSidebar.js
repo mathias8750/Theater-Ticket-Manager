@@ -1,9 +1,9 @@
 import {Grid, TextField, Button} from "@mui/material";
-import SidebarEventFromOrgItem from "../../../components/SidebarEventFromOrgItem";
 import { useContext } from "react";
 import {OrganizationContext} from "../../../context/Context";
+import SidebarEventFromOrgItem from "./SidebarEventFromOrgItem";
 
-const ScrollableSidebar = ({ events, onEventClick, onAddClick }) => {
+const ScrollableSidebar = ({ events, onEventClick, onAddClick, onEditPriceClick }) => {
 
   const {state} = useContext(OrganizationContext);
 
@@ -29,7 +29,7 @@ const ScrollableSidebar = ({ events, onEventClick, onAddClick }) => {
               {events.map((event) => {
                 if (state.selectedOrg.organizationID == event.organizationID)
                 return (
-                  <SidebarEventFromOrgItem event={event} onEventClick={onEventClick}/>
+                  <SidebarEventFromOrgItem event={event} onEventClick={onEventClick} />
                 )
               })}
             </div>

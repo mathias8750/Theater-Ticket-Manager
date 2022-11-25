@@ -2,7 +2,7 @@ import {Button, Card, CardHeader, Typography} from "@mui/material";
 import { formatAMPM } from "renderer/utils/DateTime";
 
 
-const SidebarEventItem = ({event, onEventClick}) => {
+const SidebarEventFromOrgItem = ({event, onEventClick}) => {
 
   const date = new Date(event.eventDateTime);
   const subtitle = <ul><li>{event.Venues.venueName}</li><li>{date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + formatAMPM(date)}</li></ul>
@@ -16,7 +16,7 @@ const SidebarEventItem = ({event, onEventClick}) => {
           action={
             <Button
               onClick={() => onEventClick(event)}
-            >Edit</Button>
+            >View</Button>
           }
         />
       </Card>
@@ -24,4 +24,4 @@ const SidebarEventItem = ({event, onEventClick}) => {
   )
 }
 
-export default SidebarEventItem;
+export default SidebarEventFromOrgItem;
