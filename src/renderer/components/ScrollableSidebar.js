@@ -1,10 +1,30 @@
 import {Grid, TextField} from "@mui/material";
 import SidebarEventItem from "./SidebarEventItem";
+import {useState} from "react";
 
 
 const ScrollableSidebar = ({ events, onEventClick }) => {
 
+  const [searchInput, setSearchInput] = useState('')
+  const [searchableEvents, setSearchableEvents] = useState(events)
 
+  const searchEvents = (inputEvent) => {
+    setSearchInput(inputEvent.target.value)
+    if (inputEvent.target.value === '') {
+      setSearchableEvents(events)
+    } else {
+      let tempEvents = []
+
+      events.map((event) => {
+        if ((event.eventName.toLowerCase()).includes(inputEvent.target.value.toLowerCase())) {
+          tempEvents.push(event)
+        }
+      })
+
+      setSearchableEvents(tempEvents)
+
+    }
+  }
 
   return (
     <>
@@ -12,10 +32,12 @@ const ScrollableSidebar = ({ events, onEventClick }) => {
         <Grid item style={{height: '10%'}}>
           <TextField
             id="standard-search"
-            label="Search field"
+            label="Search Events"
             type="search"
             variant="outlined"
             fullWidth={true}
+            value={searchInput}
+            onChange={searchEvents}
           />
         </Grid>
 
@@ -24,7 +46,7 @@ const ScrollableSidebar = ({ events, onEventClick }) => {
         }}>
           <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
             <div style={{ height: '100%', overflow: 'auto'}}>
-              {events.map((event) => {
+              {searchableEvents.map((event) => {
                 return (
                   <SidebarEventItem event={event} onEventClick={onEventClick}/>
                 )

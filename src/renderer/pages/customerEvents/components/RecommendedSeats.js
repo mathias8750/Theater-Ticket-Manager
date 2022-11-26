@@ -1,7 +1,7 @@
-import {Button, Card, CardHeader, Typography} from "@mui/material";
+import {Button, Card, CardHeader} from "@mui/material";
 
 const RecommendedSeats = ({seats, onSeatsClick}) => {
-  
+
     let seats_str = 'Seat(s): ';
     for (let i = 0; i < seats.result.length; i++) {
       seats_str = seats_str + seats.result[i].seatNumber + ', ';

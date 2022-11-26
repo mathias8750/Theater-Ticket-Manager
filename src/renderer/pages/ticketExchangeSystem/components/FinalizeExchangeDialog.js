@@ -14,6 +14,7 @@ import {
 import Stack from "@mui/material/Stack";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import supabase from "../../../utils/Supabase";
+import SelectedSeatList from "../../../components/SelectedSeatList";
 
 
 const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTickets, originalEvent, originalTickets, customer, handleAlert }) => {
@@ -145,48 +146,7 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
 
           <Grid container style={{ width: '100%', padding: '10px'}}>
             <Grid item md={5} style={{ width: '50%'}}>
-              <Card style={{height: '100%'}}>
-                <CardHeader
-                  title={originalEvent.eventName}
-                  subheader={originalEvent.eventDateTime}
-                />
-
-                <Divider/>
-
-                <CardContent style={{height: '100%', paddingRight: '0px'}}>
-                  <List
-                    sx={{
-                      width: '100%',
-                      bgcolor: 'background.paper',
-                      position: 'relative',
-                      overflow: 'auto',
-                      height: '85%',
-                      '& ul': {padding: 0},
-                    }}
-                    subheader={<li/>}
-                  >
-                    {originalTickets.map((seat) => (
-                      <>
-                        <ListItem
-                          key={seat.id}
-                          sx={{
-                            paddingLeft: '0px'
-                          }}>
-                          <ListItemText primary={`${seat.sectionNumber} Row ${seat.rowNumber} Seat ${seat.seatNumber}`}
-                                        secondary={`$${seat.priceValue}`}
-                                        primaryTypographyProps={{
-                                          variant: 'h5'
-                                        }}
-                                        secondaryTypographyProps={{
-                                          variant: 'h6'
-                                        }}
-                          />
-                        </ListItem>
-                      </>
-                    ))}
-                  </List>
-                </CardContent>
-              </Card>
+              <SelectedSeatList event={originalEvent} selectedSeats={originalTickets}/>
             </Grid>
 
             <Grid item md={2}>
@@ -194,48 +154,7 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
             </Grid>
 
             <Grid item md={5} style={{ width: '50%'}}>
-              <Card style={{height: '100%'}}>
-                <CardHeader
-                  title={selectedEvent.eventName}
-                  subheader={selectedEvent.eventDateTime}
-                />
-
-                <Divider/>
-
-                <CardContent style={{height: '100%', paddingRight: '0px'}}>
-                  <List
-                    sx={{
-                      width: '100%',
-                      bgcolor: 'background.paper',
-                      position: 'relative',
-                      overflow: 'auto',
-                      height: '85%',
-                      '& ul': {padding: 0},
-                    }}
-                    subheader={<li/>}
-                  >
-                    {selectedTickets.map((seat) => (
-                      <>
-                        <ListItem
-                          key={seat.id}
-                          sx={{
-                            paddingLeft: '0px'
-                          }}>
-                          <ListItemText primary={`${seat.sectionNumber} Row ${seat.rowNumber} Seat ${seat.seatNumber}`}
-                                        secondary={`$${seat.priceValue}`}
-                                        primaryTypographyProps={{
-                                          variant: 'h5'
-                                        }}
-                                        secondaryTypographyProps={{
-                                          variant: 'h6'
-                                        }}
-                          />
-                        </ListItem>
-                      </>
-                    ))}
-                  </List>
-                </CardContent>
-              </Card>
+              <SelectedSeatList event={selectedEvent} selectedSeats={selectedTickets}/>
             </Grid>
           </Grid>
 

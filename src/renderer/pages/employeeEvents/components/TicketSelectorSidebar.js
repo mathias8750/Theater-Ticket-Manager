@@ -10,13 +10,22 @@ import {
   ListItemText,
   Typography
 } from "@mui/material";
-import {useNavigate} from "react-router-dom";
 import SelectedSeatList from "../../../components/SelectedSeatList";
+import EditPricesDialog from "./EditPricesDialog";
+import { useState } from "react";
 
 
 const TicketSelectorSidebar = ({event, selectedSeats}) => {
 
-  const navigate = useNavigate()
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const onPriceEditClick = () => {
+    toggleDialog();
+  }
+
+  const toggleDialog = () => {
+    setDialogOpen(!dialogOpen);
+  }
 
   return (
     <Grid direction={'column'} container item style={{height: '100%', padding: '10px'}} md={4}>
@@ -30,13 +39,13 @@ const TicketSelectorSidebar = ({event, selectedSeats}) => {
           style={{width: '100%', height: '100%'}}
           variant={'contained'}
           disabled={selectedSeats.length === 0}
-          onClick={() => {
-            navigate("/customer/events/checkout", {state: selectedSeats})
-          }}
+          onClick={onPriceEditClick}
         >
-          Checkout
+          Edit Prices
         </Button>
       </Grid>
+
+      <EditPricesDialog open={dialogOpen} onClose={toggleDialog} selectedSeats={selectedSeats} />
 
     </Grid>
   )

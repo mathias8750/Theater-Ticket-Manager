@@ -1,5 +1,4 @@
 import {
-  Typography,
   Card,
   CardHeader,
   Button,
@@ -11,13 +10,12 @@ import {
   Grid, Stack
 } from "@mui/material";
 import React, {useEffect, useState} from 'react';
-import {eventDateTimeSubheader} from "renderer/utils/DateTime";
 import {useNavigate} from "react-router-dom";
-import {width} from "@mui/system";
 import {useQuery} from "@tanstack/react-query";
 import SeatList from "./SeatList";
-import supabase from "renderer/utils/Supabase";
 import {recommendSeats} from "../utils/SeatRecommender";
+import {eventDateTimeSubheader} from "../../../utils/DateTime";
+import supabase from "../../../utils/Supabase";
 
 const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
 
@@ -69,65 +67,64 @@ const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
     <>
       <div style={{height: '100%', width: '100%'}}>
 
-          <Card>
-            <CardHeader
-              title={event.eventName}
-              subheader={eventDateTimeSubheader(event)}
-            />
-          </Card>
+        <Card>
+          <CardHeader
+            title={event.eventName}
+            subheader={eventDateTimeSubheader(event)}
+          />
+        </Card>
 
-          <div style={{
-            alignItems: 'center',
-            paddingTop: '2%',
-            width: '100%',
-          }}>
-            <FormControl fullWidth>
-              <InputLabel id="ticket-select-label">Number of Tickets</InputLabel>
-              <Select
-                labelId="ticket-select-label"
-                id="ticket-select"
-                value={numTickets}
-                label="Number of Tickets"
-                onChange={handleTicketNumChange}
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={6}>6</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-
-          <div style={{
-            paddingTop: '1%',
-            width: '100%',
-            overflow: 'auto',
-            height: '85%'
-          }}>
-            <Box style={{flexGrow: 0, background: 'white', height: '100%', display: 'flex'}}>
-              <SeatList recommendedSeats={recommendedSeats} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
-            </Box>
-
-          </div>
-
-          <div style={{
-            margin: 'auto',
-            width: '25%',
-            padding: '10px',
-          }}>
-            <Button
-              variant='contained'
-              type='submit'
-              color='primary'
-              size='small'
-              onClick={onTicketSelectButton}
+        <div style={{
+          alignItems: 'center',
+          paddingTop: '2%',
+          width: '100%',
+        }}>
+          <FormControl fullWidth>
+            <InputLabel id="ticket-select-label">Number of Tickets</InputLabel>
+            <Select
+              labelId="ticket-select-label"
+              id="ticket-select"
+              value={numTickets}
+              label="Number of Tickets"
+              onChange={handleTicketNumChange}
             >
-              Select Tickets From Chart
-            </Button>
-          </div>
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={6}>6</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
 
+        <div style={{
+          paddingTop: '1%',
+          width: '100%',
+          overflow: 'auto',
+          height: '85%'
+        }}>
+          <Box style={{flexGrow: 0, background: 'white', height: '100%', display: 'flex'}}>
+            <SeatList recommendedSeats={recommendedSeats} onRecommendedSeatsClick={onRecommendedSeatsClick}/>
+          </Box>
+
+        </div>
+
+        <div style={{
+          margin: 'auto',
+          width: '25%',
+          padding: '10px',
+        }}>
+          <Button
+            variant='contained'
+            type='submit'
+            color='primary'
+            size='small'
+            onClick={onTicketSelectButton}
+          >
+            Select Tickets From Chart
+          </Button>
+        </div>
 
 
       </div>

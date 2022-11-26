@@ -1,5 +1,5 @@
 import RecommendedSeats from "./RecommendedSeats";
-import { Typography, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 
 const SeatList = ({recommendedSeats, onRecommendedSeatsClick}) => {
@@ -7,7 +7,7 @@ const SeatList = ({recommendedSeats, onRecommendedSeatsClick}) => {
 
     return (
       <>
-        <Grid container direction={'column'} style={{height: '100%'}}>      
+        <Grid container direction={'column'} style={{height: '100%'}}>
         <Grid item style={{
           border: '1px solid rgba(0, 0, 0, 0.05)',
           height: '100%',
