@@ -3,7 +3,7 @@ import { formatAMPM } from "renderer/utils/DateTime";
 import CustomerListItem from "./CustomerListItem";
 
 
-const SidebarEventCustomerList = ({tickets, onCustomerClick}) => {
+const SidebarEventCustomerList = ({customers, onCustomerClick}) => {
 
   return (
     <>
@@ -14,7 +14,7 @@ const SidebarEventCustomerList = ({tickets, onCustomerClick}) => {
         }}>
           <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
             <div style={{ height: '100%', overflow: 'auto'}}>
-              {tickets.map((ticket) => {
+              {customers.map((ticket) => {
                 return (
                   <CustomerListItem customer={ticket} onCustomerClick={onCustomerClick} />
                 )

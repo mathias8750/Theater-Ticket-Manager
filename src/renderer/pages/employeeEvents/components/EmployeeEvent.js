@@ -5,12 +5,18 @@ import CustomerEvents from 'renderer/pages/customerEvents/CustomerEvents';
 import supabase from 'renderer/utils/Supabase';
 import {useQuery} from "@tanstack/react-query";
 import SidebarEventCustomerList from './SidebarEventCustomerList';
+import { eventDateTimeSubheader } from 'renderer/utils/DateTime';
 
-const EmployeeEvent = ({event, onCustomerClick}) => {
+const EmployeeEvent = ({event}) => {
 
     const navigate = useNavigate();
    
-    const [eventTickets, setEventTickets] = useState([]);
+    const [eventCustomers, setEventCustomers] = useState([]);
+
+    // exchange tickets here
+    const onCustomerClick = (customer) => {
+      console.log(customer.customerName);
+    }
 
     const editPrices = () => {
         navigate("/employee/home/events/ticket-price-manager", {state: event});
@@ -34,16 +40,14 @@ const EmployeeEvent = ({event, onCustomerClick}) => {
       for (let i = 0; i < tickets_sorted.length; i++) {
         if (!customerIDList.includes(tickets_sorted[i].customerID)) {
           customerIDList.push(tickets_sorted[i].customerID);
-          customerList.push(tickets_sorted[i]);
-          let index = customerList.findIndex((cust => cust.customerID === tickets_sorted[i].customerID));
-          customerList[index].seats = [];
-          customerList[index].seats.push({sectionNumber: tickets_sorted[i].sectionNumber, rowNumber: tickets_sorted[i].rowNumber, seatNumber: tickets_sorted[i].seatNumber});
-        } else {
-          let index = customerList.findIndex((cust => cust.customerID === tickets_sorted[i].customerID));
-          customerList[index].seats.push({sectionNumber: tickets_sorted[i].sectionNumber, rowNumber: tickets_sorted[i].rowNumber, seatNumber: tickets_sorted[i].seatNumber});
+          customerList.push({customerID: tickets_sorted[i].customerID,
+                             customerName: tickets_sorted[i].Customers.customerName,
+                             customerPhone: tickets_sorted[i].Customers.customerPhone,
+                             customerEmail: tickets_sorted[i].Customers.customerEmail
+                            });
         }
       }
-      setEventTickets(customerList);
+      setEventCustomers(customerList);
       return tickets;
     }
 
@@ -58,13 +62,27 @@ const EmployeeEvent = ({event, onCustomerClick}) => {
     }
 
     return (
-        <>
-        <Typography>{event.eventName}</Typography>
-        <div
-        style={{
-          display: 'flex',
-          margin: 'auto',
-        }}>
+      <div style={{height: '100%', width: '100%'}}>
+      <Card>
+        <CardHeader
+          title={event.eventName}
+          subheader={eventDateTimeSubheader(event)}
+        />
+      </Card>
+      <div style={{height: '100%'}}>
+      <div style={{display: 'flex', paddingTop: '2%'}}>
+        <Typography>Customers:</Typography>
+      </div>
+          <div
+            style={{
+              display: 'flex',
+              height: '50%',
+              paddingTop: '2%',
+              justifyContent: 'center',
+          }}>
+            <SidebarEventCustomerList customers={eventCustomers} onCustomerClick={onCustomerClick}/>
+          </div>
+        <div style={{display: 'flex', paddingTop: '2%', justifyContent: 'center'}}>
         <Button
           variant='contained'
           type='submit'
@@ -74,11 +92,9 @@ const EmployeeEvent = ({event, onCustomerClick}) => {
         >
           Edit Ticket Prices
         </Button>
-        <Typography>List of Customers for Event</Typography>
-         <SidebarEventCustomerList tickets={eventTickets} onCustomerClick={onCustomerClick}/>
-    
         </div>
-        </>
+        </div>
+        </div>
     )
 }
 

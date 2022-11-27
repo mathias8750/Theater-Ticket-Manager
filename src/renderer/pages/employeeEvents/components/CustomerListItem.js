@@ -6,12 +6,12 @@ const CustomerListItem = ({customer, onCustomerClick}) => {
         <>
         <Card>
         <CardHeader
-          title={customer.Customers.customerName}
-          subheader={customer.Customers.customerEmail}
+          title={customer.customerName}
+          subheader={customer.customerEmail}
           action={
             <Button
               onClick={() => onCustomerClick(customer)}
-            >View</Button>
+            >Exchange Tickets</Button>
           }
         />
       </Card>

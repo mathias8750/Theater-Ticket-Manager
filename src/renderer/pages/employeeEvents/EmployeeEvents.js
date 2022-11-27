@@ -133,10 +133,6 @@ const removeEvent = async(event) => {
     setAddEventOpen(!addEventOpen);
   }
 
-  const onCustomerClick = (customer) => {
-    console.log('customer name: ' + customer.customerName);
-  }
-
   return (
    <>
      <EmployeeHeader>
@@ -148,7 +144,7 @@ const removeEvent = async(event) => {
           </Grid>
           <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
             {selectedEvent !== null ? (
-              <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent} onCustomerClick={onCustomerClick}/>
+              <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent} />
             ) : (
               <></>
             )}
