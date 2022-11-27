@@ -109,6 +109,8 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
         tempBalconyTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
       }
     })
+
+    return {stage: tempStageTickets, balcony: tempBalconyTickets}
   }
 
   return (
