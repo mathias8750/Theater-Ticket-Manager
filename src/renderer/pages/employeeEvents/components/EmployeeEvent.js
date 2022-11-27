@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import CustomerEvents from 'renderer/pages/customerEvents/CustomerEvents';
 import supabase from 'renderer/utils/Supabase';
 import {useQuery} from "@tanstack/react-query";
+import SidebarEventCustomerList from './SidebarEventCustomerList';
 
 const EmployeeEvent = ({event}) => {
 
     const navigate = useNavigate();
-
+   
     const [eventTickets, setEventTickets] = useState([]);
 
     const editPrices = () => {
@@ -52,18 +53,8 @@ const EmployeeEvent = ({event}) => {
         >
           Edit Ticket Prices
         </Button>
-    <Typography>List of Customers for Event
-       {eventTickets.map((ticket) => {
-            if (ticket.eventID === event.eventID) {
-              <Card>
-                <CardHeader
-                  title={ticket.customerID}
-                  subtitle={ticket.customerID}
-                />
-              </Card>
-            }
-        })}
-    </Typography>
+        <Typography>List of Customers for Event</Typography>
+          <SidebarEventCustomerList event={event} tickets={eventTickets}/>
     
         </div>
         </>
