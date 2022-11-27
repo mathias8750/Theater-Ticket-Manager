@@ -2,20 +2,15 @@ import {Button, Card, CardHeader, Typography} from "@mui/material";
 import { formatAMPM } from "renderer/utils/DateTime";
 
 
-const SidebarEventCustomerList = ({event, tickets}) => {
+const SidebarEventCustomerList = ({ticket}) => {
 
   return (
     <>
-    {tickets.map((ticket) => {
-        if (ticket.eventID == event.eventID) {
-            <Card>
-            <CardHeader
-                title={ticket.customerID}
-                subheader={ticket.customerName}
-                />
-            </Card>
-        }
-    })}
+        <Card>
+          <CardHeader
+              title={ticket.customerName}
+              />
+        </Card>
     </>
   )
 }
