@@ -6,7 +6,7 @@ import supabase from 'renderer/utils/Supabase';
 import {useQuery} from "@tanstack/react-query";
 import SidebarEventCustomerList from './SidebarEventCustomerList';
 
-const EmployeeEvent = ({event}) => {
+const EmployeeEvent = ({event, onCustomerClick}) => {
 
     const navigate = useNavigate();
    
@@ -19,11 +19,32 @@ const EmployeeEvent = ({event}) => {
     const fetchTickets = async () => {
       let {data: tickets, error} = await supabase
         .from('Tickets')
-        .select('*')
-        .eq('eventID', event.eventID)
-  
-        setEventTickets(tickets);
-        return tickets;
+        .select('*, Customers(customerName, customerEmail, customerPhone)')
+        .eq('eventID', event.eventID);
+
+
+      let tickets_sorted = [];
+      for (let i = 0; i < tickets.length; i++) {
+        if (tickets[i].customerID != null) {
+          tickets_sorted.push(tickets[i]);
+        }
+      }
+      let customerIDList = [];
+      let customerList = [];
+      for (let i = 0; i < tickets_sorted.length; i++) {
+        if (!customerIDList.includes(tickets_sorted[i].customerID)) {
+          customerIDList.push(tickets_sorted[i].customerID);
+          customerList.push(tickets_sorted[i]);
+          let index = customerList.findIndex((cust => cust.customerID === tickets_sorted[i].customerID));
+          customerList[index].seats = [];
+          customerList[index].seats.push({sectionNumber: tickets_sorted[i].sectionNumber, rowNumber: tickets_sorted[i].rowNumber, seatNumber: tickets_sorted[i].seatNumber});
+        } else {
+          let index = customerList.findIndex((cust => cust.customerID === tickets_sorted[i].customerID));
+          customerList[index].seats.push({sectionNumber: tickets_sorted[i].sectionNumber, rowNumber: tickets_sorted[i].rowNumber, seatNumber: tickets_sorted[i].seatNumber});
+        }
+      }
+      setEventTickets(customerList);
+      return tickets;
     }
 
     const {status, data, error} = useQuery(['tickets'], fetchTickets)
@@ -54,7 +75,7 @@ const EmployeeEvent = ({event}) => {
           Edit Ticket Prices
         </Button>
         <Typography>List of Customers for Event</Typography>
-          <SidebarEventCustomerList event={event} tickets={eventTickets}/>
+         <SidebarEventCustomerList tickets={eventTickets} onCustomerClick={onCustomerClick}/>
     
         </div>
         </>
