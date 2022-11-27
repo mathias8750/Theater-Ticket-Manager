@@ -1,4 +1,4 @@
-import {Box, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
+import {Box, Select, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
 import ScrollableSidebar from "./components/ScrollableSidebar";
 import EmployeeHeader from "../../components/EmployeeHeader";
 import supabase from "../../utils/Supabase";
@@ -144,7 +144,7 @@ const removeEvent = async(event) => {
           </Grid>
           <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
             {selectedEvent !== null ? (
-              <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent}/>
+              <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent} />
             ) : (
               <></>
             )}
@@ -178,108 +178,3 @@ const removeEvent = async(event) => {
 }
 
 export default EmployeeEvents;
-
-/*
-<div
-        style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '5px',
-            height: '10%',
-            }} >
-              <Typography>Venue ID
-                <input
-                    name='Venue ID'
-                    type="text"
-                    onChange={event => setVenueID(event.target.value)}
-                />
-              </Typography>
-              <Typography>Event Date/Time
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDateTimePicker
-                    value={eventdatetime}
-                    onChange={(newValue) => {
-                      console.log(newValue);
-                      setDateTime(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-              </Typography>
-
-              <Typography>Event Name
-                <input
-                    name='Event Name'
-                    type="text"
-                    onChange={event => setEventName(event.target.value)}
-                />
-              </Typography>
-
-              <Typography>Season ID
-                <input
-                    name='Season ID'
-                    type="text"
-                    onChange={event => setSeasonID(event.target.value)}
-                />
-              </Typography>
-
-                <Button
-                    variant='contained'
-                    color='primary'
-                    size='small'
-                    onClick={addEvent}
-                >
-                    Create Event
-                </Button>
-       </div>
-      </Typography>
-      <div style={{justifyContent: 'left'}}>
-        <Box style={{ justifyContent: 'left', flexGrow: 1, background: 'white', height: '100%'}}>
-          <Grid container style={{justifyContent: 'left', padding: '10px', height: '100%'}}>
-            <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
-              <ScrollableSidebar events={data} onEventClick={onEventClick}/>
-            </Grid>
-          </Grid>
-        </Box>
-      </div>
-       <SnackbarAlert 
-                alertOpen={failureAlertOpen} 
-                toggleAlert={toggleFailureAlert}
-                alertSeverity={'error'}
-                alertText={'Error: Cannot complete action'}
-                />
-
-                <SnackbarAlert 
-                alertOpen={successAlertOpen} 
-                toggleAlert={toggleSuccessAlert}
-                alertSeverity={'success'}
-                alertText={'New Event Added Successfully'}
-                />
-
-                <SnackbarAlert 
-                alertOpen={deleteAlertOpen} 
-                toggleAlert={toggleDeleteAlert}
-                alertSeverity={'success'}
-                alertText={'Event Deleted Successfully'}
-                />
-
-                <SnackbarAlert 
-                alertOpen={successUpdateAlertOpen} 
-                toggleAlert={toggleUpdateSuccessAlert}
-                alertSeverity={'success'}
-                alertText={'Event Updated Successfully'}
-                />
-
-                <SnackbarAlert 
-                alertOpen={failureUpdateAlertOpen} 
-                toggleAlert={toggleUpdateFailureAlert}
-                alertSeverity={'error'}
-                alertText={'Error: Could Not Update Event'}
-                />
-      </EmployeeHeader>
-    </>
-  )
-}
-
-export default EmployeeEvents;
-       */
