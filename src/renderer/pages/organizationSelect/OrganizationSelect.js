@@ -104,7 +104,7 @@ const OrganizationSelect = ({}) => {
 
   return (
 
-      <LoginHeader helpID={3}>
+      <LoginHeader>
         <div style={{height: '100%'}}>
             
             <div

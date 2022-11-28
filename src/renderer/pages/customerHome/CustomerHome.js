@@ -3,9 +3,6 @@ import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
 import React from "react";
-import {compareDateTime} from "renderer/utils/DateTime";
-
-import "./style.css";
 import SidebarEventItem from "../../components/SidebarEventItem";
 import {compareDateTime} from "../../utils/DateTime";
 import {useNavigate} from "react-router-dom";
@@ -66,7 +63,7 @@ const CustomerHome = ({}) => {
   }
 
   return (
-    <CustomerHeader helpID={0}>
+    <CustomerHeader>
 
       <Box style={{flexGrow: 1, background: 'white', height: '100%'}}>
 

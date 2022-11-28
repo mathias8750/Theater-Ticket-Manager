@@ -11,7 +11,7 @@ const EmployeeHome = ({}) => {
 
   return (
     <>
-      <EmployeeHeader helpID={4}>
+      <EmployeeHeader>
         <Typography
           variant="h3"
           align="center"

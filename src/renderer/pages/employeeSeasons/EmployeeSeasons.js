@@ -182,7 +182,7 @@ const sortSeasons = (seasons) => {
   }
 
     return (
-      <EmployeeHeader helpID={6}>
+      <EmployeeHeader>
         <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
           <Grid container style={{padding: '10px', height: '100%'}}>
             <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>

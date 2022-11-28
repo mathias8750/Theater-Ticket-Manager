@@ -41,7 +41,7 @@ const EmployeeHeader = (props) => {
                     Logout 
               </Button>
             </NavLink>
-            <HelpBackdrop open={open} setOpen={setOpen} helpID={props.helpID}/>
+            <HelpBackdrop open={open} setOpen={setOpen}/>
           </Toolbar>
         </AppBar>
       </Box>
