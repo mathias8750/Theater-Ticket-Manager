@@ -39,7 +39,7 @@ const LoginHeader = (props) => {
             >
                     Logout
             </Button>
-            <HelpBackdrop open={open} setOpen={setOpen}/>
+            <HelpBackdrop open={open} setOpen={setOpen} helpID={props.helpID}/>
             </Toolbar>
         </AppBar>
       </Box>

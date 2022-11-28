@@ -161,13 +161,22 @@ const EmployeeSeasons = ({}) => {
     setSeasonAddErrorOpen(!seasonAddErrorOpen);
   }
 
-  return (
-    <EmployeeHeader>
-      <Box style={{flexGrow: 1, background: 'white', height: '100%'}}>
-        <Grid container style={{padding: '10px', height: '100%'}}>
-          <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
-            <ScrollableSidebar seasons={seasonList.sort(compareDateTimeSeason)} onSeasonClick={onSeasonClick}
-                               onCreateClick={onCreateClick}/>
+    return (
+      <EmployeeHeader helpID={6}>
+        <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
+          <Grid container style={{padding: '10px', height: '100%'}}>
+            <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
+              <ScrollableSidebar seasons={sortSeasons(seasonList)} onSeasonClick={onSeasonClick} onCreateClick={onCreateClick}/>
+            </Grid>
+
+
+            <Grid item md={8} style={{paddingRight: '10px', height: '100%'}}>
+              {selectedSeason !== null ? (
+                <Season season={selectedSeason}/>
+              ) : (
+                <></>
+              )}
+            </Grid>
           </Grid>
 
 
