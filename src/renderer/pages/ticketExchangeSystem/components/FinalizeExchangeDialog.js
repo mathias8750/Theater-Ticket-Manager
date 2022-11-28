@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Card,
   CardContent,
@@ -15,9 +16,27 @@ import Stack from "@mui/material/Stack";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import supabase from "../../../utils/Supabase";
 import SelectedSeatList from "../../../components/SelectedSeatList";
+import {useNavigate} from "react-router-dom";
+import React, {useState} from "react";
 
 
 const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTickets, originalEvent, originalTickets, customer, handleAlert }) => {
+
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [errorOpen, setErrorOpen] = useState(false)
+
+  const onSuccessClose = () => {
+    setSuccessOpen(!successOpen);
+    handleClose(true)
+    navigate('/employee/home/events')
+
+  }
+
+  const onErrorClose = () => {
+    setErrorOpen(!open)
+  }
+
+  let navigate = useNavigate();
 
   const checkTicketSold = async () => {
     for (const index in selectedTickets) {
@@ -93,18 +112,14 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
   const handleConfirm = async () => {
 
     if (await checkTicketSold()) {
-      handleAlert(false)
+      setErrorOpen(true)
     } else if (await resetTicket()) {
-      handleAlert(false)
+      setErrorOpen(true)
     } else if (await purchaseTicket()) {
-      handleAlert(false)
+      setErrorOpen(true)
     } else {
-      //handleAlert(true)
+      setSuccessOpen(true)
     }
-
-
-    handleClose(true)
-
   }
 
   if (!selectedEvent) {
@@ -126,9 +141,9 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
     let difference = oldSum - newSum
 
     if (difference < 0) {
-      return <Typography style={{padding: 0}}>Cost: ${Math.abs(difference)}</Typography>
+      return <Typography style={{padding: 0}}>Cost: ${(Math.abs(difference)).toFixed(2)}</Typography>
     } else {
-      return <Typography style={{padding: 0}}>Refund: ${Math.abs(difference)}</Typography>
+      return <Typography style={{padding: 0}}>Refund: ${(Math.abs(difference)).toFixed(2)}</Typography>
     }
   }
 
@@ -174,6 +189,18 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
 
         </Stack>
 
+      </Dialog>
+
+      <Dialog open={successOpen} onClose={onSuccessClose}>
+        <Alert severity={'success'}>
+          Exchanged Tickets!
+        </Alert>
+      </Dialog>
+
+      <Dialog open={errorOpen} onClose={onErrorClose}>
+        <Alert severity={'error'}>
+          Error: Try Again
+        </Alert>
       </Dialog>
     </>
 
