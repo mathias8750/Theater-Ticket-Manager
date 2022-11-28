@@ -18,6 +18,8 @@ const Season = ({season}) => {
   const [newTicketHolderName, setNewTicketHolderName] = useState('');
   const [newTicketHolderEmail, setNewTicketHolderEmail] = useState('');
   const [newTicketHolderPhone, setNewTicketHolderPhone] = useState('');
+  const [selectedSeasonTicketHolder, setSeasonTicketHolder] = useState(null);
+
   const navigate = useNavigate();
 
 
@@ -26,6 +28,7 @@ const Season = ({season}) => {
   }
 
   const onTicketHolderClick = (ticketHolder) => {
+    setSeasonTicketHolder(ticketHolder);
     console.log("Name: " + ticketHolder.Customers.customerName);
   }
 
