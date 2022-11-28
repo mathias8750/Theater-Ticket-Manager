@@ -107,11 +107,10 @@ const OrganizationSelect = ({}) => {
 
   return (
 
-    <LoginHeader>
-      <div style={{height: '100%'}}>
-
-        <div
-          style={{
+      <LoginHeader helpID={3}>
+        <div style={{height: '100%'}}>
+            <div
+            style={{
             display: 'flex',
             height: '50%',
             justifyContent: 'center',

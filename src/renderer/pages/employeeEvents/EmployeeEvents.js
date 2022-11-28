@@ -159,44 +159,44 @@ const EmployeeEvents = ({}) => {
   }
 
   return (
-    <>
-      <EmployeeHeader>
-        <Typography variant="h3" align="center" style={{padding: '10px'}}>Event Management</Typography>
-        <div style={{flexGrow: 1, background: 'white', height: '100%'}}>
-          <Grid container style={{padding: '10px', height: '100%'}}>
-            <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
-              <ScrollableSidebar events={eventList} onEventClick={onEventClick} onAddClick={toggleAddEventDialog}/>
-            </Grid>
-            <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
-              {selectedEvent !== null ? (
-                <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent}/>
-              ) : (
-                <></>
-              )}
-            </Grid>
+   <>
+     <EmployeeHeader helpID={5}>
+      <Typography variant= "h3" align= "center" style={{padding:'10px'}}>Event Management</Typography>
+      <div style={{ flexGrow: 1, background: 'white', height: '100%'}}>
+        <Grid container style={{padding: '10px', height: '100%'}}>
+          <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
+            <ScrollableSidebar events={eventList} onEventClick={onEventClick} onAddClick={toggleAddEventDialog}/>
           </Grid>
-        </div>
-        <AddEventDialog open={addEventOpen} onClose={toggleAddEventDialog} fetchEvents={FetchEvents}/>
-        <SnackbarAlert
-          alertOpen={failureAlertOpen}
-          toggleAlert={toggleFailureAlert}
-          alertSeverity={'error'}
-          alertText={'Cannot complete action'}
-        />
+          <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
+            {selectedEvent !== null ? (
+              <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent}/>
+            ) : (
+              <></>
+            )}
+          </Grid>
+        </Grid>
+      </div>
+     <AddEventDialog open={addEventOpen} onClose={toggleAddEventDialog} fetchEvents={FetchEvents} />
+      <SnackbarAlert
+        alertOpen={failureAlertOpen}
+        toggleAlert={toggleFailureAlert}
+        alertSeverity={'error'}
+        alertText={'Cannot complete action'}
+      />
 
-        <SnackbarAlert
-          alertOpen={successAlertOpen}
-          toggleAlert={toggleSuccessAlert}
-          alertSeverity={'success'}
-          alertText={'New Event Added Successfully'}
-        />
+      <SnackbarAlert
+        alertOpen={successAlertOpen}
+        toggleAlert={toggleSuccessAlert}
+        alertSeverity={'success'}
+        alertText={'New Event Added Successfully'}
+      />
 
-        <SnackbarAlert
-          alertOpen={deleteAlertOpen}
-          toggleAlert={toggleDeleteAlert}
-          alertSeverity={'success'}
-          alertText={'Event Deleted Successfully'}
-        />
+      <SnackbarAlert
+        alertOpen={deleteAlertOpen}
+        toggleAlert={toggleDeleteAlert}
+        alertSeverity={'success'}
+        alertText={'Event Deleted Successfully'}
+      />
       </EmployeeHeader>
     </>
   )
