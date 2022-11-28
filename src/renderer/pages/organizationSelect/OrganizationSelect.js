@@ -109,37 +109,6 @@ const OrganizationSelect = ({}) => {
 
       <LoginHeader helpID={3}>
         <div style={{height: '100%'}}>
-            
-            <div
-            style={{
-              display: 'flex',
-              height: '50%',
-              justifyContent: 'center',
-            }}>
-            <OrganizationScrollableList orgs={orgs} onOrgClick={onSelectButton}/>
-            </div>
-            <div
-            style={{
-              paddingTop: '7%',
-              display: 'flex',
-              justifyContent: 'center',
-            }}>
-              <Button
-              color='primary'
-              size='small'
-              onClick={toggleAddOrgDialog}
-              >
-                Create New Organization
-              </Button>
-            </div>
-            <Dialog
-              open={orgAddOpen}
-              onClose={toggleAddOrgDialog}
-              style={{
-                justifyContent: 'center',
-              }}
-            >
-            <DialogTitle>Create Organization</DialogTitle>
             <div
             style={{
             display: 'flex',
