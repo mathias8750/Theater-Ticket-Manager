@@ -135,7 +135,7 @@ const removeEvent = async(event) => {
 
   return (
    <>
-     <EmployeeHeader>
+     <EmployeeHeader helpID={5}>
       <Typography variant= "h3" align= "center" style={{padding:'10px'}}>Event Management</Typography>
       <div style={{ flexGrow: 1, background: 'white', height: '100%'}}>
         <Grid container style={{padding: '10px', height: '100%'}}>
