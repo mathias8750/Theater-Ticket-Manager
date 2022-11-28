@@ -15,6 +15,7 @@ const ScrollableSidebar = ({seasons, onSeasonClick, onCreateClick}) => {
           <div style={{height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
             <div style={{height: '100%', overflow: 'auto'}}>
               {seasons.map((season) => {
+                console.log(season)
                 return (
                   <SidebarSeasonItem season={season} onSeasonClick={onSeasonClick}/>
                 )
