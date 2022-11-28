@@ -50,7 +50,7 @@ const TicketExchangerSidebar = ({tickets, originalEvent, selectedEvent, setSelec
   return (
     <Grid direction={'column'} container item style={{height: '100%', padding: '10px'}} md={4}>
       <Grid item style={{height: '40%'}}>
-       <SelectedSeatList selectedSeats={selectedSeats} event={originalEvent}/>
+       <SelectedSeatList selectedSeats={tickets} event={originalEvent}/>
       </Grid>
 
       <Grid item style={{ height: '10%'}}>

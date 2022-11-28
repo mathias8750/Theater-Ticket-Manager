@@ -2,8 +2,8 @@ import {Button, Typography, TextField, Dialog, DialogTitle} from "@mui/material"
 import Stack from "@mui/material/Stack";
 import {Link as NavLink, useNavigate} from "react-router-dom";
 import React, {useRef, useState, useContext} from "react";
-import { OrganizationContext } from "renderer/context/Context";
-import { useQuery } from "@tanstack/react-query";
+import {OrganizationContext} from "renderer/context/Context";
+import {useQuery} from "@tanstack/react-query";
 import LoginHeader from "renderer/components/LoginHeader";
 import SnackbarAlert from "renderer/components/SnackbarAlert";
 import OrganizationScrollableList from "renderer/components/OrganizationScrollableList";
@@ -44,33 +44,36 @@ const OrganizationSelect = ({}) => {
 
   // If org isn't selected alert the user, if it is navigate to employee home page
   const onSelectButton = (org) => {
-    update({selectedOrg: org});    
+    update({selectedOrg: org});
     navigate("/employee/home");
   }
 
   // Function to control adding organization
   const onAddButton = async () => {
-    
-    if((newOrgNameRef.current.value.trim() != '') && (newOrgEmailRef.current.value.trim() != '')){
+
+    if ((newOrgNameRef.current.value.trim() != '') && (newOrgEmailRef.current.value.trim() != '')) {
 
       // Get the current array of orgs from the db, before adding the new org
-      const { data: orgs_compare} = await supabase
+      const {data: orgs_compare} = await supabase
         .from('Organizations')
         .select('*')
 
       // Add the new org to the db, supabase will handle uniqueness constraints
       const {data: orgs, error} = await supabase
         .from('Organizations')
-        .insert([{organizationName: newOrgNameRef.current.value.trim(), organizationEmail: newOrgEmailRef.current.value.trim().toLowerCase()}]);
-      
+        .insert([{
+          organizationName: newOrgNameRef.current.value.trim(),
+          organizationEmail: newOrgEmailRef.current.value.trim().toLowerCase()
+        }]);
+
       // Check if the org name or email is already in use; if it is display alert
       let orgSelectAlertStatus = false;
-      for(let i = 0; i < orgs_compare.length; i++){
-        if((orgs_compare[i].organizationName == newOrgNameRef.current.value.trim()) || (orgs_compare[i].organizationEmail.toLowerCase() == newOrgEmailRef.current.value.trim().toLowerCase())){
+      for (let i = 0; i < orgs_compare.length; i++) {
+        if ((orgs_compare[i].organizationName == newOrgNameRef.current.value.trim()) || (orgs_compare[i].organizationEmail.toLowerCase() == newOrgEmailRef.current.value.trim().toLowerCase())) {
           orgSelectAlertStatus = true;
         }
       }
-      if(orgSelectAlertStatus == true){
+      if (orgSelectAlertStatus == true) {
         toggleNewOrgAlert();
       } else {
         toggleOrgAddedAlert();
@@ -104,103 +107,103 @@ const OrganizationSelect = ({}) => {
 
   return (
 
-      <LoginHeader>
-        <div style={{height: '100%'}}>
-            
-            <div
-            style={{
-              display: 'flex',
-              height: '50%',
-              justifyContent: 'center',
-            }}>
-            <OrganizationScrollableList orgs={orgs} onOrgClick={onSelectButton}/>
-            </div>
-            <div
-            style={{
-              paddingTop: '7%',
-              display: 'flex',
-              justifyContent: 'center',
-            }}>
-              <Button
-              color='primary'
-              size='small'
-              onClick={toggleAddOrgDialog}
-              >
-                Create New Organization
-              </Button>
-            </div>
-            <Dialog
-              open={orgAddOpen}
-              onClose={toggleAddOrgDialog}
-              style={{
-                justifyContent: 'center',
-              }}
-            >
-            <DialogTitle>Create Organization</DialogTitle>
-            <div
-            style={{
+    <LoginHeader>
+      <div style={{height: '100%'}}>
+
+        <div
+          style={{
             display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '2%',
-            paddingBottom: '4%',
-            }} >
-            <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingRight: '2%',
-            }}>
-            <TextField
-            id='newOrgNameTextField'
-            label='Organization Name'
-            inputRef={newOrgNameRef}
-            />
-            </div>
-            <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingRight: '2%',
-            }}>
-            <TextField
-            id='newOrgEmailTextField'
-            label='Organization Email'
-            inputRef={newOrgEmailRef}
-            />
-            </div>
-            <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingRight: '2%',
-            }}>
-            <Button
-            variant='contained'
-            type='submit'
+            height: '50%',
+            justifyContent: 'center',
+          }}>
+          <OrganizationScrollableList orgs={orgs} onOrgClick={onSelectButton}/>
+        </div>
+        <div
+          style={{
+            paddingTop: '7%',
+            display: 'flex',
+            justifyContent: 'center',
+          }}>
+          <Button
             color='primary'
             size='small'
-            onClick={onAddButton}
-            >
-              Add Organization
-            </Button>
-            </div>
-            </div>
-            </Dialog>
+            onClick={toggleAddOrgDialog}
+          >
+            Create New Organization
+          </Button>
         </div>
-        <SnackbarAlert 
-        alertOpen={newOrgErrOpen} 
+        <Dialog
+          open={orgAddOpen}
+          onClose={toggleAddOrgDialog}
+          style={{
+            justifyContent: 'center',
+          }}
+        >
+          <DialogTitle>Create Organization</DialogTitle>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              paddingLeft: '2%',
+              paddingBottom: '4%',
+            }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                paddingRight: '2%',
+              }}>
+              <TextField
+                id='newOrgNameTextField'
+                label='Organization Name'
+                inputRef={newOrgNameRef}
+              />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                paddingRight: '2%',
+              }}>
+              <TextField
+                id='newOrgEmailTextField'
+                label='Organization Email'
+                inputRef={newOrgEmailRef}
+              />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                paddingRight: '2%',
+              }}>
+              <Button
+                variant='contained'
+                type='submit'
+                color='primary'
+                size='small'
+                onClick={onAddButton}
+              >
+                Add Organization
+              </Button>
+            </div>
+          </div>
+        </Dialog>
+      </div>
+      <SnackbarAlert
+        alertOpen={newOrgErrOpen}
         toggleAlert={toggleNewOrgAlert}
         alertSeverity={'error'}
         alertText={'Organization Name/Email already in use'}
-        />
+      />
 
-        <SnackbarAlert 
-        alertOpen={orgAddedOpen} 
+      <SnackbarAlert
+        alertOpen={orgAddedOpen}
         toggleAlert={toggleOrgAddedAlert}
         alertSeverity={'success'}
         alertText={'Successfully Added New Organization'}
-        />
-      </LoginHeader>
+      />
+    </LoginHeader>
   )
 }
 

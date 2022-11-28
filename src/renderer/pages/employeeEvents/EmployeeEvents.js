@@ -1,11 +1,24 @@
-import {Box, Select, input, Alert, AlertTitle, Card, TextField, CardContent, Grid, Typography, Button, Snackbar, } from "@mui/material";
+import {
+  Box,
+  Select,
+  input,
+  Alert,
+  AlertTitle,
+  Card,
+  TextField,
+  CardContent,
+  Grid,
+  Typography,
+  Button,
+  Snackbar,
+} from "@mui/material";
 import ScrollableSidebar from "./components/ScrollableSidebar";
 import EmployeeHeader from "../../components/EmployeeHeader";
 import supabase from "../../utils/Supabase";
 import {useQuery} from "@tanstack/react-query";
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {useContext} from "react";
-import { generateTickets } from "./utils/TicketGenerator";
+import {generateTickets} from "./utils/TicketGenerator";
 import dayjs from 'dayjs';
 import AddEventDialog from "./components/AddEventDialog";
 import {OrganizationContext} from "../../context/Context";
@@ -66,28 +79,40 @@ const EmployeeEvents = ({}) => {
   }
 
   const addEvent = async () => {
-      const dt = new Date(eventdatetime);
-      let season = null;
-      if (seasonID != 0) {
-        season = seasonID;
-      }
-      const {data: Events, error} = await supabase
+    const dt = new Date(eventdatetime);
+    let season = null;
+    if (seasonID != 0) {
+      season = seasonID;
+    }
+    const {data: Events, error} = await supabase
       .from('Events')
-      .insert([{seasonID: season, organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: dt.toString(), eventName: eventname}]);
+      .insert([{
+        seasonID: season,
+        organizationID: state.selectedOrg.organizationID,
+        venueID: venueid,
+        eventDateTime: dt.toString(),
+        eventName: eventname
+      }]);
 
-      if (error) {
-          toggleFailureAlert();
-      } else {
-          toggleSuccessAlert();
-          generateTickets(Events[0]);
-          FetchEvents();
-      }
+    if (error) {
+      toggleFailureAlert();
+    } else {
+      toggleSuccessAlert();
+      generateTickets(Events[0]);
+      FetchEvents();
+    }
   }
 
-const updateEvent = async(oldEvent) => {
+  const updateEvent = async (oldEvent) => {
     const {data: Events, error} = await supabase
-    .from('Events')
-    .update([{seasonID: season, organizationID: state.selectedOrg.organizationID, venueID: venueid, eventDateTime: dt.toString(), eventName: eventname}])
+      .from('Events')
+      .update([{
+        seasonID: season,
+        organizationID: state.selectedOrg.organizationID,
+        venueID: venueid,
+        eventDateTime: dt.toString(),
+        eventName: eventname
+      }])
 
     if (error) {
       toggleUpdateFailureAlert();
@@ -96,17 +121,17 @@ const updateEvent = async(oldEvent) => {
       generateTickets(Events[0]);
       FetchEvents();
     }
-}
+  }
 
-const removeEvent = async(event) => {
-  const {deleteEvent, error} = await supabase
+  const removeEvent = async (event) => {
+    const {deleteEvent, error} = await supabase
       .from("Events")
       .delete()
       .eq('', event.eventName);
-}
+  }
 
   const FetchEvents = async () => {
-    const { data: events, error } = await supabase
+    const {data: events, error} = await supabase
       .from('Events')
       .select('*, Organizations(organizationName), Venues(venueName)');
     if (!error) {
@@ -134,44 +159,44 @@ const removeEvent = async(event) => {
   }
 
   return (
-   <>
-     <EmployeeHeader>
-      <Typography variant= "h3" align= "center" style={{padding:'10px'}}>Event Management</Typography>
-      <div style={{ flexGrow: 1, background: 'white', height: '100%'}}>
-        <Grid container style={{padding: '10px', height: '100%'}}>
-          <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
-            <ScrollableSidebar events={eventList} onEventClick={onEventClick} onAddClick={toggleAddEventDialog}/>
+    <>
+      <EmployeeHeader>
+        <Typography variant="h3" align="center" style={{padding: '10px'}}>Event Management</Typography>
+        <div style={{flexGrow: 1, background: 'white', height: '100%'}}>
+          <Grid container style={{padding: '10px', height: '100%'}}>
+            <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
+              <ScrollableSidebar events={eventList} onEventClick={onEventClick} onAddClick={toggleAddEventDialog}/>
+            </Grid>
+            <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
+              {selectedEvent !== null ? (
+                <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent}/>
+              ) : (
+                <></>
+              )}
+            </Grid>
           </Grid>
-          <Grid item md={8} style={{paddingRight: '10px', height: '75%', display: 'flex'}}>
-            {selectedEvent !== null ? (
-              <EmployeeEvent key={selectedEvent.eventID} event={selectedEvent} />
-            ) : (
-              <></>
-            )}
-          </Grid>
-        </Grid>
-      </div>
-     <AddEventDialog open={addEventOpen} onClose={toggleAddEventDialog} fetchEvents={FetchEvents} />
-      <SnackbarAlert
-        alertOpen={failureAlertOpen}
-        toggleAlert={toggleFailureAlert}
-        alertSeverity={'error'}
-        alertText={'Cannot complete action'}
-      />
+        </div>
+        <AddEventDialog open={addEventOpen} onClose={toggleAddEventDialog} fetchEvents={FetchEvents}/>
+        <SnackbarAlert
+          alertOpen={failureAlertOpen}
+          toggleAlert={toggleFailureAlert}
+          alertSeverity={'error'}
+          alertText={'Cannot complete action'}
+        />
 
-      <SnackbarAlert
-        alertOpen={successAlertOpen}
-        toggleAlert={toggleSuccessAlert}
-        alertSeverity={'success'}
-        alertText={'New Event Added Successfully'}
-      />
+        <SnackbarAlert
+          alertOpen={successAlertOpen}
+          toggleAlert={toggleSuccessAlert}
+          alertSeverity={'success'}
+          alertText={'New Event Added Successfully'}
+        />
 
-      <SnackbarAlert
-        alertOpen={deleteAlertOpen}
-        toggleAlert={toggleDeleteAlert}
-        alertSeverity={'success'}
-        alertText={'Event Deleted Successfully'}
-      />
+        <SnackbarAlert
+          alertOpen={deleteAlertOpen}
+          toggleAlert={toggleDeleteAlert}
+          alertSeverity={'success'}
+          alertText={'Event Deleted Successfully'}
+        />
       </EmployeeHeader>
     </>
   )
