@@ -19,7 +19,7 @@ const EmployeeEvent = ({event}) => {
     const fetchTickets = async () => {
       let {data: tickets, error} = await supabase
         .from('Tickets')
-        .select('*')
+        .select('*, Customers(customerID)')
   
         setEventTickets(tickets);
         return tickets;
@@ -56,7 +56,7 @@ const EmployeeEvent = ({event}) => {
         <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
             <div style={{ height: '100%', overflow: 'auto'}}> 
               {eventTickets.map((ticket) => {
-                if (event.eventID == ticket.eventID) {
+                if (event.eventID == ticket.eventID && ticket.Customers.customerID != null) {
                   return (
                     <SidebarEventCustomerList ticket={ticket}/>
                   )

@@ -8,7 +8,7 @@ const SidebarEventCustomerList = ({ticket}) => {
     <>
         <Card>
           <CardHeader
-              title={ticket.customerName}
+              title={ticket.Customers.customerName}
               />
         </Card>
     </>
