@@ -23,6 +23,7 @@ const EmployeeSeasons = ({}) => {
   const [seasonAddOpen, setSeasonAddOpen] = useState(false);
   const [dateErrorOpen, setDateErrorOpen] = useState(false);
   const [nameErrorOpen, setNameErrorOpen] = useState(false);
+  const [flippedDatesErrorOpen, setFlippedDatesErrorOpen] = useState(false);
   const [seasonAddSuccessOpen, setSeasonAddSuccessOpen] = useState(false);
   const [seasonAddErrorOpen, setSeasonAddErrorOpen] = useState(false);
   const [seasonStartDate, setSeasonStartDate] = useState(dayjs(new Date()));
@@ -50,7 +51,7 @@ const EmployeeSeasons = ({}) => {
       console.log(i);
       for (let j = 0; j < seasons.length; j++){
         if (ignore.includes(j) == false){
-          d = new Date(seasons[j].startDate);
+          let d = new Date(seasons[j].startDate);
           if (d < smallestDate){
             smallestDate = d;
             smallestSeason = seasons[j];
@@ -98,7 +99,8 @@ const EmployeeSeasons = ({}) => {
       }
     })
 
-    setSeasonList(seasons);
+    let sorted_seasons = sortSeasons(seasons);
+    setSeasonList(sorted_seasons);
     return seasons;
   }
 
@@ -154,20 +156,23 @@ const EmployeeSeasons = ({}) => {
     let valid = true;
     let startDate = new Date(seasonStartDate);
     let endDate = new Date(seasonEndDate);
-    for (const season of seasonList) {
-      let tempStartDate = new Date(season.startDate);
-      let tempEndDate = new Date(season.endDate);
+    for (let i = 0; i < seasonList.length; i++) {
+      let tempStartDate = new Date(seasonList[i].startDate);
+      let tempEndDate = new Date(seasonList[i].endDate);
 
-      if ((tempStartDate >= startDate) && (tempStartDate <= endDate)) {
+      if ((startDate >= tempStartDate) && (startDate <= tempEndDate)) {
         valid = false;
       }
-      if ((tempEndDate >= startDate) && (tempEndDate <= endDate)) {
+      if ((endDate >= tempStartDate) && (endDate <= tempEndDate)) {
         valid = false;
       }
+      
     }
     if (valid) {
       if (newSeasonNameRef.current.value.trim() === '') {
         toggleNameError();
+      } else if (startDate >= endDate) {
+        toggleFlippedDatesError();
       } else {
         insertSeason();
       }
@@ -196,13 +201,17 @@ const EmployeeSeasons = ({}) => {
     setSeasonAddErrorOpen(!seasonAddErrorOpen);
   }
 
+  const toggleFlippedDatesError = () => {
+    setFlippedDatesErrorOpen(!flippedDatesErrorOpen);
+  }
+
     return (
       <>
       <EmployeeHeader helpID={6}>
         <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
           <Grid container style={{padding: '10px', height: '100%'}}>
             <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
-              <ScrollableSidebar seasons={sortSeasons(seasonList)} onSeasonClick={onSeasonClick} onCreateClick={onCreateClick}/>
+              <ScrollableSidebar seasons={seasonList} onSeasonClick={onSeasonClick} onCreateClick={onCreateClick}/>
             </Grid>
 
 
@@ -253,8 +262,15 @@ const EmployeeSeasons = ({}) => {
         alertSeverity={'error'}
         alertText={'Error adding season'}
       />
+      <SnackbarAlert
+        alertOpen={flippedDatesErrorOpen}
+        toggleAlert={toggleFlippedDatesError}
+        alertSeverity={'error'}
+        alertText={'Start date must be before end date'}
+      />
     </EmployeeHeader>
     </>
+              
   )
 }
 
