@@ -13,7 +13,7 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
   const containerRef = useRef(null)
 
   const [stage, setStage] = useState({
-    scale: 1,
+    scale: 0.4,
     x: 0,
     y: 0
   });

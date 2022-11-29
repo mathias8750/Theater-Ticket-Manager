@@ -13,7 +13,7 @@ const TicketViewer = ({venue, tickets, onSeatClick, selectedSeats, setSelectedSe
     const containerRef = useRef(null)
 
     const [stage, setStage] = useState({
-        scale: 1,
+        scale: 0.4,
         x: 0,
         y: 0
     });
@@ -97,8 +97,6 @@ const TicketViewer = ({venue, tickets, onSeatClick, selectedSeats, setSelectedSe
     function concertHallConvert(tickets) {
         let tempStageTickets = ConcertHallStageLevelSection
         let tempBalconyTickets = ConcertHallBalconyLevelSection
-
-        console.log(tickets)
 
         tickets.map((ticket) => {
             let tempTicket = {
