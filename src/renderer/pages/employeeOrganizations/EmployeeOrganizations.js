@@ -42,7 +42,7 @@ const EmployeeOrganizations = ({}) => {
 
 
   const updateOrg = async (oldOrgName) => {
-    if ((orgNameRef.current.value.trim() != '') && (orgEmailRef.current.value.trim() != '') && (orgMinPriceRef.current.value.trim() != '') && (orgMaxPriceRef.current.value.trim() != '') && (parseFloat(orgMinPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMaxPriceRef.current.value.trim()) > parseFloat(orgMinPriceRef.current.value.trim()))) {
+    if ((orgNameRef.current.value.trim() != '') && (orgEmailRef.current.value.trim() != '') && (orgMinPriceRef.current.value.trim() != '') && (orgMaxPriceRef.current.value.trim() != '') && (orgSeasonTicketPriceRef.current.value.trim() != '') && (parseFloat(orgSeasonTicketPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMinPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMaxPriceRef.current.value.trim()) > parseFloat(orgMinPriceRef.current.value.trim()))) {
       const {data, error} = await supabase
         .from('Organizations')
         .update({
@@ -165,8 +165,8 @@ const EmployeeOrganizations = ({}) => {
             justifyContent: 'center'
           }}>
             <TextField
-              id='orgMaxPriceTextField'
-              label='Maximum Ticket Price'
+              id='orgSeasonTicketPriceTextField'
+              label='Season Ticket Price'
               type='number'
               defaultValue={currentOrganization.organizationSeasonTicketPrice}
               inputRef={orgSeasonTicketPriceRef}
