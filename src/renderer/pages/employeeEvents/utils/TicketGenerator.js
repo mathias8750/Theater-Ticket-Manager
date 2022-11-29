@@ -74,17 +74,19 @@ export const generateTickets = (event) => {
 
                             // if seat belongs to season ticket holder, mark it sold
                             let sold = false;
+                            let custID = null;
                             for (let i=0; i<seasonTicketHolders.length; i++) {
                                 if (seasonTicketHolders[i].seasonID === event.seasonID) {
                                     if ((seasonTicketHolders[i].concertHallSeatNumber.toString() === seat[0]) && (seasonTicketHolders[i].concertHallRowNumber === row[0]) && (seasonTicketHolders[i].concertHallSectionNumber === section[0])) {
                                         sold = true;
+                                        custID = seasonTicketHolders[i].customerID;
                                     }
                                 }
                             }
 
                             // calculate default ticket price then push ticket to tickets array
                             let price = parseFloat((eventOrg.organizationMaxPrice - (((row[0].charCodeAt(0)-'A'.charCodeAt(0))) * diff)).toFixed(2));
-                            tickets.push({soldBool: sold, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            tickets.push({soldBool: sold, priceValue: price, customerID: custID, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
@@ -98,17 +100,19 @@ export const generateTickets = (event) => {
 
                             // if seat belongs to season ticket holder, mark it sold ***FIX THIS***
                             let sold = false;
+                            let custID = null;
                             for (let i=0; i<seasonTicketHolders.length; i++) {
                                 if (seasonTicketHolders[i].seasonID === event.seasonID) {
                                     if ((seasonTicketHolders[i].concertHallSeatNumber.toString() === seat[0]) && (seasonTicketHolders[i].concertHallRowNumber === row[0]) && (seasonTicketHolders[i].concertHallSectionNumber === section[0])) {
                                         sold = true;
+                                        custID = seasonTicketHolders[i].customerID;
                                     }
                                 }
                             }
 
                             // calculate default ticket price then push ticket to tickets array
                             let price = parseFloat((eventOrg.organizationMinPrice + ((('L'.charCodeAt(0) - row[0].charCodeAt(0))) * diff)).toFixed(2));
-                            tickets.push({soldBool: sold, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            tickets.push({soldBool: sold, priceValue: price, customerID: custID, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
@@ -129,17 +133,19 @@ export const generateTickets = (event) => {
 
                             // if seat belongs to season ticket holder, mark it sold
                             let sold = false;
+                            let custID = null;
                             for (let i = 0; i < seasonTicketHolders.length; i++) {
                                 if (seasonTicketHolders[i].seasonID === event.seasonID) {
                                     if ((seasonTicketHolders[i].playhouseSeatNumber.toString() === seat[0]) && (seasonTicketHolders[i].playhouseRowNumber === row[0]) && (seasonTicketHolders[i].playhouseSectionNumber === section[0])) {
                                         sold = true;
+                                        custID = seasonTicketHolders[i].customerID;
                                     }
                                 }
                             }
 
                             // calculate default ticket price then push ticket to tickets array
                             let price = parseFloat((eventOrg.organizationMaxPrice - (((row[0].charCodeAt(0)-'A'.charCodeAt(0))) * diff)).toFixed(2));
-                            tickets.push({soldBool: sold, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            tickets.push({soldBool: sold, priceValue: price, customerID: custID, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })
@@ -153,17 +159,19 @@ export const generateTickets = (event) => {
 
                             // if seat belongs to season ticket holder, mark it sold
                             let sold = false;
+                            let custID = null;
                             for (let i = 0; i < seasonTicketHolders.length; i++) {
                                 if (seasonTicketHolders[i].seasonID === event.seasonID) {
                                     if ((seasonTicketHolders[i].playhouseSeatNumber.toString() === seat[0]) && (seasonTicketHolders[i].playhouseRowNumber === row[0]) && (seasonTicketHolders[i].playhouseSectionNumber === section[0])) {
                                         sold = true;
+                                        custID = seasonTicketHolders[i].customerID;
                                     }
                                 }
                             }
 
                             // calculate default ticket price then push ticket to tickets array
                             let price = parseFloat((eventOrg.organizationMinPrice + ((('C'.charCodeAt(0) - row[0].charCodeAt(0))) * diff)).toFixed(2));
-                            tickets.push({soldBool: sold, priceValue: price, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
+                            tickets.push({soldBool: sold, priceValue: price, customerID: custID, eventID: event.eventID, seasonID: event.seasonID, venueID: event.venueID, seatNumber: seat[0], rowNumber: row[0], sectionNumber: section[0]});
                         })
                     }
                 })

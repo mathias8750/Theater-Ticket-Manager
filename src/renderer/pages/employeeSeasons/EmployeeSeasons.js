@@ -23,6 +23,8 @@ const EmployeeSeasons = ({}) => {
   const [seasonAddOpen, setSeasonAddOpen] = useState(false);
   const [dateErrorOpen, setDateErrorOpen] = useState(false);
   const [nameErrorOpen, setNameErrorOpen] = useState(false);
+  const [dateFormatErrorOpen, setDateFormatErrorOpen] = useState(false);
+  const [flippedDatesErrorOpen, setFlippedDatesErrorOpen] = useState(false);
   const [seasonAddSuccessOpen, setSeasonAddSuccessOpen] = useState(false);
   const [seasonAddErrorOpen, setSeasonAddErrorOpen] = useState(false);
   const [seasonStartDate, setSeasonStartDate] = useState(dayjs(new Date()));
@@ -32,7 +34,7 @@ const EmployeeSeasons = ({}) => {
 
 
   const sortSeasons = (seasons) => {
-    if (seasons.length == 0) {
+    if (seasons.length == 0){
       console.log("No seasons");
       return seasons;
     }
@@ -42,16 +44,15 @@ const EmployeeSeasons = ({}) => {
     //let smallestDate = new Date(seasons[0].startDate);
     let smallestSeason;
     let smallestIndex;
-    for (let i = 0; i < seasons.length; i++) {
+    for (let i = 0; i < seasons.length; i++){
       //let smallestDate = new Date(seasons[i].startDate);
       //let smallestSeason = seasons[i];
       //let smallestIndex = i;
       let smallestDate = new Date(2050, 11, 24, 10, 33, 30, 0);
-      console.log(i);
-      for (let j = 0; j < seasons.length; j++) {
-        if (ignore.includes(j) == false) {
+      for (let j = 0; j < seasons.length; j++){
+        if (ignore.includes(j) == false){
           let d = new Date(seasons[j].startDate);
-          if (d < smallestDate) {
+          if (d < smallestDate){
             smallestDate = d;
             smallestSeason = seasons[j];
             smallestIndex = j;
@@ -61,8 +62,7 @@ const EmployeeSeasons = ({}) => {
       ignore.push(smallestIndex)
       sortedSeasons.push(smallestSeason);
     }
-    console.log(ignore)
-
+    
     return sortedSeasons;
   }
 
@@ -98,7 +98,8 @@ const EmployeeSeasons = ({}) => {
       }
     })
 
-    setSeasonList(seasons);
+    let sorted_seasons = sortSeasons(seasons);
+    setSeasonList(sorted_seasons);
     return seasons;
   }
 
@@ -125,15 +126,6 @@ const EmployeeSeasons = ({}) => {
 
   const {status, data, error} = useQuery(['seasons'], fetchSeasons)
 
-  /*
-  data.sort(function(d1, d2){
-    return d1.date - d2.date;
-  });
-  */
-  //data.sort((a, b) => a.startDate - b.startDate);
-  console.log(data)
-
-
   if (status === 'loading') {
     return <span>Loading...</span>
   }
@@ -154,10 +146,16 @@ const EmployeeSeasons = ({}) => {
     let valid = true;
     let startDate = new Date(seasonStartDate);
     let endDate = new Date(seasonEndDate);
-    for (const season of seasonList) {
-      let tempStartDate = new Date(season.startDate);
-      let tempEndDate = new Date(season.endDate);
+    for (let i = 0; i < seasonList.length; i++) {
+      let tempStartDate = new Date(seasonList[i].startDate);
+      let tempEndDate = new Date(seasonList[i].endDate);
 
+      if ((startDate >= tempStartDate) && (startDate <= tempEndDate)) {
+        valid = false;
+      }
+      if ((endDate >= tempStartDate) && (endDate <= tempEndDate)) {
+        valid = false;
+      }
       if ((tempStartDate >= startDate) && (tempStartDate <= endDate)) {
         valid = false;
       }
@@ -168,6 +166,10 @@ const EmployeeSeasons = ({}) => {
     if (valid) {
       if (newSeasonNameRef.current.value.trim() === '') {
         toggleNameError();
+      } else if ((startDate.toString() === 'Invalid Date') || (endDate.toString() === 'Invalid Date') || (startDate.toString() === 'Wed Dec 31 1969 18:00:00 GMT-0600 (Central Standard Time)') || (endDate.toString() === 'Wed Dec 31 1969 18:00:00 GMT-0600 (Central Standard Time)')) {
+        toggleDateFormatError();
+      } else if (startDate >= endDate) {
+        toggleFlippedDatesError();
       } else {
         insertSeason();
       }
@@ -196,14 +198,21 @@ const EmployeeSeasons = ({}) => {
     setSeasonAddErrorOpen(!seasonAddErrorOpen);
   }
 
-  return (
-    <>
+  const toggleFlippedDatesError = () => {
+    setFlippedDatesErrorOpen(!flippedDatesErrorOpen);
+  }
+
+  const toggleDateFormatError = () => {
+    setDateFormatErrorOpen(!dateFormatErrorOpen);
+  }
+
+    return (
+      <>
       <EmployeeHeader helpID={6}>
-        <Box style={{flexGrow: 1, background: 'white', height: '100%'}}>
+        <Box style={{ flexGrow: 1, background: 'white', height: '100%'}}>
           <Grid container style={{padding: '10px', height: '100%'}}>
             <Grid item md={4} style={{paddingRight: '10px', height: '100%'}}>
-              <ScrollableSidebar seasons={seasonList.sort(compareDateTimeSeason)} onSeasonClick={onSeasonClick}
-                                 onCreateClick={onCreateClick}/>
+              <ScrollableSidebar seasons={seasonList} onSeasonClick={onSeasonClick} onCreateClick={onCreateClick}/>
             </Grid>
 
 
@@ -214,46 +223,61 @@ const EmployeeSeasons = ({}) => {
                 <></>
               )}
             </Grid>
+          
 
 
-          </Grid>
-        </Box>
-        <CreateSeasonDialog
-          open={seasonAddOpen}
-          onClose={toggleAddSeasonDialog}
-          seasonNameRef={newSeasonNameRef}
-          startDate={seasonStartDate}
-          endDate={seasonEndDate}
-          setSeasonStartDate={setSeasonStartDate}
-          setSeasonEndDate={setSeasonEndDate}
-          onSeasonCreate={onSeasonCreate}
-        />
-        <SnackbarAlert
-          alertOpen={dateErrorOpen}
-          toggleAlert={toggleDateError}
-          alertSeverity={'error'}
-          alertText={'Season overlaps existing season'}
-        />
-        <SnackbarAlert
-          alertOpen={nameErrorOpen}
-          toggleAlert={toggleNameError}
-          alertSeverity={'error'}
-          alertText={'Season must have a name'}
-        />
-        <SnackbarAlert
-          alertOpen={seasonAddSuccessOpen}
-          toggleAlert={toggleSeasonAddSuccess}
-          alertSeverity={'success'}
-          alertText={'Season added successfully'}
-        />
-        <SnackbarAlert
-          alertOpen={seasonAddErrorOpen}
-          toggleAlert={toggleSeasonAddError}
-          alertSeverity={'error'}
-          alertText={'Error adding season'}
-        />
-      </EmployeeHeader>
+          
+        </Grid>
+      </Box>
+      <CreateSeasonDialog
+        open={seasonAddOpen}
+        onClose={toggleAddSeasonDialog}
+        seasonNameRef={newSeasonNameRef}
+        startDate={seasonStartDate}
+        endDate={seasonEndDate}
+        setSeasonStartDate={setSeasonStartDate}
+        setSeasonEndDate={setSeasonEndDate}
+        onSeasonCreate={onSeasonCreate}
+      />
+      <SnackbarAlert
+        alertOpen={dateErrorOpen}
+        toggleAlert={toggleDateError}
+        alertSeverity={'error'}
+        alertText={'Season overlaps existing season'}
+      />
+      <SnackbarAlert
+        alertOpen={nameErrorOpen}
+        toggleAlert={toggleNameError}
+        alertSeverity={'error'}
+        alertText={'Season must have a name'}
+      />
+      <SnackbarAlert
+        alertOpen={seasonAddSuccessOpen}
+        toggleAlert={toggleSeasonAddSuccess}
+        alertSeverity={'success'}
+        alertText={'Season added successfully'}
+      />
+      <SnackbarAlert
+        alertOpen={seasonAddErrorOpen}
+        toggleAlert={toggleSeasonAddError}
+        alertSeverity={'error'}
+        alertText={'Error adding season'}
+      />
+      <SnackbarAlert
+        alertOpen={flippedDatesErrorOpen}
+        toggleAlert={toggleFlippedDatesError}
+        alertSeverity={'error'}
+        alertText={'Start date must be before end date'}
+      />
+      <SnackbarAlert
+        alertOpen={dateFormatErrorOpen}
+        toggleAlert={toggleDateFormatError}
+        alertSeverity={'error'}
+        alertText={'Invalid date'}
+      />
+    </EmployeeHeader>
     </>
+              
   )
 }
 

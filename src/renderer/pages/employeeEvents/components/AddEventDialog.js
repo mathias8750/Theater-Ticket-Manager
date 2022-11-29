@@ -89,7 +89,7 @@ const AddEventDialog = ({open, onClose, fetchEvents}) => {
   const addEvent = () => {
     let dateCheck = false;
     let newEventDateTime = new Date(eventDateTime);
-    if ((eventNameRef.current.value.trim() != '') && (eventDateTime.toString() != 'Invalid Date')) {
+    if ((eventNameRef.current.value.trim() != '') && (newEventDateTime.toString() != 'Invalid Date') && (newEventDateTime.toString() != 'Wed Dec 31 1969 18:00:00 GMT-0600 (Central Standard Time)')) {
     for (let i = 0; i < seasonList.length; i++) {
       if (seasonList[i].seasonID === eventSeasonID) {
         let startDate = new Date(seasonList[i].startDate);
