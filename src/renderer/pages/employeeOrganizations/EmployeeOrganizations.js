@@ -19,6 +19,7 @@ const EmployeeOrganizations = ({}) => {
   const orgEmailRef = useRef("");
   const orgMinPriceRef = useRef("");
   const orgMaxPriceRef = useRef("");
+  const orgSeasonTicketPriceRef = useRef("");
   let navigate = useNavigate();
 
   const [tickets, setTickets] = useState([]);
@@ -48,7 +49,8 @@ const EmployeeOrganizations = ({}) => {
           organizationName: orgNameRef.current.value.trim(),
           organizationEmail: orgEmailRef.current.value.trim(),
           organizationMinPrice: parseFloat(orgMinPriceRef.current.value.trim()),
-          organizationMaxPrice: parseFloat(orgMaxPriceRef.current.value.trim())
+          organizationMaxPrice: parseFloat(orgMaxPriceRef.current.value.trim()),
+          organizationSeasonTicketPrice: parseFloat(orgSeasonTicketPriceRef.current.value.trim())
         })
         .eq('organizationName', oldOrgName.trim());
 
@@ -155,6 +157,19 @@ const EmployeeOrganizations = ({}) => {
               type='number'
               defaultValue={currentOrganization.organizationMaxPrice}
               inputRef={orgMaxPriceRef}
+            />
+          </div>
+          <div style={{
+            display: 'flex',
+            paddingBottom: '1%',
+            justifyContent: 'center'
+          }}>
+            <TextField
+              id='orgMaxPriceTextField'
+              label='Maximum Ticket Price'
+              type='number'
+              defaultValue={currentOrganization.organizationSeasonTicketPrice}
+              inputRef={orgSeasonTicketPriceRef}
             />
           </div>
           <div style={{

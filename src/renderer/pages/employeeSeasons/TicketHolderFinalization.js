@@ -1,13 +1,14 @@
 import {Typography, Button, Dialog, Alert} from "@mui/material";
-import React, {useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import EmployeeHeader from "renderer/components/EmployeeHeader";
 import supabase from "renderer/utils/Supabase";
+import {OrganizationContext} from "../../context/Context";
 
 const TicketHolderFinalization = ({}) => {
 
   // set price in organization settings?
-  const seasonTicketPrice = 200.00;
+  const {state: organization} = useContext(OrganizationContext)
 
   const {state: customer} = useLocation();
   const [successOpen, setSuccessOpen] = useState(false);
@@ -283,7 +284,7 @@ const TicketHolderFinalization = ({}) => {
           justifyContent: 'center'
         }}>
           <Typography align="center" style={{paddingTop: '1%', paddingBottom: '1%'}}>Price:
-            ${seasonTicketPrice}</Typography>
+            ${organization.selectedOrg.organizationSeasonTicketPrice}</Typography>
         </div>
         <div style={{
           display: 'flex',

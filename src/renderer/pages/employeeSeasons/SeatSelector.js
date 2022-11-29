@@ -69,7 +69,6 @@ const SeatSelector = ({}) => {
     }
 
 
-
     setTickets(tickets_sample)
 
     return tickets_sample;
@@ -89,12 +88,15 @@ const SeatSelector = ({}) => {
     <EmployeeHeader>
       <Grid container style={{height: '100%'}}>
 
-        <SeatSelectorSidebar season={newTicketHolderData.season} selectedSeats={selectedSeats}
-                             onSelectClick={onSelectClick}/>
+        <SeatSelectorSidebar
+          season={newTicketHolderData.season}
+          selectedSeats={selectedSeats}
+          onSelectClick={onSelectClick}
+        />
 
         <Grid item md={8}>
           <TicketViewer
-            key={newTicketHolderData.season.seasonID}
+            key={`${newTicketHolderData.season.seasonID}-${venue}`}
             venue={venue}
             tickets={tickets}
             selectedSeats={selectedSeats}
