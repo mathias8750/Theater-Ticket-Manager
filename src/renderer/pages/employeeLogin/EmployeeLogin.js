@@ -44,7 +44,7 @@ const EmployeeLogin = ({}) => {
 
   return (
 
-    <LoginHeader>
+    <LoginHeader helpID={2}>
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <Typography variant="h6" align="center" style={{padding: '2%'}}>Employee Login</Typography>
       </div>

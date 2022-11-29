@@ -101,7 +101,7 @@ const EmployeeOrganizations = ({}) => {
 
   return (
     <>
-      <EmployeeHeader>
+      <EmployeeHeader helpID={7}>
         <div style={{height: '100%'}}>
           <Typography variant="h6" align="center" style={{paddingTop: '5%', paddingBottom: '1%'}}>Organization
             Settings</Typography>
