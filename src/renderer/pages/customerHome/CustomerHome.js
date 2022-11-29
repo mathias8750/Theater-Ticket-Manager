@@ -42,7 +42,6 @@ const CustomerHome = ({}) => {
       const eventDate = new Date(event.eventDateTime)
 
       if (today < eventDate) {
-        console.log(event)
         return event
       }
     })
