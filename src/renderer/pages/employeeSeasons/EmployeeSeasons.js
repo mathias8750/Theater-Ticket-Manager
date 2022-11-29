@@ -89,14 +89,14 @@ const EmployeeSeasons = ({}) => {
       .select('*')
       .eq('organizationID', state.selectedOrg.organizationID)
 
-    seasons = seasons.filter((season) => {
+    /*seasons = seasons.filter((season) => {
       const today = new Date()
       const endDate = new Date(season.endDate)
 
       if (today < endDate) {
         return season
       }
-    })
+    })*/
 
     let sorted_seasons = seasons.sort(compareDateTimeSeason);
     setSeasonList(sorted_seasons);

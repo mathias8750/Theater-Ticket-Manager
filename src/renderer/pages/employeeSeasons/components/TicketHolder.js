@@ -20,7 +20,7 @@ const TicketHolder = ({ticketHolder, onTicketHolderClick}) => {
           action={
             <Button
               onClick={() => onTicketHolderClick(ticketHolder)}
-            >View</Button>
+            >Edit</Button>
           }
         />
       </Card>

@@ -9,15 +9,27 @@ import AddTicketHolderDialog from "./AddTicketHolderDialog";
 import {useNavigate} from "react-router-dom";
 import SnackbarAlert from "renderer/components/SnackbarAlert";
 import {matchIsValidTel} from "mui-tel-input";
+import EditTicketHolderDialog from "./EditTicketHolderDialog";
 
 const Season = ({season}) => {
 
   const [ticketHolderList, setTicketHolderList] = useState([]);
   const [addTicketHolderDialogOpen, setAddTicketHolderDialogOpen] = useState(false);
+  const [editTicketHolderDialogOpen, setEditTicketHolderDialogOpen] = useState(false)
   const [ticketHolderInfoAlertOpen, setTicketHolderInfoAlertOpen] = useState(false);
   const [newTicketHolderName, setNewTicketHolderName] = useState('');
   const [newTicketHolderEmail, setNewTicketHolderEmail] = useState('');
   const [newTicketHolderPhone, setNewTicketHolderPhone] = useState('');
+  const [updatedTicketHolderName, setUpdatedTicketHolderName] = useState('')
+  const [updatedTicketHolderEmail, setUpdatedTicketHolderEmail] = useState('')
+  const [updatedTicketHolderPhone, setUpdatedTicketHolderPhone] = useState('')
+  const [updatedTicketHolderID, setUpdatedTicketHolderID] = useState('')
+
+
+  const [update, setUpdate] = useState(false)
+  const [updatedTicketHolderSuccessInfoAlertOpen, setUpdatedTicketHolderSuccessInfoAlertOpen] = useState(false)
+  const [updatedTicketHolderErrorInfoAlertOpen, setUpdatedTicketHolderErrorInfoAlertOpen] = useState(false)
+
   const navigate = useNavigate();
 
 
@@ -26,7 +38,11 @@ const Season = ({season}) => {
   }
 
   const onTicketHolderClick = (ticketHolder) => {
-    console.log("Name: " + ticketHolder.Customers.customerName);
+    setUpdatedTicketHolderEmail(ticketHolder.Customers.customerEmail)
+    setUpdatedTicketHolderName(ticketHolder.Customers.customerName)
+    setUpdatedTicketHolderPhone(ticketHolder.Customers.customerPhone)
+    setUpdatedTicketHolderID(ticketHolder.customerID)
+    setEditTicketHolderDialogOpen(true)
   }
 
   const onSelectSeatsClick = () => {
@@ -41,6 +57,31 @@ const Season = ({season}) => {
           phone: newTicketHolderPhone
         }
       });
+    }
+  }
+
+  const onUpdateTicketHolderClick = async () => {
+    if (updatedTicketHolderName === '' || updatedTicketHolderEmail === '' || !matchIsValidTel(updatedTicketHolderPhone)) {
+      toggleTicketHolderInfoAlert();
+    } else {
+
+      toggleEditTicketHolderDialog()
+
+      const {data, error} = await supabase
+        .from('Customers')
+        .update({
+          customerName: updatedTicketHolderName,
+          customerEmail: updatedTicketHolderEmail,
+          customerPhone: updatedTicketHolderPhone
+        })
+        .eq("customerID", updatedTicketHolderID)
+
+      if (!error) {
+        toggleUpdatedTicketHolderSuccessInfoAlert()
+      } else {
+        toggleUpdatedTicketHolderErrorInfoAlert()
+      }
+
     }
   }
 
@@ -61,7 +102,7 @@ const Season = ({season}) => {
 
   useEffect(() => {
     fetchTicketHolders();
-  }, [season]);
+  }, [season, update]);
 
   const {status, data, error} = useQuery(['ticketHolders'], fetchTicketHolders);
 
@@ -77,8 +118,21 @@ const Season = ({season}) => {
     setAddTicketHolderDialogOpen(!addTicketHolderDialogOpen);
   }
 
+  const toggleEditTicketHolderDialog = () => {
+    setEditTicketHolderDialogOpen(!editTicketHolderDialogOpen);
+  }
+
   const toggleTicketHolderInfoAlert = () => {
     setTicketHolderInfoAlertOpen(!ticketHolderInfoAlertOpen);
+  }
+
+  const toggleUpdatedTicketHolderSuccessInfoAlert = () => {
+    setUpdatedTicketHolderSuccessInfoAlertOpen(!updatedTicketHolderSuccessInfoAlertOpen)
+    setUpdate(!update)
+  }
+
+  const toggleUpdatedTicketHolderErrorInfoAlert = () => {
+    setUpdatedTicketHolderErrorInfoAlertOpen(!updatedTicketHolderErrorInfoAlertOpen)
   }
 
   return (
@@ -130,11 +184,38 @@ const Season = ({season}) => {
           setPhone={setNewTicketHolderPhone}
           onSelectSeatsClick={onSelectSeatsClick}
         />
+
+        <EditTicketHolderDialog
+          open={editTicketHolderDialogOpen}
+          onClose={toggleEditTicketHolderDialog}
+          name={updatedTicketHolderName}
+          setName={setUpdatedTicketHolderName}
+          email={updatedTicketHolderEmail}
+          setEmail={setUpdatedTicketHolderEmail}
+          phone={updatedTicketHolderPhone}
+          setPhone={setUpdatedTicketHolderPhone}
+          onUpdateTicketHolderClick={onUpdateTicketHolderClick}
+        />
+
         <SnackbarAlert
           alertOpen={ticketHolderInfoAlertOpen}
           toggleAlert={toggleTicketHolderInfoAlert}
           alertSeverity={'error'}
           alertText={'All fields required'}
+        />
+
+        <SnackbarAlert
+          alertOpen={updatedTicketHolderSuccessInfoAlertOpen}
+          toggleAlert={toggleUpdatedTicketHolderSuccessInfoAlert}
+          alertSeverity={'success'}
+          alertText={'Updated Ticket Holder'}
+        />
+
+        <SnackbarAlert
+          alertOpen={updatedTicketHolderErrorInfoAlertOpen}
+          toggleAlert={toggleUpdatedTicketHolderErrorInfoAlert}
+          alertSeverity={'error'}
+          alertText={'Failed to update Ticket Holder'}
         />
       </div>
     </>
