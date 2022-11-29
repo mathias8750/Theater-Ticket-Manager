@@ -12,6 +12,7 @@ const EmployeeEvent = ({event}) => {
   const navigate = useNavigate();
 
   const [eventCustomers, setEventCustomers] = useState([]);
+  const [eventAssignedTickets, setEventAssignedTickets] = useState([]);
 
   // exchange tickets here
   const onCustomerClick = async (customer) => {
@@ -54,6 +55,7 @@ const EmployeeEvent = ({event}) => {
         });
       }
     }
+    setEventAssignedTickets(tickets_sorted);
     setEventCustomers(customerList);
     return tickets;
   }
@@ -77,9 +79,6 @@ const EmployeeEvent = ({event}) => {
         />
       </Card>
       <div style={{height: '100%'}}>
-        <div style={{display: 'flex', paddingTop: '2%'}}>
-          <Typography>Customers:</Typography>
-        </div>
         <div
           style={{
             display: 'flex',
@@ -87,7 +86,7 @@ const EmployeeEvent = ({event}) => {
             paddingTop: '2%',
             justifyContent: 'center',
           }}>
-          <SidebarEventCustomerList customers={eventCustomers} onCustomerClick={onCustomerClick}/>
+          <SidebarEventCustomerList event={event} tickets={eventAssignedTickets} customers={eventCustomers} onCustomerClick={onCustomerClick}/>
         </div>
         <div style={{display: 'flex', paddingTop: '2%', justifyContent: 'center'}}>
           <Button
