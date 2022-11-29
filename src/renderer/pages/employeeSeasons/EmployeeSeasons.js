@@ -62,7 +62,7 @@ const EmployeeSeasons = ({}) => {
       ignore.push(smallestIndex)
       sortedSeasons.push(smallestSeason);
     }
-    
+
     return sortedSeasons;
   }
 
@@ -98,7 +98,7 @@ const EmployeeSeasons = ({}) => {
       }
     })
 
-    let sorted_seasons = sortSeasons(seasons);
+    let sorted_seasons = seasons.sort(compareDateTimeSeason);
     setSeasonList(sorted_seasons);
     return seasons;
   }
@@ -223,10 +223,10 @@ const EmployeeSeasons = ({}) => {
                 <></>
               )}
             </Grid>
-          
 
 
-          
+
+
         </Grid>
       </Box>
       <CreateSeasonDialog
@@ -277,7 +277,7 @@ const EmployeeSeasons = ({}) => {
       />
     </EmployeeHeader>
     </>
-              
+
   )
 }
 
