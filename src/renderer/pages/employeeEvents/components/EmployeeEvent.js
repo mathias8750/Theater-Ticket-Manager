@@ -82,13 +82,13 @@ const EmployeeEvent = ({event}) => {
         <div
           style={{
             display: 'flex',
-            height: '50%',
+            height: '100%',
             paddingTop: '2%',
             justifyContent: 'center',
           }}>
           <SidebarEventCustomerList event={event} tickets={eventAssignedTickets} customers={eventCustomers} onCustomerClick={onCustomerClick}/>
         </div>
-        <div style={{display: 'flex', paddingTop: '2%', justifyContent: 'center'}}>
+        <div style={{display: 'flex', paddingTop: '5px', justifyContent: 'center'}}>
           <Button
             variant='contained'
             type='submit'
