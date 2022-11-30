@@ -136,42 +136,35 @@ const Season = ({season}) => {
   }
 
   return (
-    <>
       <div style={{height: '100%', width: '100%'}}>
         <Card>
           <CardHeader
             title={season.seasonName}
             subheader={seasonDateTimeSubheader(season)}
           />
-
-          <Divider/>
-
-          <CardContent>
-            <div style={{height: '100%', display: 'flex', flexDirection: 'column', alignContent: 'stretch'}}>
-              <div
-                style={{
-                  display: 'flex',
-                  flex: "1 1 auto",
-                  height: '90%',
-                  paddingTop: '2%',
-                  justifyContent: 'center',
-                }}>
-                <TicketHolderList ticketHolders={ticketHolderList} onTicketHolderClick={onTicketHolderClick}/>
-              </div>
-              <div style={{height: '10%', display: 'flex', paddingTop: '2%', justifyContent: 'center'}}>
-                <Button
-                  variant='contained'
-                  type='submit'
-                  color='primary'
-                  size='small'
-                  onClick={onAddButton}
-                >
-                  Add Season Ticket Holder
-                </Button>
-              </div>
-            </div>
-          </CardContent>
         </Card>
+        <div style={{height: '100%' }}>
+          <div
+            style={{
+              display: 'flex',
+              height: '100%',
+              paddingTop: '2%',
+              justifyContent: 'center',
+            }}>
+            <TicketHolderList ticketHolders={ticketHolderList} onTicketHolderClick={onTicketHolderClick}/>
+          </div>
+          <div style={{display: 'flex', paddingTop: '5px', justifyContent: 'center'}}>
+            <Button
+              variant='contained'
+              type='submit'
+              color='primary'
+              size='small'
+              onClick={onAddButton}
+            >
+              Add Season Ticket Holder
+            </Button>
+          </div>
+        </div>
 
         <AddTicketHolderDialog
           open={addTicketHolderDialogOpen}
@@ -218,7 +211,6 @@ const Season = ({season}) => {
           alertText={'Failed to update Ticket Holder'}
         />
       </div>
-    </>
   )
 }
 

@@ -1,11 +1,51 @@
-import {Button, Card, CardHeader, CardContent, Divider, IconButton, Typography, Grid} from "@mui/material";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardContent,
+  Divider,
+  IconButton,
+  Typography,
+  Grid,
+  TextField,
+  Input
+} from "@mui/material";
 import {Download} from "@mui/icons-material";
 import { CSVLink, CSVDownload } from "react-csv";
 import { formatAMPM } from "renderer/utils/DateTime";
 import CustomerListItem from "./CustomerListItem";
-
+import {useEffect, useState} from "react";
+import Paper from "@mui/material/Paper";
+import CancelIcon from '@mui/icons-material/Cancel';
+import SearchIcon from '@mui/icons-material/Search';
 
 const SidebarEventCustomerList = ({event, tickets, customers, onCustomerClick}) => {
+
+  const [open, setOpen] = useState(false)
+  const [searchInput, setSearchInput] = useState('')
+  const [searchableCustomers, setSearchableCustomers] = useState(customers)
+
+  useEffect(() => {
+    setSearchableCustomers(customers)
+  }, [customers])
+
+  const searchCustomers = (inputCustomer) => {
+    setSearchInput(inputCustomer.target.value)
+    if (inputCustomer.target.value === '') {
+      setSearchableCustomers(customers)
+    } else {
+      let tempCustomers = []
+
+      customers.map((customer) => {
+        if ((customer.customerName.toLowerCase()).includes(inputCustomer.target.value.toLowerCase())) {
+          tempCustomers.push(customer)
+        }
+      })
+
+      setSearchableCustomers(tempCustomers)
+
+    }
+  }
 
   const generateTicketAssignmentObjects = () => {
     const ticketAssignmentObjects = []
@@ -27,7 +67,7 @@ const SidebarEventCustomerList = ({event, tickets, customers, onCustomerClick}) 
              "Event ID": event.eventID,
              "Venue ID": event.venueID,
           }
-    
+
           ticketAssignmentObjects.push(temp)
         }
       }
@@ -42,18 +82,60 @@ const SidebarEventCustomerList = ({event, tickets, customers, onCustomerClick}) 
           title={'Customers'}
           titleTypographyProps={{ variant: 'h6'}}
           action={
-            <CSVLink data={generateTicketAssignmentObjects()} filename={'ticketassignments_' + event.eventName + '.csv'}>
-              <IconButton>
-                <Download/>
-              </IconButton>
-            </CSVLink>
+            <Grid container>
+              <Grid item>
+                {open ? (
+                  <Paper style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}>
+                    <div style={{
+                      margin: "auto 16px",
+                    }}>
+                      <Input
+                        value={searchInput}
+                        onChange={searchCustomers}
+                        disableUnderline={true}
+                        placeholder={'Search'}
+                        autoFocus={true}
+                      >
+                      </Input>
+                    </div>
+                    <IconButton
+                      onClick={(event) => {
+                        event.target.value = ''
+                        searchCustomers(event)
+                        setOpen(false)
+                      }}
+                    >
+                      <CancelIcon/>
+                    </IconButton>
+                  </Paper>
+                ) : (
+                  <IconButton
+                    onClick={() => setOpen(true)}
+                  >
+                    <SearchIcon/>
+                  </IconButton>
+
+                )}
+              </Grid>
+              <Grid item>
+                <CSVLink data={generateTicketAssignmentObjects()} filename={'ticketassignments_' + event.eventName + '.csv'}>
+                  <IconButton>
+                    <Download/>
+                  </IconButton>
+                </CSVLink>
+              </Grid>
+            </Grid>
+
           }
         />
         <Divider/>
-        <CardContent>
-          <div style={{ height: '100%', maxHeight: '800px', width: '100%', overflow: 'hidden'}}>
+        <CardContent style={{ height: '100%' }}>
+          <div style={{ height: '100%', maxHeight: '80%', width: '100%', overflow: 'auto'}}>
             <div style={{ height: '100%', overflow: 'auto'}}>
-              {customers.map((ticket) => {
+              {searchableCustomers.map((ticket) => {
                 return (
                   <CustomerListItem customer={ticket} onCustomerClick={onCustomerClick} />
                 )
@@ -61,7 +143,7 @@ const SidebarEventCustomerList = ({event, tickets, customers, onCustomerClick}) 
             </div>
           </div>
         </CardContent>
-    </Card>     
+    </Card>
   )
 }
 
