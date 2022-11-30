@@ -38,7 +38,7 @@ const EmployeeHome = ({}) => {
           <NavLink to={"/employee/home/seasons"} style={{textDecoration: 'none'}}>
             <Button variant="text"
                     style={{fontSize: 20}}>
-              Create/Manage Seasons
+              Create/Manage Org Seasons
             </Button>
           </NavLink>
         </div>
@@ -51,7 +51,7 @@ const EmployeeHome = ({}) => {
           <NavLink to={"/employee/home/organizations"} style={{textDecoration: 'none'}}>
             <Button variant="text"
                     style={{fontSize: 20}}>
-              Create/Manage Organizations
+              Organization Settings
             </Button>
           </NavLink>
         </div>

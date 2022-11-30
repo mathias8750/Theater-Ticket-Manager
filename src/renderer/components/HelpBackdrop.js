@@ -19,8 +19,8 @@ const messages = [
     <p>View all events sorted by date <hr></hr> Select "view" to see seating and purchase information <hr></hr> Seats can be selected by ID or from the seating chart</p> , 
     <p>Login in via employee credentials to access management features</p> , 
     <p>Select an Organization to manage <hr></hr> or, create a new Organization</p>, 
-    <p>Access Organization management features</p>, 
-    <p>Create a new event with the fields provided</p> , 
+    <p>Click "Create/Manage Events" to handle event management.<hr></hr>Click "Create/Manage Org Seasons" to handle seasons management.<hr></hr>Click "Organization Settings" to change organization details.</p>, 
+    <p>Click "View" from any of the events provided to see information on venues chosen, ticket prices, and customers.<hr></hr>Click "Create Event" to create a new event to be hosted by the organization.</p> , 
     <p>Manage or create Seasons <hr></hr>Add Season Ticket Holders</p>, 
     <p>Update Organization settings <hr></hr> Delete the selected Organization</p>
 ];
