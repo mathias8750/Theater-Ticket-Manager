@@ -11,7 +11,6 @@ const TicketExchanger = () => {
 
   const location = useLocation()
 
-
   const [selectedEvent, setSelectedEvent] = useState(null)
 
   const [selectedSeats, setSelectedSeats] = useState([])

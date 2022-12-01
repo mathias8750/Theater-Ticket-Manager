@@ -13,9 +13,9 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
   const containerRef = useRef(null)
 
   const [stage, setStage] = useState({
-    scale: 0.4,
-    x: 0,
-    y: 0
+    scale: 1,
+    x: 100,
+    y: 100
   });
 
   const handleWheel = (e) => {

@@ -13,9 +13,9 @@ const TicketViewer = ({venue, tickets, onSeatClick, selectedSeats, setSelectedSe
     const containerRef = useRef(null)
 
     const [stage, setStage] = useState({
-        scale: 0.4,
-        x: 0,
-        y: 0
+        scale: 1,
+        x: 100,
+        y: 100
     });
 
     const handleWheel = (e) => {
@@ -76,18 +76,15 @@ const TicketViewer = ({venue, tickets, onSeatClick, selectedSeats, setSelectedSe
 
 
     function playhouseConvert(tickets) {
-        let tempSectionTickets = PlayhouseSections
-        let tempLogeTickets = PlayhouseLoges
+        let tempSectionTickets = structuredClone(PlayhouseSections)
+        let tempLogeTickets = structuredClone(PlayhouseLoges)
 
         tickets.map((ticket) => {
-            let tempTicket = {
-                ...ticket,
-            }
 
             if (ticket.sectionNumber.startsWith("S")) {
-                tempSectionTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
+                tempSectionTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = ticket
             } else if (ticket.sectionNumber.startsWith("L")) {
-                tempLogeTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
+                tempLogeTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = ticket
             }
         })
 
@@ -95,18 +92,15 @@ const TicketViewer = ({venue, tickets, onSeatClick, selectedSeats, setSelectedSe
     }
 
     function concertHallConvert(tickets) {
-        let tempStageTickets = ConcertHallStageLevelSection
-        let tempBalconyTickets = ConcertHallBalconyLevelSection
+        let tempStageTickets = structuredClone(ConcertHallStageLevelSection)
+        let tempBalconyTickets = structuredClone(ConcertHallBalconyLevelSection)
 
         tickets.map((ticket) => {
-            let tempTicket = {
-                ...ticket,
-            }
 
             if (ticket.sectionNumber.startsWith("S")) {
-                tempStageTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
+                tempStageTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = ticket
             } else if (ticket.sectionNumber.startsWith("B")) {
-                tempBalconyTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = tempTicket
+                tempBalconyTickets[ticket.sectionNumber][ticket.rowNumber][ticket.seatNumber] = ticket
             }
         })
 
