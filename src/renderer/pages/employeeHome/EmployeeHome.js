@@ -4,12 +4,17 @@ import EmployeeHeader from "../../components/EmployeeHeader";
 import {OrganizationContext} from "renderer/context/Context";
 import {useContext} from "react";
 
+// Page for the employee once the user has logged in and selected an organization
 
 const EmployeeHome = ({}) => {
 
+  // Uses a react context so the selected organization details can be used here
   const {state} = useContext(OrganizationContext);
 
   return (
+    // Outputs the three buttons that can be interfaced to go to their 
+    // respective management pages; also signals the help backdrop of 
+    // what page this is
     <>
       <EmployeeHeader helpID={4}>
         <Typography
