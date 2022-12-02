@@ -8,6 +8,7 @@ import LoginHeader from "renderer/components/LoginHeader";
 import SnackbarAlert from "renderer/components/SnackbarAlert";
 import OrganizationScrollableList from "renderer/components/OrganizationScrollableList";
 import supabase from "renderer/utils/Supabase";
+import isEmail from "validator/es/lib/isEmail";
 
 
 const OrganizationSelect = ({}) => {
@@ -18,7 +19,7 @@ const OrganizationSelect = ({}) => {
   const [orgAddOpen, setAddOpen] = useState(false);
   const [orgs, setOrgs] = useState([]);
   const newOrgNameRef = useRef('');
-  const newOrgEmailRef = useRef('');
+  const [newOrgEmail, setNewOrgEmail] = useState("")
   const newOrgObjectRef = useRef('');
   const navigate = useNavigate();
 
@@ -51,7 +52,7 @@ const OrganizationSelect = ({}) => {
   // Function to control adding organization
   const onAddButton = async () => {
 
-    if ((newOrgNameRef.current.value.trim() != '') && (newOrgEmailRef.current.value.trim() != '')) {
+    if ((newOrgNameRef.current.value.trim() != '') && (isEmail(newOrgEmail))) {
 
       // Get the current array of orgs from the db, before adding the new org
       const {data: orgs_compare} = await supabase
@@ -63,13 +64,13 @@ const OrganizationSelect = ({}) => {
         .from('Organizations')
         .insert([{
           organizationName: newOrgNameRef.current.value.trim(),
-          organizationEmail: newOrgEmailRef.current.value.trim().toLowerCase()
+          organizationEmail: newOrgEmail
         }]);
 
       // Check if the org name or email is already in use; if it is display alert
       let orgSelectAlertStatus = false;
       for (let i = 0; i < orgs_compare.length; i++) {
-        if ((orgs_compare[i].organizationName == newOrgNameRef.current.value.trim()) || (orgs_compare[i].organizationEmail.toLowerCase() == newOrgEmailRef.current.value.trim().toLowerCase())) {
+        if ((orgs_compare[i].organizationName == newOrgNameRef.current.value.trim()) || (orgs_compare[i].organizationEmail == newOrgEmail)) {
           orgSelectAlertStatus = true;
         }
       }
@@ -87,7 +88,6 @@ const OrganizationSelect = ({}) => {
 
     // Clear the new org name and new org email text fields
     newOrgNameRef.current.value = "";
-    newOrgEmailRef.current.value = "";
   }
 
   // Function to toggle the new org alert message
@@ -167,7 +167,9 @@ const OrganizationSelect = ({}) => {
               <TextField
                 id='newOrgEmailTextField'
                 label='Organization Email'
-                inputRef={newOrgEmailRef}
+                value={newOrgEmail}
+                onChange={(event) => setNewOrgEmail(event.target.value)}
+                error={!isEmail(newOrgEmail)}
               />
             </div>
             <div

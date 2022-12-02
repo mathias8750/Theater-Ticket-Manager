@@ -304,10 +304,6 @@ const SeasonTicketSelector = ({}) => {
   const [selectedVenue, setSelectedVenue] = useState(1)
 
   const onCheckoutClick = () => {
-
-    console.log(playhouseSeat)
-    console.log(concertHallSeat)
-
     navigate('/employee/home/seasons/seat-selector/finalize', {
       state: {
         newTicketHolderData: newTicketHolderData,
