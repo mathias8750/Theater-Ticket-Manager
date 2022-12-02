@@ -96,6 +96,11 @@ const Seat = ({
     <div
       onClick={() => {
         if (!seat.soldBool) {
+          if (seat.sectionNumber === undefined) {
+            seat.sectionNumber = sectionInfo
+            seat.rowNumber = rowLetter
+            seat.seatNumber =  seatNumber
+          }
           updateSelectedSeats(seat, selected)
 
           if (selected) {

@@ -7,6 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import {useContext} from "react";
 import {CheckoutContext} from "../TicketCheckout";
 import {matchIsValidTel, MuiTelInput} from "mui-tel-input";
+import isEmail from "validator/es/lib/isEmail";
 
 export default function CustomerInformationForm() {
 
@@ -44,7 +45,7 @@ export default function CustomerInformationForm() {
             onChange={(event) => {
               setCustomerEmail(event.target.value)
             }}
-            error={customerEmail === ''}
+            error={!isEmail(customerEmail)}
             fullWidth
             autoComplete="email"
             variant="standard"

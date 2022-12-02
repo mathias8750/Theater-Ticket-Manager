@@ -1,6 +1,7 @@
 import React from "react";
 import {Typography, Button, Dialog, DialogTitle, TextField} from "@mui/material";
 import {matchIsValidTel, MuiTelInput} from "mui-tel-input";
+import isEmail from "validator/es/lib/isEmail";
 
 const AddTicketHolderDialog = ({open, onClose, name, setName, email, setEmail, phone, setPhone, onSelectSeatsClick}) => {
 
@@ -42,7 +43,9 @@ const AddTicketHolderDialog = ({open, onClose, name, setName, email, setEmail, p
           id='newHolderEmailTextField'
           label='Email'
           value={email}
-          onChange={(event => setEmail(event.target.value))}        />
+          onChange={(event => setEmail(event.target.value))}
+          error={!isEmail(email)}
+        />
       </div>
       <div
         style={{

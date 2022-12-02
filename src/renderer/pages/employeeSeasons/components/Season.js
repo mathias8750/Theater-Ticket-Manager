@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import SnackbarAlert from "renderer/components/SnackbarAlert";
 import {matchIsValidTel} from "mui-tel-input";
 import EditTicketHolderDialog from "./EditTicketHolderDialog";
+import uniqid from "uniqid";
 
 const Season = ({season}) => {
 
@@ -54,7 +55,8 @@ const Season = ({season}) => {
           season: season,
           name: newTicketHolderName,
           email: newTicketHolderEmail,
-          phone: newTicketHolderPhone
+          phone: newTicketHolderPhone,
+          uniqueID: uniqid()
         }
       });
     }

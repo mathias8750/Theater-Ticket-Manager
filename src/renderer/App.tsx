@@ -13,10 +13,10 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {OrganizationProvider} from './context/Context';
 import TicketSelector from "./pages/ticketCheckoutSystem/TicketSelector";
 import TicketCheckout from "./pages/ticketCheckoutSystem/TicketCheckout";
-import SeatSelector from './pages/employeeSeasons/SeatSelector';
 import TicketHolderFinalization from './pages/employeeSeasons/TicketHolderFinalization';
 import TicketExchanger from "./pages/ticketExchangeSystem/TicketExchanger";
 import EmployeeTicketSelector from './pages/employeeEvents/EmployeeTicketSelector';
+import SeasonTicketSelector from "./pages/employeeSeasons/SeasonTicketSelector";
 
 
 const queryClient = new QueryClient()
@@ -39,7 +39,7 @@ export default function App() {
             <Route path={"/employee/home/organizations"} element={<EmployeeOrganizations/>}/>
             <Route path={"/customer/events/seat-viewer"} element={<TicketSelector/>}/>
             <Route path={"/customer/events/checkout"} element={<TicketCheckout/>}/>
-            <Route path={"/employee/home/seasons/seat-selector"} element={<SeatSelector/>}/>
+            <Route path={"/employee/home/seasons/seat-selector"} element={<SeasonTicketSelector/>}/>
             <Route path={"/employee/home/seasons/seat-selector/finalize"} element={<TicketHolderFinalization/>}/>
             <Route path={"/employee/home/events/ticket-exchanger"} element={<TicketExchanger/>}/>
             <Route path={"/employee/home/events/ticket-price-manager"} element={<EmployeeTicketSelector/>}/>
