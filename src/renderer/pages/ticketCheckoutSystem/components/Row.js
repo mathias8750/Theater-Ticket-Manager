@@ -6,6 +6,7 @@ const Row = ({ row, rowLetter, sectionNumber, rowIndex, maxSeats, sectionIndex, 
     <>
       {Object.keys(row).map((key, seatIndex) => {
         if (key !== "data") {
+          // RETURNS A SEAT FOR EACH SEAT IN THE ROW
           return (
             <Seat
               sectionInfo={sectionInfo}

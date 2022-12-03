@@ -123,12 +123,15 @@ export default function Checkout() {
   const handleNext = async () => {
 
     if (activeStep === 0) {
+      // VALIDILITY CHECKER FOR CUSTOMER INFORMATION
+
       if (!isEmail(customerEmail) || customerName === '' || !matchIsValidTel(customerPhone)) {
 
       } else {
         setActiveStep(activeStep + 1);
       }
     } else if (activeStep === 1) {
+      // VALIDILITY CHECKER FOR PAYMENTS
 
       if (paymentType === 0) {
         if (name === '' || !isCreditCard(ccNumber) || !isCvv(cvv) || !isDate(date)) {
@@ -145,6 +148,9 @@ export default function Checkout() {
 
     } else if (activeStep === 2) {
 
+
+      // CHECKS IF TICKETS ARE SOLD
+
       let errorFound = await checkTicketSold()
 
       if (errorFound) {
@@ -155,6 +161,8 @@ export default function Checkout() {
 
         if (customers) {
           if (customers.length === 0) {
+            // INSERTS THE CUSTOMER
+
             let customerInsertReturn = await addCustomer();
 
             if (!customerInsertReturn) {
@@ -163,12 +171,16 @@ export default function Checkout() {
 
             }
 
+            // GETS THE CUSTOMER AFTER INSERTING
             customers = await getCustomer();
 
 
           }
 
           if (customers) {
+
+            // UPDATES THE TICKETS IN THE DATABASE
+
             const {data, error} = await supabase
               .from('Tickets')
               .upsert(location.state.map((ticket) => {

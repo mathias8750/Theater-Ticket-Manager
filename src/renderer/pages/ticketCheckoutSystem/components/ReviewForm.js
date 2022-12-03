@@ -18,6 +18,8 @@ export default function Review() {
 
   const location = useLocation();
 
+
+  // SUMS THE PRICES
   const sumPrices = (seats) => {
     let sum = 0;
 

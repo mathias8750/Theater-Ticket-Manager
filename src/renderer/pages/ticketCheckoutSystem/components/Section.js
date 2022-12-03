@@ -4,6 +4,7 @@ import {SECTION_PADDING} from "../utils/SeatViewerConsts";
 
 const Section = ({ section, sectionIndex, offset, sectionTextOffset, sectionText, sectionInfo }) => {
 
+  // X CALCULATOR FOR SECTION TITLES
   let x = 200 + SECTION_PADDING * sectionIndex
   if (sectionInfo === 'B1') {
     x = SECTION_PADDING * sectionIndex

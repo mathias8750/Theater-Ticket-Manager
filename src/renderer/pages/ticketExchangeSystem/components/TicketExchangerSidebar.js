@@ -67,18 +67,6 @@ const TicketExchangerSidebar = ({tickets, originalEvent, selectedEvent, setSelec
             sx={{ width: '100%'}}
             renderInput={(params) => <TextField {...params} label="Event" />}
           />
-          {/*<InputLabel id="event-select-label">Event</InputLabel>
-          <Select
-            labelId="event-select-label"
-            id="event-select"
-            value={internalEvent}
-            label="Season"
-            onChange={handleEventChange}
-          >
-            {events.map((event) => (
-              <MenuItem key={event.eventID} value={event}>{event.eventName}</MenuItem>
-            ))}
-          </Select>*/}
         </FormControl>
       </Grid>
 

@@ -23,7 +23,6 @@ const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
   const [numTickets, setNumTickets] = useState(2);
   const [recommendedSeats, setRecommendedSeats] = useState([]);
   const [eventLocation, setEventLocation] = useState(event.venueID);
-  const date = new Date(event.eventDateTime);
 
   let navigate = useNavigate();
 
@@ -58,6 +57,7 @@ const CustomerEvent = ({event, onRecommendedSeatsClick}) => {
   }
 
 
+  // changes the recommended seats when the number of seats desired changes
   const handleTicketNumChange = (event) => {
     setNumTickets(event.target.value);
     setRecommendedSeats(recommendSeats(eventTickets, event.target.value, eventLocation));
