@@ -82,10 +82,6 @@ const OrganizationSelect = ({}) => {
         let newOrgs = orgs_compare.concat(orgs);
         setOrgs(newOrgs);
         toggleAddOrgDialog();
-
-        console.log('orgs: ' + orgs);
-        console.log('orgs_compare: ' + orgs_compare);
-        console.log('newOrgs: ' + newOrgs);
       }
     }
 
