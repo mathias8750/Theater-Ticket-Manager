@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SnackbarAlert from "renderer/components/SnackbarAlert";
 import supabase from "renderer/utils/Supabase";
+// List of imported libraries and components above
 
 const EditPricesDialog = ({open, onClose, selectedSeats}) => {
 

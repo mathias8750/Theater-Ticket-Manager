@@ -1,6 +1,7 @@
 import Row from "./Row";
 import {Text} from "react-konva";
 import {SECTION_PADDING} from "../utils/SeatViewerConsts";
+// List of imported libraries and components above
 
 const Section = ({ section, sectionIndex, offset, sectionTextOffset, sectionText, sectionInfo }) => {
 

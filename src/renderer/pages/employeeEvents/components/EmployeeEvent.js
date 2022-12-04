@@ -6,6 +6,7 @@ import supabase from 'renderer/utils/Supabase';
 import {useQuery} from "@tanstack/react-query";
 import SidebarEventCustomerList from './SidebarEventCustomerList';
 import {eventDateTimeSubheader} from 'renderer/utils/DateTime';
+// List of imported libraries and components above
 
 const EmployeeEvent = ({event}) => {
 

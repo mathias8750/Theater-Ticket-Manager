@@ -1,5 +1,6 @@
 import {Layer} from "react-konva";
 import Section from "./Section";
+// List of imported libraries and components above
 
 
 const Playhouse = ({tickets}) => {

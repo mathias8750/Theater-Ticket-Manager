@@ -1,4 +1,5 @@
 import Seat from "./Seat";
+// List of imported libraries and components above
 
 
 const Row = ({ row, rowLetter, sectionNumber, rowIndex, maxSeats, sectionIndex, offset, sectionInfo }) => {

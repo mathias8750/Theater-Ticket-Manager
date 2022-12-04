@@ -10,6 +10,7 @@ import { useState } from "react";
 import { PlayhouseLoges, PlayhouseSections } from "renderer/data/PlayhouseSeatMapJson";
 import { ConcertHallStageLevelSection, ConcertHallBalconyLevelSection } from "renderer/data/ConcerthallSeatMapJson";
 import supabase from "renderer/utils/Supabase";
+// List of imported libraries and components above
 
 // add event, have event object, call generate events on that object
 // Event org object

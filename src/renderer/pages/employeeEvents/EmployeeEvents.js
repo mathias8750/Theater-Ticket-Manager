@@ -24,10 +24,11 @@ import AddEventDialog from "./components/AddEventDialog";
 import {OrganizationContext} from "../../context/Context";
 import SnackbarAlert from "../../components/SnackbarAlert";
 import EmployeeEvent from "./components/EmployeeEvent";
-
+// List of imported libraries and components above
 
 const EmployeeEvents = ({}) => {
 
+  // List of objects used throughout the page, fitted with updater functions 
   const [removedEvent, setremovedEvent] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [deleteAlertOpen, setDeleteAlert] = useState(false);
@@ -36,14 +37,16 @@ const EmployeeEvents = ({}) => {
   const [successUpdateAlertOpen, setUpdateSuccessAlert] = useState(false);
   const [failureUpdateAlertOpen, setUpdateFailureAlert] = useState(false);
   const [eventList, setEventList] = useState([]);
-
-  const {state} = useContext(OrganizationContext);
   const [open, setOpen] = useState(false);
   const [addEventOpen, setAddEventOpen] = useState(false);
   const [eventname, setEventName] = useState('');
   const [venueid, setVenueID] = useState(0);
   const [seasonID, setSeasonID] = useState(0);
   const [eventdatetime, setDateTime] = useState(dayjs('2023-01-01T00:00:00.000Z'));
+
+  // Sends in the selected organization to render details from organization onto this page
+  const {state} = useContext(OrganizationContext);
+  
 
   // Map customer list to the screen
   const toggleMapCustomers = () => {
@@ -65,6 +68,7 @@ const EmployeeEvents = ({}) => {
     setUpdateSuccessAlert(!successUpdateAlertOpen);
   }
 
+  // Toggles the failure alert
   const toggleUpdateFailureAlert = () => {
     setUpdateFailureAlert(!failureUpdateAlertOpen);
   }
@@ -74,26 +78,29 @@ const EmployeeEvents = ({}) => {
     setDeleteAlert(!deleteAlertOpen);
   }
 
+  // 
   const handleClose = () => {
     setOpen(false);
   }
 
+  // Sends an event object created by the user to the database updates the eventList variable
   const addEvent = async () => {
-    const dt = new Date(eventdatetime);
+    const dt = new Date(eventdatetime); 
     let season = null;
-    if (seasonID != 0) {
+    if (seasonID != 0) { // Sets the season for the event
       season = seasonID;
     }
-    const {data: Events, error} = await supabase
+    const {data: Events, error} = await supabase // Gathers the data from the Events table in supabase
       .from('Events')
-      .insert([{
-        seasonID: season,
+      .insert([{           // Places the user created event into the database, while using
+        seasonID: season,  // the organization context to fill in the organization attribute
         organizationID: state.selectedOrg.organizationID,
         venueID: venueid,
         eventDateTime: dt.toString(),
         eventName: eventname
       }]);
 
+      // Output whether the operation completed or not
     if (error) {
       toggleFailureAlert();
     } else {
@@ -103,6 +110,7 @@ const EmployeeEvents = ({}) => {
     }
   }
 
+  // Calls the events table in supabase and updates the specified event to the info provided by the user
   const updateEvent = async (oldEvent) => {
     const {data: Events, error} = await supabase
       .from('Events')
@@ -114,6 +122,7 @@ const EmployeeEvents = ({}) => {
         eventName: eventname
       }])
 
+      // Output whether the operation succeeded or not
     if (error) {
       toggleUpdateFailureAlert();
     } else {
@@ -123,6 +132,7 @@ const EmployeeEvents = ({}) => {
     }
   }
 
+  // Remove the specified event from the supabase events table
   const removeEvent = async (event) => {
     const {deleteEvent, error} = await supabase
       .from("Events")
@@ -130,6 +140,7 @@ const EmployeeEvents = ({}) => {
       .eq('', event.eventName);
   }
 
+  // Updates the eventList object by gathering data from the supabase events table
   const FetchEvents = async () => {
     const {data: events, error} = await supabase
       .from('Events')
@@ -140,6 +151,7 @@ const EmployeeEvents = ({}) => {
     return events;
   }
 
+  // Query the supabase for the events table, and will output if an error occurred in the process
   const {status, data, error} = useQuery(['events'], FetchEvents)
 
   if (status === 'loading') {
@@ -150,15 +162,21 @@ const EmployeeEvents = ({}) => {
     return <span>Error: {error.message}</span>
   }
 
+  // Updates the selectedEvent variable when the user clicks on any event in the list
   const onEventClick = (event) => {
     setSelectedEvent(event);
   }
 
+  // Outputs the AddEvent dialog which will allow the user to input the info for the new event
   const toggleAddEventDialog = () => {
     setAddEventOpen(!addEventOpen);
   }
 
   return (
+    // The entire output to the screen, consisting of the employeeheader; the addevent, list of events, and search bar
+    // buttons; Also contains alert messages for each operation in the page 
+    
+    // Sends functions to the event list sidebar component, as well as the employeeEvent component
     <>
       <EmployeeHeader helpID={5}>
         <div style={{flexGrow: 1, background: 'white', height: '100%'}}>
@@ -201,5 +219,6 @@ const EmployeeEvents = ({}) => {
   )
 }
 
+// Export EmployeeEvents function to output to screen
 export default EmployeeEvents;
 

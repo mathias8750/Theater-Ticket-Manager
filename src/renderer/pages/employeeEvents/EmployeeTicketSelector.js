@@ -6,6 +6,7 @@ import {useState} from "react";
 import TicketSelectorSidebar from "./components/TicketSelectorSidebar";
 import TicketViewer from "./components/TicketViewer";
 import EmployeeHeader from "renderer/components/EmployeeHeader";
+// List of imported libraries and components above
 
 
 const EmployeeTicketSelector = ({}) => {

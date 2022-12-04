@@ -2,6 +2,7 @@ import {Grid, TextField, Button} from "@mui/material";
 import {useContext, useEffect, useState} from "react";
 import {OrganizationContext} from "../../../context/Context";
 import SidebarEventFromOrgItem from "./SidebarEventFromOrgItem";
+// List of imported libraries and components above
 
 const ScrollableSidebar = ({ events, onEventClick, onAddClick, onEditPriceClick }) => {
 

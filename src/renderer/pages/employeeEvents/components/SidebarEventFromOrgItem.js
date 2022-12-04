@@ -1,5 +1,6 @@
 import {Button, Card, CardHeader, Typography} from "@mui/material";
 import { formatAMPM } from "renderer/utils/DateTime";
+// List of imported libraries and components above
 
 
 const SidebarEventFromOrgItem = ({event, onEventClick}) => {

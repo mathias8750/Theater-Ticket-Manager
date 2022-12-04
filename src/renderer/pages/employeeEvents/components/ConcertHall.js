@@ -1,6 +1,7 @@
 import {Layer} from "react-konva";
 import Section from "./Section";
 import {ConcertHallBalconyLevelSection, ConcertHallStageLevelSection} from "../../../data/ConcerthallSeatMapJson";
+// List of imported libraries and components above
 
 
 const ConcertHall = ({ tickets }) => {

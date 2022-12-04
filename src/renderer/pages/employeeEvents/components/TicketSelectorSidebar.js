@@ -13,6 +13,7 @@ import {
 import SelectedSeatList from "../../../components/SelectedSeatList";
 import EditPricesDialog from "./EditPricesDialog";
 import { useState } from "react";
+// List of imported libraries and components above
 
 
 const TicketSelectorSidebar = ({event, selectedSeats}) => {

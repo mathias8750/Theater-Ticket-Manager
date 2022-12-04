@@ -18,6 +18,7 @@ import {useEffect, useState} from "react";
 import Paper from "@mui/material/Paper";
 import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
+// List of imported libraries and components above
 
 const SidebarEventCustomerList = ({event, tickets, customers, onCustomerClick}) => {
 

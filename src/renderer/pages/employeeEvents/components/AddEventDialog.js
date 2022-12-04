@@ -19,6 +19,7 @@ import {generateTickets} from "../utils/TicketGenerator";
 import supabase from "../../../utils/Supabase";
 import {OrganizationContext} from "../../../context/Context";
 import SnackbarAlert from "../../../components/SnackbarAlert";
+// List of imported libraries and components above
 
 
 const AddEventDialog = ({open, onClose, fetchEvents}) => {

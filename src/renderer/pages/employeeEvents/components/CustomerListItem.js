@@ -1,4 +1,5 @@
 import {Button, Card, CardHeader, Typography} from "@mui/material";
+// List of imported libraries and components above
 
 const CustomerListItem = ({customer, onCustomerClick}) => {
 
