@@ -13,8 +13,10 @@ import AdminSidebar from "../../components/AdminSidebar";
 import SnackbarAlert from "../../components/SnackbarAlert";
 import supabase from "../../utils/Supabase";
 
+// Admin page for user creation and deletion
 const AdminPage = ({}) => {
 
+  // Variables for alert opens, lists, and user input
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
   const [confirmationOpen, setConfirmationOpen] = useState(false);
@@ -133,6 +135,7 @@ const AdminPage = ({}) => {
     return <span>Error: {error.message}</span>
   }
 
+  // display components
   return (
 
     <>

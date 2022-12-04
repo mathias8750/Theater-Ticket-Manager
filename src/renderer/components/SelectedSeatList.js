@@ -1,9 +1,10 @@
 import {Card, CardContent, CardHeader, Divider, List, ListItem, ListItemText} from "@mui/material";
 import {formatAMPM} from "../utils/DateTime";
 
-
+// List of selected seats for seating chart sidebar
 const SelectedSeatList = ({event, selectedSeats}) => {
 
+  // get event date object
   const date = new Date(event.eventDateTime)
 
   return (

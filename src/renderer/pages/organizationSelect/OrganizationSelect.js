@@ -10,9 +10,10 @@ import OrganizationScrollableList from "renderer/components/OrganizationScrollab
 import supabase from "renderer/utils/Supabase";
 import isEmail from "validator/es/lib/isEmail";
 
-
+// Organization select screen, displays after employee login
 const OrganizationSelect = ({}) => {
 
+  // Variables for error opens, org list, user input, current org setting, and navigation
   const {state, update} = useContext(OrganizationContext);
   const [newOrgErrOpen, setNewOpen] = useState(false);
   const [orgAddedOpen, setAddedOpen] = useState(false);
@@ -104,6 +105,7 @@ const OrganizationSelect = ({}) => {
     setAddOpen(!orgAddOpen);
   }
 
+  // display components
   return (
 
       <LoginHeader helpID={3}>

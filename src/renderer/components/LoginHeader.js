@@ -4,10 +4,11 @@ import React, {useState} from 'react';
 import HelpBackdrop from "./HelpBackdrop";
 import {useContext} from "react";
 
+// Header bar for login screens (employee login, org select)
 const LoginHeader = (props) => {
 
+  // Location and open setter
   const location = useLocation();
-
   const [open, setOpen] = useState(false);  
   const navigate = useNavigate();  
 

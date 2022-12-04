@@ -1,9 +1,8 @@
 import {Grid, TextField, Typography} from "@mui/material";
 import SidebarUserItem from "./SidebarUserItem";
 
-
+// Scrollable list for user items on the admin screen
 const AdminSidebar = ({ users, onUserClick }) => {
-
 
 
   return (

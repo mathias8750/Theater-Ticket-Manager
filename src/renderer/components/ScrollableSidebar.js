@@ -2,12 +2,14 @@ import {Grid, TextField} from "@mui/material";
 import SidebarEventItem from "./SidebarEventItem";
 import {useState} from "react";
 
-
+// Scrollable sidebar of event items for the customer events screen
 const ScrollableSidebar = ({ events, onEventClick }) => {
 
+  // States for search bar input and array of searchable events
   const [searchInput, setSearchInput] = useState('')
   const [searchableEvents, setSearchableEvents] = useState(events)
 
+  // Search events list based on input
   const searchEvents = (inputEvent) => {
     setSearchInput(inputEvent.target.value)
     if (inputEvent.target.value === '') {

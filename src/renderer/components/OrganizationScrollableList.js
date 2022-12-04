@@ -1,7 +1,7 @@
 import {Grid, TextField, Typography} from "@mui/material";
 import OrganizationListItem from "./OrganizationListItem";
 
-
+// List of org items displayed on the org select screen
 const OrganizationScrollableList = ({ orgs, onOrgClick }) => {
 
 

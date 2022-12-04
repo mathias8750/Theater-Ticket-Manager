@@ -8,9 +8,10 @@ import {useContext} from "react";
 import { OrganizationContext } from "renderer/context/Context";
 // List of imported libraries and components above
 
-
+// Header bar for employee pages
 const EmployeeHeader = (props) => {
 
+  // Open setter, and location and selected org data
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const {state} = useContext(UserContext);

@@ -14,6 +14,7 @@ Help messages legend
 6 - Employee Seasons
 7 - Employee Organizations
 */
+// Array of messages, one for each page in the program
 const messages = [
     <p>View a list of upcoming events <hr></hr> Select "view" to see more information</p>, 
     <p>View all events sorted by date <hr></hr> Select "view" to see seating and purchase information <hr></hr> Seats can be selected by ID or from the seating chart</p> , 
@@ -25,25 +26,15 @@ const messages = [
     <p>Update Organization settings <hr></hr> Delete the selected Organization</p>
 ];
 
-//var messageID = 1;
-
-
-/*
-const setMessage = ({ID}) => {
-    messageID = ID
-}
-*/
-//{location.pathname}
-
+// Help overlay used on each page
 const HelpBackdrop = ({open, setOpen, helpID}) => {
 
+    // location and message id
     const location = useLocation();
     const [messageID, setMessageID] = useState(2);
 
-    
-
+    // set selected message from the array
     var message = messages[helpID];
-    //const message = "Employee Home Page"
 
     return (
         <Backdrop

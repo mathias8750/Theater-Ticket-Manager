@@ -8,12 +8,12 @@ import {useContext} from "react";
 import { OrganizationContext } from "renderer/context/Context";
 
 
-
-
+// Header bar for customer pages
 const CustomerHeader = (props) => {
 
   console.log("help  " + props.helpID);
 
+  // Open setter, and location and selected org data
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const {state} = useContext(UserContext);

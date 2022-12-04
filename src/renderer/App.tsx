@@ -17,10 +17,12 @@ import TicketHolderFinalization from './pages/employeeSeasons/TicketHolderFinali
 import TicketExchanger from "./pages/ticketExchangeSystem/TicketExchanger";
 import EmployeeTicketSelector from './pages/employeeEvents/EmployeeTicketSelector';
 import SeasonTicketSelector from "./pages/employeeSeasons/SeasonTicketSelector";
+// import context providers and page components above ^^
 
-
+// set up query client for react query
 const queryClient = new QueryClient()
 
+// set up routes for pages within the program
 export default function App() {
 
   return (

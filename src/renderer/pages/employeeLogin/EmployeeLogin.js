@@ -5,15 +5,17 @@ import supabase from '../../utils/Supabase.js';
 import LoginHeader from "../../components/LoginHeader";
 import SnackbarAlert from "../../components/SnackbarAlert";
 
-
+// Employee Login page
 const EmployeeLogin = ({}) => {
 
+  // Variables for alert opens, user input, and navigation
   const [failureAlertOpen, setFailureAlert] = useState(false);
   const usernameRef = useRef('');
   const passwordRef = useRef('');
   const [selectedUser, setSelectedUser] = useState(null)
   let navigate = useNavigate();
 
+  // Toggle alert for login failure
   const toggleFailureAlert = () => {
     setFailureAlert(!failureAlertOpen)
   }
@@ -41,7 +43,7 @@ const EmployeeLogin = ({}) => {
     }
   }
 
-
+  // display components
   return (
 
     <LoginHeader helpID={2}>
