@@ -20,6 +20,9 @@ import {createContext, useState} from "react";
 import CustomerHeader from "../../components/CustomerHeader";
 import supabase from "../../utils/Supabase";
 import {matchIsValidTel} from "mui-tel-input";
+import isEmail from "validator/es/lib/isEmail";
+import isCreditCard from "validator/es/lib/isCreditCard";
+import isDate from "validator/es/lib/isDate";
 
 export const CheckoutContext = createContext({})
 
@@ -49,6 +52,13 @@ export default function Checkout() {
   const [customerName, setCustomerName] = useState('')
   const [customerEmail, setCustomerEmail] = useState('')
   const [customerPhone, setCustomerPhone] = useState('')
+
+  const [paymentType, setPaymentType] = useState(0)
+
+  const [name, setName] = useState('Robby')
+  const [date, setDate] = useState("2023/12/01")
+  const [ccNumber, setCcNumber] = useState('2221005663144978')
+  const [cvv, setCvv] = useState('343')
 
   const checkTicketSold = async () => {
     let errorFound = false
@@ -101,17 +111,45 @@ export default function Checkout() {
 
   }
 
+  function isCvv(input) {
+    const cvv = /^[0-9]{3,4}$/;
+    if (input.match(cvv)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const handleNext = async () => {
 
     if (activeStep === 0) {
-      if (customerPhone === '' || customerName === '' || !matchIsValidTel(customerPhone)) {
+      // VALIDILITY CHECKER FOR CUSTOMER INFORMATION
+
+      if (!isEmail(customerEmail) || customerName === '' || !matchIsValidTel(customerPhone)) {
 
       } else {
         setActiveStep(activeStep + 1);
       }
     } else if (activeStep === 1) {
-      setActiveStep(activeStep + 1);
+      // VALIDILITY CHECKER FOR PAYMENTS
+
+      if (paymentType === 0) {
+        if (name === '' || !isCreditCard(ccNumber) || !isCvv(cvv) || !isDate(date)) {
+
+        } else {
+          setActiveStep(activeStep + 1);
+
+        }
+      } else {
+        setActiveStep(activeStep + 1);
+
+      }
+
+
     } else if (activeStep === 2) {
+
+
+      // CHECKS IF TICKETS ARE SOLD
 
       let errorFound = await checkTicketSold()
 
@@ -123,6 +161,8 @@ export default function Checkout() {
 
         if (customers) {
           if (customers.length === 0) {
+            // INSERTS THE CUSTOMER
+
             let customerInsertReturn = await addCustomer();
 
             if (!customerInsertReturn) {
@@ -131,12 +171,16 @@ export default function Checkout() {
 
             }
 
+            // GETS THE CUSTOMER AFTER INSERTING
             customers = await getCustomer();
 
 
           }
 
           if (customers) {
+
+            // UPDATES THE TICKETS IN THE DATABASE
+
             const {data, error} = await supabase
               .from('Tickets')
               .upsert(location.state.map((ticket) => {
@@ -206,7 +250,17 @@ export default function Checkout() {
             customerPhone: customerPhone,
             setCustomerPhone: setCustomerPhone,
             customerEmail: customerEmail,
-            setCustomerEmail: setCustomerEmail
+            setCustomerEmail: setCustomerEmail,
+            setName: setName,
+            name: name,
+            setCvv: setCvv,
+            cvv: cvv,
+            setCcNumber: setCcNumber,
+            ccNumber: ccNumber,
+            date: date,
+            setDate: setDate,
+            selectedPaymentType: paymentType,
+            setSelectedPaymentType: setPaymentType,
           }}
         >
 

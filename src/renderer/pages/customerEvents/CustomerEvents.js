@@ -18,9 +18,10 @@ const CustomerEvents = ({}) => {
   const fetchEvents = async () => {
     let {data: events} = await supabase
       .from('Events')
+      // gets all the info from the events table, combining them with org and venues
       .select('*, Organizations(organizationName), Venues(venueName)');
 
-
+    // filters out the events before today
     events = events.filter((event) => {
       const today = new Date()
       const eventDate = new Date(event.eventDateTime)

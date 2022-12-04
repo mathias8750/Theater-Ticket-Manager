@@ -5,11 +5,7 @@ import {
   CardContent,
   CardHeader,
   Dialog,
-  Divider,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
   Typography
 } from "@mui/material";
 import Stack from "@mui/material/Stack";
@@ -38,6 +34,8 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
 
   let navigate = useNavigate();
 
+  //CHECKS IF TICKETS SOLD
+
   const checkTicketSold = async () => {
     for (const index in selectedTickets) {
       const { data: ticket } = await supabase
@@ -53,13 +51,15 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
     return false
   }
 
+  // RESETS TICKET BACK TO UNSOLD
+
   const resetTicket =  async () => {
     const {data, error} = await supabase
       .from('Tickets')
       .upsert(originalTickets.map((ticket) => {
         return {
           ticketID: ticket.ticketID,
-          seasonTicketHolderID: ticket.seasonTicketHolderID,
+          seasonTicketHolderID: null,
           soldBool: false,
           priceValue: ticket.priceValue,
           eventID: ticket.eventID,
@@ -80,6 +80,8 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
       return false
     }
   }
+
+  // purchases the new ticket
 
   const purchaseTicket = async () => {
     const {data, error} = await supabase
@@ -125,6 +127,8 @@ const FinalizeExchangeDialog = ({ handleClose, open, selectedEvent, selectedTick
   if (!selectedEvent) {
     return <></>
   }
+
+  // determines what the cost difference between this and last purchase was
 
   const newCost = () => {
     let oldSum = 0

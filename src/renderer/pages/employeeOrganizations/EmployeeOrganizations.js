@@ -5,6 +5,7 @@ import EmployeeHeader from "../../components/EmployeeHeader";
 import {OrganizationContext} from "../../context/Context";
 import SnackbarAlert from "../../components/SnackbarAlert";
 import supabase from "../../utils/Supabase";
+import isEmail from "validator/es/lib/isEmail";
 
 
 const EmployeeOrganizations = ({}) => {
@@ -16,7 +17,7 @@ const EmployeeOrganizations = ({}) => {
   const [updateSuccessOpen, setUpdateSuccess] = useState(false);
   const [updateErrorOpen, setUpdateError] = useState(false);
   const orgNameRef = useRef("");
-  const orgEmailRef = useRef("");
+  const [orgEmail, setOrgEmail] = useState(currentOrganization.organizationEmail)
   const orgMinPriceRef = useRef("");
   const orgMaxPriceRef = useRef("");
   const orgSeasonTicketPriceRef = useRef("");
@@ -42,12 +43,12 @@ const EmployeeOrganizations = ({}) => {
 
 
   const updateOrg = async (oldOrgName) => {
-    if ((orgNameRef.current.value.trim() != '') && (orgEmailRef.current.value.trim() != '') && (orgMinPriceRef.current.value.trim() != '') && (orgMaxPriceRef.current.value.trim() != '') && (orgSeasonTicketPriceRef.current.value.trim() != '') && (parseFloat(orgSeasonTicketPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMinPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMaxPriceRef.current.value.trim()) > parseFloat(orgMinPriceRef.current.value.trim()))) {
+    if ((orgNameRef.current.value.trim() != '') && (isEmail(orgEmail)) && (orgMinPriceRef.current.value.trim() != '') && (orgMaxPriceRef.current.value.trim() != '') && (orgSeasonTicketPriceRef.current.value.trim() != '') && (parseFloat(orgSeasonTicketPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMinPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMaxPriceRef.current.value.trim()) > parseFloat(orgMinPriceRef.current.value.trim()))) {
       const {data, error} = await supabase
         .from('Organizations')
         .update({
           organizationName: orgNameRef.current.value.trim(),
-          organizationEmail: orgEmailRef.current.value.trim(),
+          organizationEmail: orgEmail,
           organizationMinPrice: parseFloat(orgMinPriceRef.current.value.trim()),
           organizationMaxPrice: parseFloat(orgMaxPriceRef.current.value.trim()),
           organizationSeasonTicketPrice: parseFloat(orgSeasonTicketPriceRef.current.value.trim())
@@ -130,7 +131,9 @@ const EmployeeOrganizations = ({}) => {
               label='Email'
               type='email'
               defaultValue={currentOrganization.organizationEmail}
-              inputRef={orgEmailRef}
+              value={orgEmail}
+              onChange={(event) => setOrgEmail(event.target.value)}
+              error={!isEmail(orgEmail)}
             />
           </div>
           <div style={{

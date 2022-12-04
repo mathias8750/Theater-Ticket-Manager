@@ -32,6 +32,7 @@ const Seat = ({
                 sectionInfo
               }) => {
 
+  // GETS NECESSARY FUNCTIONS AND ARRAYS FROM THE CONTEXT
   let {updateSelectedSeats, maxSelectableSeats, selectedSeats, venue} = useContext(TicketViewerContext)
 
   const [selected, setSelected] = useState(false)
@@ -39,7 +40,9 @@ const Seat = ({
 
   let rectX;
   let textX;
+  // IF PLAYHOUSE
   if (venue === 2) {
+    // SECTION 3 AND 4 NEED TO BE FLIPPED
     if (sectionNumber === 4) {
       rectX = RECT_X_MARGIN + SECTION_PADDING - 87 + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
       textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING - 87 + RECT_X_PADDING * (maxSeats - 1 - seatIndex)
@@ -51,6 +54,7 @@ const Seat = ({
       textX = calculateSeatNumberTextXMargin(seatNumber) + SECTION_PADDING * sectionIndex + RECT_X_PADDING * seatIndex
     }
   } else {
+    // IF CONCERT HALL
     if (sectionInfo === 'S1') {
       rectX = 340 - RECT_X_PADDING * (rowLength - seatIndex)
       textX = 340 - RECT_X_PADDING * (rowLength - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
@@ -68,6 +72,7 @@ const Seat = ({
         rectX = 430 - RECT_X_PADDING * (rowLength - seatIndex)
         textX = 430 - RECT_X_PADDING * (rowLength - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
       } else {
+        // ROW 12 NEEDS SPECIFIC DATA
         rectX = 430 - RECT_X_PADDING * (14 - seatIndex)
         textX = 430 - RECT_X_PADDING * (14 - seatIndex) + calculateSeatNumberTextXMargin(seatNumber) - 100
       }
@@ -81,7 +86,7 @@ const Seat = ({
     }
   }
 
-
+  // SETS THE FILL COLOR OF THE SEAT
   function setFill(reserved, selected) {
     if (selected) {
       return ('blue')
@@ -96,6 +101,7 @@ const Seat = ({
     <div
       onClick={() => {
         if (!seat.soldBool) {
+          // IF THE TICKETS ARRAY FAILED, THIS MAKES SURE THE CORRECT DATA IS SHOWN
           if (seat.sectionNumber === undefined) {
             seat.sectionNumber = sectionInfo
             seat.rowNumber = rowLetter

@@ -1,14 +1,6 @@
 import {
   Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
-  Typography
 } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import SelectedSeatList from "../../../components/SelectedSeatList";
