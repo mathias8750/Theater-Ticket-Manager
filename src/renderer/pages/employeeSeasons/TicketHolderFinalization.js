@@ -1,4 +1,4 @@
-import {Typography, Button, Dialog, Alert} from "@mui/material";
+import {Typography, FormControl, InputLabel, Select, MenuItem, Button, Dialog, Alert} from "@mui/material";
 import React, {useContext, useRef, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import EmployeeHeader from "renderer/components/EmployeeHeader";
@@ -7,7 +7,6 @@ import {OrganizationContext} from "../../context/Context";
 
 const TicketHolderFinalization = ({}) => {
 
-  // set price in organization settings?
   const {state: organization} = useContext(OrganizationContext)
 
   const {state: customer} = useLocation();
@@ -15,6 +14,7 @@ const TicketHolderFinalization = ({}) => {
   const [seatSoldErrorOpen, setSeatSoldErrorOpen] = useState(false);
   const [customerAddErrorOpen, setCustomerAddErrorOpen] = useState(false);
   const ticketSoldCheck = useRef(false);
+  const [paymentOption, setPaymentOption] = useState(0);
   const customerIDRef = useRef(0);
   const ticketHolderID = useRef(0);
   const navigate = useNavigate();
@@ -236,27 +236,25 @@ const TicketHolderFinalization = ({}) => {
         </div>
         <div style={{
           display: 'flex',
-          paddingBottom: '1%',
+          paddingBottom: '0.5%',
           justifyContent: 'center'
         }}>
           <Typography align="center" style={{
-            paddingTop: '1%',
-            paddingBottom: '1%'
+            paddingBottom: '0.5%'
           }}>Name: {customer.newTicketHolderData.name}</Typography>
         </div>
         <div style={{
           display: 'flex',
-          paddingBottom: '1%',
+          paddingBottom: '0.5%',
           justifyContent: 'center'
         }}>
           <Typography align="center" style={{
-            paddingTop: '1%',
-            paddingBottom: '1%'
+            paddingBottom: '0.5%'
           }}>Email: {customer.newTicketHolderData.email}</Typography>
         </div>
         <div style={{
           display: 'flex',
-          paddingBottom: '1%',
+          paddingBottom: '0.5%',
           justifyContent: 'center'
         }}>
           <Typography align="center" style={{paddingTop: '1%', paddingBottom: '1%'}}>Phone
@@ -264,7 +262,7 @@ const TicketHolderFinalization = ({}) => {
         </div>
         <div style={{
           display: 'flex',
-          paddingBottom: '1%',
+          paddingBottom: '0.5%',
           justifyContent: 'center'
         }}>
           <Typography align="center" style={{paddingTop: '1%', paddingBottom: '1%'}}>Concert Hall
@@ -272,7 +270,7 @@ const TicketHolderFinalization = ({}) => {
         </div>
         <div style={{
           display: 'flex',
-          paddingBottom: '1%',
+          paddingBottom: '0.5%',
           justifyContent: 'center'
         }}>
           <Typography align="center" style={{paddingTop: '1%', paddingBottom: '1%'}}>Playhouse
@@ -280,11 +278,36 @@ const TicketHolderFinalization = ({}) => {
         </div>
         <div style={{
           display: 'flex',
-          paddingBottom: '1%',
+          paddingBottom: '0.5%',
           justifyContent: 'center'
         }}>
           <Typography align="center" style={{paddingTop: '1%', paddingBottom: '1%'}}>Price:
             ${organization.selectedOrg.organizationSeasonTicketPrice}</Typography>
+        </div>
+        <div style={{
+          display: 'flex',
+          paddingBottom: '1%',
+          paddingLeft: '36%',
+          paddingRight: '35%',
+          justifyContent: 'center'
+        }}>
+          <FormControl fullWidth>
+            <InputLabel id="payment-select-label">Payment Option</InputLabel>
+              <Select
+              fullWidth
+              labelId="payment-select-label"
+              id="payment-select"
+              value={paymentOption}
+              label="Payment Option"
+              onChange={(event) => {
+                setPaymentOption(event.target.value)
+              }}
+            >
+              <MenuItem value={0}>Card</MenuItem>
+              <MenuItem value={1}>Cash</MenuItem>
+              <MenuItem value={2}>Check</MenuItem>
+            </Select>
+          </FormControl>
         </div>
         <div style={{
           display: 'flex',
