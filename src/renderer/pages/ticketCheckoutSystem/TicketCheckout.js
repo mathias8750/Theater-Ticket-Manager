@@ -241,7 +241,7 @@ export default function Checkout() {
   }
 
   return (
-    <CustomerHeader>
+    <CustomerHeader helpID={9}>
       <ThemeProvider theme={theme}>
         <CheckoutContext.Provider
           value={{

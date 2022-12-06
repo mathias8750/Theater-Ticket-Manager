@@ -38,7 +38,7 @@ const EmployeeTicketSelector = ({}) => {
   }
 
   return (
-    <EmployeeHeader>
+    <EmployeeHeader helpID={11}>
       <Grid container style={{ height: '100%'}}>
 
         <TicketSelectorSidebar event={event} selectedSeats={selectedSeats} />

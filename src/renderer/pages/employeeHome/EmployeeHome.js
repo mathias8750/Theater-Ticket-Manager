@@ -44,7 +44,7 @@ const EmployeeHome = ({}) => {
           <NavLink to={"/employee/home/seasons"} style={{textDecoration: 'none'}}>
             <Button variant="text"
                     style={{fontSize: 20}}>
-              Create/Manage Org Seasons
+              Create/Manage Seasons
             </Button>
           </NavLink>
         </div>

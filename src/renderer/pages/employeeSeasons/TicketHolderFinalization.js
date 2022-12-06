@@ -224,7 +224,7 @@ const TicketHolderFinalization = ({}) => {
   }
 
   return (
-    <EmployeeHeader>
+    <EmployeeHeader helpID={13}>
       <div style={{height: '100%'}}>
         <div style={{
           display: 'flex',

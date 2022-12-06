@@ -37,7 +37,7 @@ const TicketSelector = ({}) => {
   }
 
   return (
-    <CustomerHeader>
+    <CustomerHeader helpID={8}>
       <Grid container style={{ height: '100%'}}>
 
         <TicketSelectorSidebar event={event} selectedSeats={selectedSeats}/>

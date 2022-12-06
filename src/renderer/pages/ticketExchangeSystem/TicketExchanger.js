@@ -23,7 +23,7 @@ const TicketExchanger = () => {
   }
 
   return (
-    <EmployeeHeader>
+    <EmployeeHeader helpID={14}>
       <Grid container style={{height: '100%'}}>
 
         <TicketExchangerSidebar
