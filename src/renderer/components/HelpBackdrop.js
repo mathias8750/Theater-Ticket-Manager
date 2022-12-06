@@ -38,7 +38,7 @@ const messages = [
     <hr></hr>Click "select tickets from chart" to pick seats from the seating chart</p>, 
 
     // Employee login (helpID = 2)
-    <p>Login in via employee credentials to access management features
+    <p>Login via employee credentials to access management features
     <hr></hr>Login via admin credentials to access administrator features
     <hr></hr>Click "home" button on the top-left to return to customer home</p>,
 
