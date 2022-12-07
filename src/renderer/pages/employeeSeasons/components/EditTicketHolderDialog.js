@@ -3,8 +3,10 @@ import {Typography, Button, Dialog, DialogTitle, TextField} from "@mui/material"
 import {matchIsValidTel, MuiTelInput} from "mui-tel-input";
 import isEmail from "validator/es/lib/isEmail";
 
+// Component for dialog to update ticket holder information
 const EditTicketHolderDialog = ({open, onClose, name, setName, email, setEmail, phone, setPhone, onUpdateTicketHolderClick}) => {
 
+  // return components to be displayed (textfields for name, email, phone; button to update)
   return (
     <Dialog
       open={open}

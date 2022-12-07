@@ -3,8 +3,10 @@ import {Typography, Button, Dialog, DialogTitle, TextField} from "@mui/material"
 import {matchIsValidTel, MuiTelInput} from "mui-tel-input";
 import isEmail from "validator/es/lib/isEmail";
 
+// component for dialog to add season ticket holder
 const AddTicketHolderDialog = ({open, onClose, name, setName, email, setEmail, phone, setPhone, onSelectSeatsClick}) => {
 
+  // return components to be displayed
   return (
     <Dialog
       open={open}
