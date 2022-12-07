@@ -8,10 +8,12 @@ import SidebarEventCustomerList from './SidebarEventCustomerList';
 import {eventDateTimeSubheader} from 'renderer/utils/DateTime';
 // List of imported libraries and components above
 
+// Function for each individual event when selected by the user
 const EmployeeEvent = ({event}) => {
 
   const navigate = useNavigate();
 
+  // States used in the page, with their respective updater functions
   const [eventCustomers, setEventCustomers] = useState([]);
   const [eventAssignedTickets, setEventAssignedTickets] = useState([]);
 
@@ -26,17 +28,19 @@ const EmployeeEvent = ({event}) => {
    navigate("/employee/home/events/ticket-exchanger", {state: {originalEvent: event, customer: customer, originalTickets: tickets}})
   }
 
+  // Function to navigate to the edit prices page for a ticket in the event
   const editPrices = () => {
     navigate("/employee/home/events/ticket-price-manager", {state: event});
   }
 
+  // Calls supabase to retrieve the tickets table and its data
   const fetchTickets = async () => {
     let {data: tickets, error} = await supabase
       .from('Tickets')
       .select('*, Customers(customerName, customerEmail, customerPhone)')
       .eq('eventID', event.eventID);
 
-
+// Sorts the tickets according to customer name that has bought the tickets
     let tickets_sorted = [];
     for (let i = 0; i < tickets.length; i++) {
       if (tickets[i].customerID != null) {
@@ -61,6 +65,7 @@ const EmployeeEvent = ({event}) => {
     return tickets;
   }
 
+  // Query supabase for the tickets table 
   const {status, data, error} = useQuery(['tickets'], fetchTickets)
 
   if (status === 'loading') {
@@ -71,6 +76,8 @@ const EmployeeEvent = ({event}) => {
     return <span>Error: {error.message}</span>
   }
 
+  // Output to the screen, including the event information and list customers
+  // that have bought tickets for the event
   return (
     <div style={{height: '100%', width: '100%'}}>
       <Card>
