@@ -1,3 +1,4 @@
+// Import libraries
 import {Typography, Button, Dialog, DialogTitle, TextField} from "@mui/material";
 import {Link as NavLink} from "react-router-dom";
 import EmployeeHeader from "../../components/EmployeeHeader";
@@ -16,8 +17,10 @@ import {compareDateTime} from "renderer/utils/DateTime";
 import dayjs from 'dayjs';
 import {compareDateTimeSeason} from "../../utils/DateTime";
 
+// Employe Seasons
 const EmployeeSeasons = ({}) => {
 
+  // Define constants
   const [seasonList, setSeasonList] = useState([]);
   const [selectedSeason, setselectedSeason] = useState(null)
   const [seasonAddOpen, setSeasonAddOpen] = useState(false);
@@ -32,22 +35,20 @@ const EmployeeSeasons = ({}) => {
   const {state} = useContext(OrganizationContext)
   const newSeasonNameRef = useRef('');
 
-
+  // Sorts array of seasons by date
   const sortSeasons = (seasons) => {
+    // Check if season's length is 0
     if (seasons.length == 0) {
       console.log("No seasons");
       return seasons;
     }
+    // Array for sorted seasons
     let sortedSeasons = [];
     let ignore = [];
-    // make smallest the index
-    //let smallestDate = new Date(seasons[0].startDate);
     let smallestSeason;
     let smallestIndex;
+    // Sort the seasons
     for (let i = 0; i < seasons.length; i++) {
-      //let smallestDate = new Date(seasons[i].startDate);
-      //let smallestSeason = seasons[i];
-      //let smallestIndex = i;
       let smallestDate = new Date(2050, 11, 24, 10, 33, 30, 0);
       for (let j = 0; j < seasons.length; j++) {
         if (ignore.includes(j) == false) {
@@ -66,6 +67,7 @@ const EmployeeSeasons = ({}) => {
     return sortedSeasons;
   }
 
+  /*
   // Sort seasons by date
   // Adapted from CustomerHome.js
   const currentDateTime = new Date();
@@ -82,7 +84,9 @@ const EmployeeSeasons = ({}) => {
     sortedSeasons.sort(compareDateTime);
     return sortedSeasons;
   }
+  */
 
+  // Get seasons from supabase
   const fetchSeasons = async () => {
     let {data: seasons} = await supabase
       .from('Seasons')
@@ -103,6 +107,7 @@ const EmployeeSeasons = ({}) => {
     return seasons;
   }
 
+  // Add new season to supabae
   const insertSeason = async () => {
     const startDate = new Date(seasonStartDate);
     const endDate = new Date(seasonEndDate);
@@ -116,6 +121,7 @@ const EmployeeSeasons = ({}) => {
         endDate: endDate.toString()
       });
 
+    // Check for error on season add
     if (error) {
       toggleSeasonAddError();
     } else {
@@ -124,24 +130,30 @@ const EmployeeSeasons = ({}) => {
     }
   }
 
+  // Get seasons and return information
   const {status, data, error} = useQuery(['seasons'], fetchSeasons)
 
+  // Loading message
   if (status === 'loading') {
     return <span>Loading...</span>
   }
 
+  // Error message
   if (status === 'error') {
     return <span>Error: {error.message}</span>
   }
 
+  // Selects season 
   const onSeasonClick = (season) => {
     setselectedSeason(season)
   }
 
+  // Open season creation menu
   const onCreateClick = () => {
     toggleAddSeasonDialog();
   }
 
+  // Season creation
   const onSeasonCreate = () => {
     let valid = true;
     let startDate = new Date(seasonStartDate);
@@ -150,6 +162,7 @@ const EmployeeSeasons = ({}) => {
       let tempStartDate = new Date(seasonList[i].startDate);
       let tempEndDate = new Date(seasonList[i].endDate);
 
+      // Check for valid dates
       if ((startDate >= tempStartDate) && (startDate <= tempEndDate)) {
         valid = false;
       }
@@ -163,6 +176,8 @@ const EmployeeSeasons = ({}) => {
         valid = false;
       }
     }
+
+    // If valid dates
     if (valid) {
       if (newSeasonNameRef.current.value.trim() === '') {
         toggleNameError();
@@ -178,34 +193,42 @@ const EmployeeSeasons = ({}) => {
     }
   }
 
+  // Toggles add season menu
   const toggleAddSeasonDialog = () => {
     setSeasonAddOpen(!seasonAddOpen);
   }
 
+  // Toggles date error message
   const toggleDateError = () => {
     setDateErrorOpen(!dateErrorOpen);
   }
 
+  // Toggles name error message
   const toggleNameError = () => {
     setNameErrorOpen(!nameErrorOpen);
   }
 
+  // Toggles season success message
   const toggleSeasonAddSuccess = () => {
     setSeasonAddSuccessOpen(!seasonAddSuccessOpen);
   }
 
+  // Toggles season add error message
   const toggleSeasonAddError = () => {
     setSeasonAddErrorOpen(!seasonAddErrorOpen);
   }
 
+  // Toggles date error message
   const toggleFlippedDatesError = () => {
     setFlippedDatesErrorOpen(!flippedDatesErrorOpen);
   }
 
+  // Toggles date format error message
   const toggleDateFormatError = () => {
     setDateFormatErrorOpen(!dateFormatErrorOpen);
   }
 
+  // Page contents
   return (
     <>
       <EmployeeHeader helpID={6}>
