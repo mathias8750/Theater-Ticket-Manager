@@ -1,3 +1,4 @@
+// Import libraries
 import EmployeeHeader from "../../components/EmployeeHeader";
 import {
   Button,
@@ -17,6 +18,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import supabase from "../../utils/Supabase";
 import TicketViewer from "../ticketCheckoutSystem/components/TicketViewer";
 
+// Select seats content
 const SeasonTicketSelectorSidebarVenueSelectedSeat = ({title, seat}) => {
 
   return (
@@ -64,6 +66,7 @@ const SeasonTicketSelectorSidebarVenueSelectedSeat = ({title, seat}) => {
   )
 }
 
+// Left side bar
 const SeasonTicketSelectorSidebar = ({
                                        selectedVenue,
                                        setSelectedVenue,
@@ -72,6 +75,7 @@ const SeasonTicketSelectorSidebar = ({
                                        playhouseSeat
                                      }) => {
 
+  // Side bar content
   return (
     <Grid direction={'column'} container style={{height: '100%', padding: '10px'}} md={4}>
       <Grid item style={{height: '7%'}}>
@@ -114,10 +118,12 @@ const SeasonTicketSelectorSidebar = ({
   )
 }
 
+// Seat select for Concert Hall venue
 const ConcertHallSeatSelector = ({uniqueID, seasonID, selectedSeats, setSelectedSeats}) => {
 
   const [tickets, setTickets] = useState([])
 
+  // Get tickets from database
   const fetchTickets = async () => {
     let {data: tickets_sample, tickets_error} = await supabase
       .from('Tickets')
@@ -132,6 +138,7 @@ const ConcertHallSeatSelector = ({uniqueID, seasonID, selectedSeats, setSelected
 
     let tickets = {}
 
+    // Check for ticket or ticket holder error
     if (!tickets_error && !holders_error) {
       for (const ticket of tickets_sample) {
         const key = `${ticket.sectionNumber}-${ticket.rowNumber}-${ticket.seatNumber}`
@@ -196,10 +203,12 @@ const ConcertHallSeatSelector = ({uniqueID, seasonID, selectedSeats, setSelected
   )
 }
 
+// Seat select for Playhouse  venue
 const PlayhouseSeatSelector = ({uniqueID, seasonID, selectedSeats, setSelectedSeats}) => {
 
   const [tickets, setTickets] = useState([])
 
+  // Get tickets from database
   const fetchTickets = async () => {
     let {data: tickets_sample, error} = await supabase
       .from('Tickets')
@@ -214,6 +223,7 @@ const PlayhouseSeatSelector = ({uniqueID, seasonID, selectedSeats, setSelectedSe
 
     let tickets = {}
 
+    // Check for ticket error
     if (!error) {
       for (const ticket of tickets_sample) {
         const key = `${ticket.sectionNumber}-${ticket.rowNumber}-${ticket.seatNumber}`
@@ -274,10 +284,12 @@ const PlayhouseSeatSelector = ({uniqueID, seasonID, selectedSeats, setSelectedSe
     error
   } = useQuery(['tickets', uniqueID], fetchTickets, {onSuccess: data => setTickets(data)})
 
+  // Loading message
   if (status === 'loading') {
     return <span>Loading...</span>
   }
 
+  //Error message
   if (status === 'error') {
     return <span>Error: {error.message}</span>
   }
@@ -294,8 +306,10 @@ const PlayhouseSeatSelector = ({uniqueID, seasonID, selectedSeats, setSelectedSe
   )
 }
 
+// Ticket selector
 const SeasonTicketSelector = ({}) => {
 
+  // Define constants
   const {state: newTicketHolderData} = useLocation();
   const navigate = useNavigate();
 
@@ -303,6 +317,7 @@ const SeasonTicketSelector = ({}) => {
   const [playhouseSeat, setPlayhouseSeat] = useState([])
   const [selectedVenue, setSelectedVenue] = useState(1)
 
+  // Finalize tickets and checkout
   const onCheckoutClick = () => {
     navigate('/employee/home/seasons/seat-selector/finalize', {
       state: {
@@ -313,7 +328,7 @@ const SeasonTicketSelector = ({}) => {
     });
   }
 
-
+  // Page contents
   return (
     <EmployeeHeader helpID={12}>
       <Grid container style={{height: '100%'}}>

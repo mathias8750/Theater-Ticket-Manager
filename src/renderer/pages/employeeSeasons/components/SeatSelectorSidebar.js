@@ -1,3 +1,4 @@
+// Import libraries
 import {
     Button,
     Card,
@@ -13,11 +14,12 @@ import {
   import {useNavigate} from "react-router-dom";
   import { seasonDateTimeSubheader } from "renderer/utils/DateTime";
   
-  
+  // Seat Selection sidebar
   const SeatSelectorSidebar = ({season, selectedSeats, onSelectClick}) => {
   
     const navigate = useNavigate()
   
+    // Sidebar contents
     return (
       <Grid direction={'column'} container item style={{height: '100%', padding: '10px'}} md={4}>
   
