@@ -3,6 +3,7 @@ import {Button, Card, CardHeader, Typography} from "@mui/material";
 
 const CustomerListItem = ({customer, onCustomerClick}) => {
 
+  // Outputs the customer information including name, email, and an option to exchange bought tickets with other seats
     return (
         <>
         <Card>

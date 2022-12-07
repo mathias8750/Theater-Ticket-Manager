@@ -11,6 +11,7 @@ import {useContext, useEffect, useState} from "react";
 import {TicketViewerContext} from "./TicketViewer";
 // List of imported libraries and components above
 
+// ?
 function calculateSeatNumberTextXMargin(seatNumber) {
   if (seatNumber < 10) {
     return 103.5
@@ -19,6 +20,7 @@ function calculateSeatNumberTextXMargin(seatNumber) {
   }
 }
 
+// Function for 
 const Seat = ({
                 seat,
                 seatNumber,

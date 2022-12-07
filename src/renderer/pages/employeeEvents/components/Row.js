@@ -1,7 +1,7 @@
 import Seat from "./Seat";
 // List of imported libraries and components above
 
-
+// Outputs the row of seats in each venue according to number of seats 
 const Row = ({ row, rowLetter, sectionNumber, rowIndex, maxSeats, sectionIndex, offset, sectionInfo }) => {
   return (
     <>

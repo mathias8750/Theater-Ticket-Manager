@@ -6,6 +6,7 @@ import {ConcertHallBalconyLevelSection, ConcertHallStageLevelSection} from "../.
 
 const ConcertHall = ({ tickets }) => {
 
+  // Outputs the Concert Hall venue graphical overlay with labels for each section and seat 
   return (
     <Layer>
 
@@ -23,4 +24,5 @@ const ConcertHall = ({ tickets }) => {
   )
 }
 
+// Export ConcertHall function to output to screen
 export default ConcertHall;

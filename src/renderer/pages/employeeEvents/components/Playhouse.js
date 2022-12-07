@@ -3,6 +3,7 @@ import Section from "./Section";
 // List of imported libraries and components above
 
 
+// Outputs the playhouse graphical overlay, with labeled sections and seat numbers
 const Playhouse = ({tickets}) => {
 
   return (
