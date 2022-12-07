@@ -20,7 +20,7 @@ function calculateSeatNumberTextXMargin(seatNumber) {
   }
 }
 
-// Function for 
+// Function for each seat component in the graphical layout of the venues
 const Seat = ({
                 seat,
                 seatNumber,
@@ -37,9 +37,11 @@ const Seat = ({
 
   let {updateSelectedSeats, maxSelectableSeats, selectedSeats, venue} = useContext(TicketViewerContext)
 
+  // State used in the page, and its updater function
   const [selected, setSelected] = useState(false)
 
 
+  // Calculates the margins of each seat in each specific venue (Playhouse or Concert Hall)
   let rectX;
   let textX;
   if (venue === 2) {
@@ -84,7 +86,7 @@ const Seat = ({
     }
   }
 
-
+// Colors the seat according to if the seat is selected or not
   function setFill(reserved, selected) {
     if (selected) {
       return ('blue')
@@ -93,6 +95,7 @@ const Seat = ({
     }
   }
 
+  // Output to the screen, including the seat, its color, each section, and the labels for each section
   return (
     <div
       onClick={() => {

@@ -3,8 +3,10 @@ import {Text} from "react-konva";
 import {SECTION_PADDING} from "../utils/SeatViewerConsts";
 // List of imported libraries and components above
 
+// Function for each section in the venue graphical layout, containing the size of each section and amount of seat components
+// as well as labels for the sections
 const Section = ({ section, sectionIndex, offset, sectionTextOffset, sectionText, sectionInfo }) => {
-
+ 
   let x = 200 + SECTION_PADDING * sectionIndex
   if (sectionInfo === 'B1') {
     x = SECTION_PADDING * sectionIndex
@@ -22,6 +24,7 @@ const Section = ({ section, sectionIndex, offset, sectionTextOffset, sectionText
 
   }
 
+  // Output to the screen, including each section ID and the seats in each row of each section (bought or open)
   return (
     <>
       <Text

@@ -3,7 +3,7 @@ import Section from "./Section";
 import {ConcertHallBalconyLevelSection, ConcertHallStageLevelSection} from "../../../data/ConcerthallSeatMapJson";
 // List of imported libraries and components above
 
-
+// Function for the graphical overlay of the ConcertHall venue
 const ConcertHall = ({ tickets }) => {
 
   // Outputs the Concert Hall venue graphical overlay with labels for each section and seat 

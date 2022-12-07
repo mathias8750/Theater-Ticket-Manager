@@ -9,6 +9,7 @@ import {ConcertHallBalconyLevelSection, ConcertHallStageLevelSection} from "../.
 
 export const TicketViewerContext = createContext({})
 
+// Function to view each ticket information when selected by the user
 const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedSeats, maxSeats }) => {
 
   const containerRef = useRef(null)
@@ -19,6 +20,7 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
     y: 100
   });
 
+  // Allows the user to widen or minimize the venue layout to see other seats better 
   const handleWheel = (e) => {
     e.evt.preventDefault();
 
@@ -54,6 +56,7 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
     }
   }, [containerRef]);
 
+  // Function that sets the tempSelectedSeats variable with seat components that have been selected by the user
   const updateSelectedSeats = (seat, selected) => {
 
     let tempSelectedSeats = [...selectedSeats];
@@ -75,7 +78,8 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
     setSelectedSeats(tempSelectedSeats)
   }
 
-
+// Function for PlayHouse venue to account for selected, bought, or open seats 
+// in a specific section, and determines how to color the seats
   function playhouseConvert(tickets) {
     let tempSectionTickets = PlayhouseSections
     let tempLogeTickets = PlayhouseLoges
@@ -95,6 +99,8 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
     return {section: tempSectionTickets, loge: tempLogeTickets};
   }
 
+// Function for Concert Hall venue to account for selected, bought, or open seats 
+// in a specific section, and determines how to color the seats
   function concertHallConvert(tickets) {
     let tempStageTickets = ConcertHallStageLevelSection
     let tempBalconyTickets = ConcertHallBalconyLevelSection
@@ -112,6 +118,7 @@ const TicketViewer = ({ venue, tickets, onSeatClick, selectedSeats, setSelectedS
     })
   }
 
+// Output to the screen containing the venues and their respective seats, whether bought, open, or selected
   return (
     <TicketViewerContext.Provider
       value={{ updateSelectedSeats: updateSelectedSeats, selectedSeats: selectedSeats, maxSelectableSeats: maxSeats, venue: venue }}

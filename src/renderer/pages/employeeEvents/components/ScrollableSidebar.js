@@ -4,10 +4,13 @@ import {OrganizationContext} from "../../../context/Context";
 import SidebarEventFromOrgItem from "./SidebarEventFromOrgItem";
 // List of imported libraries and components above
 
+// Function for the scrollable sidebar containing the list of events for an organization
 const ScrollableSidebar = ({ events, onEventClick, onAddClick, onEditPriceClick }) => {
 
+  // Context for the selected organization by the user
   const {state} = useContext(OrganizationContext);
 
+  // States used in the program with updater functions
   const [searchInput, setSearchInput] = useState('')
   const [searchableEvents, setSearchableEvents] = useState(events)
 
@@ -15,6 +18,7 @@ const ScrollableSidebar = ({ events, onEventClick, onAddClick, onEditPriceClick 
     setSearchableEvents(events)
   }, [events])
 
+  // Allows the user to search via a text box for a specific event in the list of events via the event name
   const searchEvents = (inputEvent) => {
     setSearchInput(inputEvent.target.value)
     if (inputEvent.target.value === '') {
@@ -27,12 +31,13 @@ const ScrollableSidebar = ({ events, onEventClick, onAddClick, onEditPriceClick 
           tempEvents.push(event)
         }
       })
-
+// Set the events variable containing the searched for events
       setSearchableEvents(tempEvents)
 
     }
   }
 
+  // Output to the screen containing the list of events and the Add Event button to add an event to the list
   return (
     <>
       <Grid container direction={'column'} style={{height: '100%'}}>

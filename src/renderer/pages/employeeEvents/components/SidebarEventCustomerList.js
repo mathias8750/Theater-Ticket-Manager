@@ -20,16 +20,20 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
 // List of imported libraries and components above
 
+// Function for the customer list, with the selected event and customers buying tickets from the event passed througj
 const SidebarEventCustomerList = ({event, tickets, customers, onCustomerClick}) => {
 
+  // States used in the page, with their respective updater functions
   const [open, setOpen] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const [searchableCustomers, setSearchableCustomers] = useState(customers)
 
+  
   useEffect(() => {
     setSearchableCustomers(customers)
   }, [customers])
 
+// Used for the search box to find the specified customers and output them first in the list of customers
   const searchCustomers = (inputCustomer) => {
     setSearchInput(inputCustomer.target.value)
     if (inputCustomer.target.value === '') {
@@ -48,6 +52,7 @@ const SidebarEventCustomerList = ({event, tickets, customers, onCustomerClick}) 
     }
   }
 
+  // Assigns the ticket variables to the customers in supabase
   const generateTicketAssignmentObjects = () => {
     const ticketAssignmentObjects = []
 
@@ -77,6 +82,7 @@ const SidebarEventCustomerList = ({event, tickets, customers, onCustomerClick}) 
     return ticketAssignmentObjects;
   }
 
+  // Output to the screen, including the customer information for each event, and the exchange tickets buttons
   return (
     <Card style={{ width: '100% '}}>
       <CardHeader
