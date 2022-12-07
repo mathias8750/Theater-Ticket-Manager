@@ -1,3 +1,4 @@
+// import libraries
 import {Typography, Button, TextField, Dialog, DialogActions, DialogTitle, DialogContentText} from "@mui/material";
 import {useContext, useState, useRef} from "react";
 import {useNavigate} from "react-router-dom";
@@ -7,9 +8,10 @@ import SnackbarAlert from "../../components/SnackbarAlert";
 import supabase from "../../utils/Supabase";
 import isEmail from "validator/es/lib/isEmail";
 
-
+// Employee Organization
 const EmployeeOrganizations = ({}) => {
 
+  // Define constants
   const {state, update} = useContext(OrganizationContext);
   const [currentOrganization, setCurrentOrganization] = useState(state.selectedOrg);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
@@ -25,25 +27,31 @@ const EmployeeOrganizations = ({}) => {
 
   const [tickets, setTickets] = useState([]);
 
+  // Toggle confirmation message
   const toggleConfirmationDialog = () => {
     setConfirmationOpen(!confirmationOpen);
   }
 
+  // Toggle deletion message
   const toggleDeleteConfirmationDialog = () => {
     setDeleteConfirmationOpen(!deleteConfirmationOpen);
   }
 
+  // Toggle update message
   const toggleUpdateSuccess = () => {
     setUpdateSuccess(!updateSuccessOpen);
   }
 
+  // Toggle error message
   const toggleUpdateError = () => {
     setUpdateError(!updateErrorOpen);
   }
 
-
+  // Update the selection organization
   const updateOrg = async (oldOrgName) => {
+    // Checks if data is valid
     if ((orgNameRef.current.value.trim() != '') && (isEmail(orgEmail)) && (orgMinPriceRef.current.value.trim() != '') && (orgMaxPriceRef.current.value.trim() != '') && (orgSeasonTicketPriceRef.current.value.trim() != '') && (parseFloat(orgSeasonTicketPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMinPriceRef.current.value.trim()) >= 0) && (parseFloat(orgMaxPriceRef.current.value.trim()) > parseFloat(orgMinPriceRef.current.value.trim()))) {
+      // Access supabase
       const {data, error} = await supabase
         .from('Organizations')
         .update({
@@ -54,12 +62,14 @@ const EmployeeOrganizations = ({}) => {
           organizationSeasonTicketPrice: parseFloat(orgSeasonTicketPriceRef.current.value.trim())
         })
         .eq('organizationName', oldOrgName.trim());
-
+      
+      // Check for error
       if (error) {
         toggleUpdateError();
         return;
       }
 
+      // Update organization
       update({selectedOrg: data[0]});
       setCurrentOrganization(data[0]);
       toggleUpdateSuccess();
@@ -68,6 +78,7 @@ const EmployeeOrganizations = ({}) => {
     }
   }
 
+  // Delete organization from supabase
   const deleteOrg = async () => {
     const {data, error} = await supabase
       .from('Organizations')
@@ -75,21 +86,25 @@ const EmployeeOrganizations = ({}) => {
       .eq('organizationID', currentOrganization.organizationID);
   }
 
+  // Confirm changes
   const handleConfirm = () => {
     let oldOrgName = currentOrganization.organizationName;
     updateOrg(oldOrgName);
     toggleConfirmationDialog();
   }
 
+  // Cancel changes
   const handleCancel = () => {
     toggleConfirmationDialog();
   }
 
+  // Delete organization and logout
   const handleDeleteConfirm = () => {
     deleteOrg().then(navigate("/employee/login"));
     toggleDeleteConfirmationDialog();
   }
 
+  // Cancel deletion
   const handleDeleteCancel = () => {
     toggleDeleteConfirmationDialog();
   }
@@ -102,6 +117,7 @@ const EmployeeOrganizations = ({}) => {
     toggleDeleteConfirmationDialog();
   }
 
+  // Page contents
   return (
     <>
       <EmployeeHeader helpID={7}>

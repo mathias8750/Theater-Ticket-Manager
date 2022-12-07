@@ -1,9 +1,10 @@
+// Import libraries
 import {Button, Card, CardHeader, Typography} from "@mui/material";
 import { seasonDateTimeSubheader } from "renderer/utils/DateTime";
 
-
+// Season item
 const SidebarSeasonItem = ({season, onSeasonClick}) => {
-
+  // Season item content
   return (
     <>
       <Card>

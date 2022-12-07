@@ -1,5 +1,7 @@
+// Import libraries
 import {Button, Card, CardHeader, Typography} from "@mui/material";
 
+// Ticket holder
 const TicketHolder = ({ticketHolder, onTicketHolderClick}) => {
 
   /*
@@ -11,6 +13,7 @@ const TicketHolder = ({ticketHolder, onTicketHolderClick}) => {
   const subtitle = <ul><li>{'Row: ' + seats.result[0]?.rowNumber}</li><li>{seats_str}</li></ul>
   */
 
+  // Ticket Holder content
   return (
     <>
       <Card>

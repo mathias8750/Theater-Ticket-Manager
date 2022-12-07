@@ -1,3 +1,4 @@
+// Import libraries
 import TicketHolder from "./TicketHolder";
 import {Typography, Grid, Card, CardHeader, CardContent, Divider, IconButton, Input} from "@mui/material";
 import {Download} from "@mui/icons-material";
@@ -7,9 +8,10 @@ import Paper from "@mui/material/Paper";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SearchIcon from "@mui/icons-material/Search";
 
-
+// Ticket holder list
 const TicketHolderList = ({ticketHolders, onTicketHolderClick}) => {
 
+  // Define constants
   const [open, setOpen] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const [searchableTicketHolders, setSearchableTicketHolders] = useState(ticketHolders)
@@ -18,6 +20,7 @@ const TicketHolderList = ({ticketHolders, onTicketHolderClick}) => {
     setSearchableTicketHolders(ticketHolders)
   }, [ticketHolders])
 
+  // Search for ticket holder
   const searchTicketHolders = (inputTicketHolder) => {
     setSearchInput(inputTicketHolder.target.value)
     if (inputTicketHolder.target.value === '') {
@@ -36,9 +39,11 @@ const TicketHolderList = ({ticketHolders, onTicketHolderClick}) => {
     }
   }
 
+  // Create ticket holder objects for display
   const generateTicketHolderObjects = () => {
     const ticketHolderObjects = []
 
+    // Ticket holder information
     ticketHolders.map((ticketHolder) => {
       let temp = {
         "Customer Email": ticketHolder.Customers.customerEmail,
@@ -61,6 +66,7 @@ const TicketHolderList = ({ticketHolders, onTicketHolderClick}) => {
     return ticketHolderObjects
   }
 
+  // Ticket holder list contents
   return (
     <Card style={{width: '100% '}}>
       <CardHeader
