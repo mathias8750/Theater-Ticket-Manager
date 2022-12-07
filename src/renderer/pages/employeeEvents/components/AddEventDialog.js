@@ -21,7 +21,8 @@ import {OrganizationContext} from "../../../context/Context";
 import SnackbarAlert from "../../../components/SnackbarAlert";
 // List of imported libraries and components above
 
-
+// Function displays the dialog box for an event creation when prompted by the user upon pressing the 
+// "create event" button in EmployeeEvents
 const AddEventDialog = ({open, onClose, fetchEvents}) => {
 
   const eventNameRef = useRef('');
