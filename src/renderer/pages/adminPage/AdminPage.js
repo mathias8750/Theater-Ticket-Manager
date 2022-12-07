@@ -139,7 +139,7 @@ const AdminPage = ({}) => {
   return (
 
     <>
-      <LoginHeader>
+      <LoginHeader helpID={10}>
         <div style={{height: '100%'}}>
           <div style={{display: 'flex', justifyContent: 'center'}}>
             <Typography variant="h6" align="center" style={{padding: '2%'}}>Employee Accounts</Typography>
