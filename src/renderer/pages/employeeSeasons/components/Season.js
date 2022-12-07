@@ -12,8 +12,10 @@ import {matchIsValidTel} from "mui-tel-input";
 import EditTicketHolderDialog from "./EditTicketHolderDialog";
 import uniqid from "uniqid";
 
+// Component for season object to be displayed on right of employee seasons screen
 const Season = ({season}) => {
 
+  // Use States for ticket holder list, dialog opens, and customer info
   const [ticketHolderList, setTicketHolderList] = useState([]);
   const [addTicketHolderDialogOpen, setAddTicketHolderDialogOpen] = useState(false);
   const [editTicketHolderDialogOpen, setEditTicketHolderDialogOpen] = useState(false)
@@ -26,18 +28,20 @@ const Season = ({season}) => {
   const [updatedTicketHolderPhone, setUpdatedTicketHolderPhone] = useState('')
   const [updatedTicketHolderID, setUpdatedTicketHolderID] = useState('')
 
-
+  // Use states for updating ticket holder info
   const [update, setUpdate] = useState(false)
   const [updatedTicketHolderSuccessInfoAlertOpen, setUpdatedTicketHolderSuccessInfoAlertOpen] = useState(false)
   const [updatedTicketHolderErrorInfoAlertOpen, setUpdatedTicketHolderErrorInfoAlertOpen] = useState(false)
 
+  // Navigation var
   const navigate = useNavigate();
 
-
+  // event handler for add ticket holder button
   const onAddButton = () => {
     toggleAddTicketHolderDialog();
   }
 
+  // event handler for updating ticket holder info
   const onTicketHolderClick = (ticketHolder) => {
     setUpdatedTicketHolderEmail(ticketHolder.Customers.customerEmail)
     setUpdatedTicketHolderName(ticketHolder.Customers.customerName)
@@ -46,6 +50,7 @@ const Season = ({season}) => {
     setEditTicketHolderDialogOpen(true)
   }
 
+  // event handler for clicking select seats button
   const onSelectSeatsClick = () => {
     if (newTicketHolderName === '' || newTicketHolderEmail === '' || !matchIsValidTel(newTicketHolderPhone)) {
       toggleTicketHolderInfoAlert();
@@ -62,6 +67,7 @@ const Season = ({season}) => {
     }
   }
 
+  // function to update ticket holder data in supabase
   const onUpdateTicketHolderClick = async () => {
     if (updatedTicketHolderName === '' || updatedTicketHolderEmail === '' || !matchIsValidTel(updatedTicketHolderPhone)) {
       toggleTicketHolderInfoAlert();
@@ -87,6 +93,7 @@ const Season = ({season}) => {
     }
   }
 
+  // function to fetch season ticket holders from supabase
   const fetchTicketHolders = async () => {
     const {data: holders, error} = await supabase
       .from('SeasonTicketHolders')
@@ -102,6 +109,7 @@ const Season = ({season}) => {
     return holders;
   }
 
+  // update ticket holder list when data is updated
   useEffect(() => {
     fetchTicketHolders();
   }, [season, update]);
@@ -116,6 +124,7 @@ const Season = ({season}) => {
     return <span>Error: {error.message}</span>
   }
 
+  // toggle functions for dialogs and alerts
   const toggleAddTicketHolderDialog = () => {
     setAddTicketHolderDialogOpen(!addTicketHolderDialogOpen);
   }
@@ -137,6 +146,7 @@ const Season = ({season}) => {
     setUpdatedTicketHolderErrorInfoAlertOpen(!updatedTicketHolderErrorInfoAlertOpen)
   }
 
+  // return components to display to screen
   return (
       <div style={{height: '100%', width: '100%'}}>
         <Card>
