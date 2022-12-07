@@ -13,7 +13,7 @@ const EditTicketHolderDialog = ({open, onClose, name, setName, email, setEmail, 
         justifyContent: 'center',
       }}
     >
-      <DialogTitle style={{paddingLeft: '30%'}}>Add Season Ticket Holder</DialogTitle>
+      <DialogTitle style={{paddingLeft: '6.5%'}}>Edit Season Ticket Holder</DialogTitle>
       <div
         style={{
           display: 'flex',
